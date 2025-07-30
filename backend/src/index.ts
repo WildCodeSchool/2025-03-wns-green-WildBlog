@@ -4,6 +4,7 @@ import "reflect-metadata";
 import dataSource from "./config/data-source";
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/HelloResolver';
+import { UserResolver } from './resolvers/UserResolver';
 
 const start = async () => {
   try {
@@ -11,7 +12,7 @@ const start = async () => {
     console.log("✅ Database connected");
 
     const schema = await buildSchema({
-      resolvers: [HelloResolver],
+      resolvers: [HelloResolver, UserResolver],
     });
 
     const server = new ApolloServer({ schema });
