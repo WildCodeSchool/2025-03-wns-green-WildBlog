@@ -15,12 +15,5 @@ RUN npm install
 # Étape 5 : Copier les fichiers de configuration
 COPY src src
 
-# Étape 6 : Définir les variables d'environnement (si tu en as)
-# ENV NODE_ENV=production
-# ENV PORT=4000
-
-# Étape 7 : Exposer le port sur lequel ton serveur tourne
-# EXPOSE 4000
-
-# Étape 8 : Démarrer l’application
+# Étape 6 : Démarrer l’application
 CMD ["npm", "start"]

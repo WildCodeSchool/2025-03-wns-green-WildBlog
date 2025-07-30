@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from 'dotenv';
-import { User } from "./entities/User";
+import { User } from "../entities/User";
 
 dotenv.config();
 
@@ -19,6 +19,5 @@ const dataSource = new DataSource({
     logging: true  // verifie les erreurs et les requêtes pour débugguer
 
 });
-
 
 export default dataSource;

@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import "reflect-metadata";
-import dataSource from "./data-source";
+import dataSource from "./config/data-source";
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/HelloResolver';
 

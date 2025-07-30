@@ -1,63 +1,59 @@
-<!-- FRONTEND : Installation du projet React avec Vite et Typescript -->
-npm create vite@latest frontend -- --template react-ts 
+### FRONTEND SETUP
+The frontend uses React, Vite, and TypeScript.
+
+```bash
+# Create React project with Vite + TypeScript template
+npm create vite@latest frontend -- --template react-ts
+
+# Enter frontend directory
 cd frontend
-npm i 
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-<!-- le projet est visible sur http://localhost:5173/ -->
+```
 
 
-<!-- BACKEND : -->
-<!-- Initialize a new Node.js project with npm this create a package.json file -->
-<!--  Install dependencies graphql and @apollo/Server this create a node_modules directory and add a package-lock.json file -->
+### BACKEND SETUP
 
-npm init --yes && npm pkg set type="module"
+# Initialize Node.js project
+npm init --yes
 
-npm install @apollo/server graphql
+# Set module type in package.json 
+npm pkg set type="commonjs"
 
-<!-- Set up with TypeScript (recommended) -->
+# Create source directory and main file
 mkdir src
 touch src/index.ts
 
-<!-- Run the following command to install the typescript and @types/node packages into your project's dev dependencies: -->
-npm install --save-dev typescript @types/node
+# Install runtime dependencies
+npm install @apollo/server graphql type-graphql typeorm pg jsonwebtoken class-validator reflect-metadata dotenv
 
-<!-- Next, create a tsconfig.json file in your project: -->
-<!-- Configurer TypeScript -->
-touch tsconfig.json
-<!-- with this configuration  -->
+# Install dev dependencies
+npm install --save-dev typescript @types/node ts-node
+
+# Configure Typescript
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
+    "rootDir": "src",
     "outDir": "dist",
     "lib": ["es2020"],
     "target": "es2020",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "types": ["node"]
-  }
+  },
+  "include": ["src"]
 }
 
-<!-- Finally, replace the default scripts entry in your package.json file with the following type and scripts entries: -->
-{
-  // ...etc.
-  "type": "module",
-  "scripts": {
-    "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
-  }
-  // other dependencies
+# Update package.json file
+"scripts": {
+  "compile": "tsc",
+  "start": "npm run compile && node ./dist/index.js",
+  "dev": "ts-node src/index.ts"
 }
-
-<!-- You can now run npm start, which should successfully compile and run your empty index.ts file, printing something like this: -->
-npm start
-
-
-
-
-<!-- PostgreSQL + ORM -->
-npm install typeorm pg
-
-<!-- JsonWebToken -->
-npm install jsonwebtoken
-
