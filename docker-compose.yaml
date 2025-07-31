@@ -20,6 +20,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     volumes:
       # - ./backend/data:/app/data
       - ./backend/src/:/app/src # synchroniser dossier backend/src avec app/src (défini dans Dockerfile du backend)

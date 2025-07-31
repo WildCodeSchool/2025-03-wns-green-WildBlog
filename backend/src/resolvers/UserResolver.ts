@@ -1,7 +1,9 @@
 import { Resolver, Mutation, Arg } from 'type-graphql';
 import { User } from '../entities/User';    
-import { SignupInput } from '../inputs/SignupInput';
+import { SignupInput } from '../inputs/user/SignupInput';
+import { LoginInput } from '../inputs/user/LoginInput';
 import  argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
 
 @Resolver(User)
 export class UserResolver {
@@ -25,5 +27,33 @@ export class UserResolver {
         });
         await user.save();
         return user;
+    }
+
+    @Mutation(() => String)
+    async Login(@Arg("data") data: LoginInput) : Promise<String> {
+        const user = await User.findOneBy({ email: data.email } );
+
+        if (!user) {
+            throw new Error("Aucun utilisateur avec cette adresse email")
+        }
+
+        const isValidPassword = await argon2.verify(user.password, data.password);
+
+        if (!isValidPassword) {
+            throw new Error("Les identifiants de connexion sont incorrects")
+        }
+        
+        const token = jwt.sign(
+            {
+              id: user.id,
+              email: user.email
+            },
+            process.env.JWT_SECRET_KEY! as string,
+            {  
+              expiresIn: "2h"
+            }
+        )
+
+        return token;
     }
 }

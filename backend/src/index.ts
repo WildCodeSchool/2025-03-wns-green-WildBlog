@@ -5,6 +5,9 @@ import dataSource from "./config/data-source";
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/HelloResolver';
 import { UserResolver } from './resolvers/UserResolver';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const start = async () => {
   try {

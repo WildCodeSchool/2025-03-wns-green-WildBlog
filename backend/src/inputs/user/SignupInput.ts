@@ -1,7 +1,6 @@
 import { Field, InputType } from "type-graphql";
 import { IsEmail, Length, MaxLength } from "class-validator";
 
-
 @InputType()
 export class SignupInput {
   @Field()
@@ -19,7 +18,4 @@ export class SignupInput {
   @Field()
   @Length(6, 255)
   password: string;
-
 }
-
-
