@@ -4,21 +4,22 @@ import { TagInput } from "../inputs/post/TagInput";
 
 @Resolver(Tag)
 export class TagResolver {
-@Mutation(() => Tag)
-async createTag(@Arg("data") data: TagInput): Promise<Tag> {
-  const isExisting = await Tag.findOneBy({ name: data.name });
 
-  if (isExisting) {
-    throw new Error("Ce tag existe déjà.")
-  }
+  @Mutation(() => Tag)
+  async createTag(@Arg("data") data: TagInput): Promise<Tag> {
+    const isExisting = await Tag.findOneBy({ name: data.name });
 
-  const tag = Tag.create({
-    name: data.name,
-    description: data.description,
-  });
+    if (isExisting) {
+      throw new Error("Ce tag existe déjà.")
+    }
 
-  await tag.save();
-  return tag;
+    const tag = Tag.create({
+      name: data.name,
+      description: data.description,
+    });
+
+    await tag.save();
+    return tag;
 }
 
   @Query(() => [Tag])
