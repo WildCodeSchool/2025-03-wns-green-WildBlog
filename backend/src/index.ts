@@ -5,6 +5,7 @@ import dataSource from "./config/data-source";
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/HelloResolver';
 import { UserResolver } from './resolvers/UserResolver';
+import { TagResolver } from './resolvers/TagResolver';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -15,7 +16,7 @@ const start = async () => {
     console.log("✅ Database connected");
 
     const schema = await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
+      resolvers: [HelloResolver, UserResolver,TagResolver],
     });
 
     const server = new ApolloServer({ schema });
