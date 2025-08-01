@@ -1,12 +1,11 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
 import { Field, ID, ObjectType } from "type-graphql"
+import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
+import { Blog } from "./Blog"
 
 @Entity()
 @ObjectType()
-export class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    @Field(() => ID)
-    id: number
+export class User extends BaseTimeEntity {
 
     @Column({ length: 100, nullable: false })
     @Field(() => String)
@@ -28,11 +27,8 @@ export class User extends BaseEntity {
     @Field()
     isActive: boolean
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    @Field()
-    createdAt: Date;
+    @OneToMany(() => Blog, blog => blog.author)
+    @Field(() => [Blog])
+    blogs: Blog[];
 
-    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    @Field()
-    updatedAt: Date;
 }

@@ -3,9 +3,10 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import "reflect-metadata";
 import dataSource from "./config/data-source";
 import { buildSchema } from 'type-graphql';
+import * as dotenv from 'dotenv';
 import { HelloResolver } from './resolvers/HelloResolver';
 import { UserResolver } from './resolvers/UserResolver';
-import * as dotenv from 'dotenv';
+import { BlogResolver } from './resolvers/BlogResolver';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ const start = async () => {
     console.log("✅ Database connected");
 
     const schema = await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
+      resolvers: [HelloResolver, UserResolver, BlogResolver],
     });
 
     const server = new ApolloServer({ schema });
