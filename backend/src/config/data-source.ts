@@ -15,7 +15,7 @@ const dataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 
-    entities: [User,Blog,Tag],
+    entities: [User, Blog, Tag],
     synchronize: true, //synchronise automatiquement la base de données(sans avoir besoin de faire des migrations : NE JAMAIS UTILISER EN PROD)
     // logging: ['error', 'query']  // verifie les erreurs et les requêtes pour débugguer
     logging: true  // verifie les erreurs et les requêtes pour débugguer

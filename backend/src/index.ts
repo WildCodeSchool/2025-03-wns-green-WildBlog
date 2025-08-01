@@ -17,7 +17,7 @@ const start = async () => {
     console.log("✅ Database connected");
 
     const schema = await buildSchema({
-      resolvers: [HelloResolver, UserResolver, BlogResolver,TagResolver],
+      resolvers: [HelloResolver, UserResolver, BlogResolver, TagResolver],
       validate: true, // active les decorators de class-validator
     });
 
