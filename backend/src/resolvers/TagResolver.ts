@@ -15,7 +15,6 @@ export class TagResolver {
 
     const tag = Tag.create({
       name: data.name,
-      description: data.description,
     });
 
     await tag.save();

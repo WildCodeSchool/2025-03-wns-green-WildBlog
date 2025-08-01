@@ -19,10 +19,6 @@ export class Tag extends BaseEntity {
   @Field()
   name: string;
 
-  @Column("text")
-  @Field()
-  description: string;
-
   @CreateDateColumn()
   @Field()
   createdAt: Date;
