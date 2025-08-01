@@ -17,6 +17,7 @@ const start = async () => {
 
     const schema = await buildSchema({
       resolvers: [HelloResolver, UserResolver, BlogResolver],
+      validate: true, // active les decorators de class-validator
     });
 
     const server = new ApolloServer({ schema });

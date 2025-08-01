@@ -10,23 +10,28 @@ export class UserResolver {
     
     @Mutation(() => User)
     async signUp(@Arg("data") data: SignupInput): Promise<User> {
-
+        
         const existing = await User.findOneBy({ email: data.email } );
         if (existing) {
-            throw new Error("Email already in use");
+            throw new Error("Cette adresse email est déjà utilisée.");
         }
 
         const hashedPassword = await argon2.hash(data.password);
+        
+        try {
+            const user = User.create({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                password: hashedPassword,
+                isActive: true
+            });
+            await user.save();
+            return user;
 
-        const user = User.create({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            password: hashedPassword,
-            isActive: true
-        });
-        await user.save();
-        return user;
+        } catch (error) {
+            throw new Error( "Erreur lors de la création de l'utilisateur : " + error.message);
+        } 
     }
 
     @Mutation(() => String)
