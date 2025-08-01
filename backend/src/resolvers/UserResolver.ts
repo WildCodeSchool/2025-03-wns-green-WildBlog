@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg } from 'type-graphql';
+import { Resolver, Mutation, Query, Arg } from 'type-graphql';
 import { User } from '../entities/User';    
 import { SignupInput } from '../inputs/user/SignupInput';
 import { LoginInput } from '../inputs/user/LoginInput';
@@ -7,6 +7,14 @@ import jwt from 'jsonwebtoken';
 
 @Resolver(User)
 export class UserResolver {
+
+    @Query(() => [User])
+    async getAllUsers(): Promise<User[]> {
+        const users = await User.find({
+            where: { isActive: true }
+        });
+        return users;
+    }
     
     @Mutation(() => User)
     async signUp(@Arg("data") data: SignupInput): Promise<User> {
