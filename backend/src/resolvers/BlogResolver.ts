@@ -15,6 +15,7 @@ export class BlogResolver {
             }
         
             // FIXME: Remplacer ce fakeAuthor par l'utilisateur connecté quand on aura le contexte
+            // Si pas d'user connecté on ne peut créer de blog
             const fakeAuthor = await User.findOneBy({ id: 1 });
             if (!fakeAuthor) {
               throw new Error("Auteur introuvable.");

@@ -9,6 +9,7 @@ import { UserResolver } from './resolvers/UserResolver';
 import { BlogResolver } from './resolvers/BlogResolver';
 import { TagResolver } from './resolvers/TagResolver';
 import { CategoryResolver } from './resolvers/CategoryResolver';
+import { PostResolver } from './resolvers/PostResolver';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const start = async () => {
     console.log("✅ Database connected");
 
     const schema = await buildSchema({
-      resolvers: [HelloResolver, UserResolver, BlogResolver, TagResolver, CategoryResolver],
+      resolvers: [HelloResolver, UserResolver, BlogResolver, TagResolver, CategoryResolver, PostResolver ],
       validate: true, // active les decorators de class-validator
     });
 

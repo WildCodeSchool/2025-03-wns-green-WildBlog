@@ -1,9 +1,11 @@
 import {
     Entity,
     Column,
+    OneToMany,
   } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
+import { Post } from "./Post";
   
   @Entity()
   @ObjectType()
@@ -16,5 +18,9 @@ import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
     @Column({ default: "" })
     @Field(() => String)
     description: string;
+
+    @OneToMany(() => Post, post => post.category)
+    @Field(() => [Post])
+    posts: Post[];
   }
   

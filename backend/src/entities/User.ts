@@ -2,6 +2,7 @@ import { Entity, Column, OneToMany } from "typeorm"
 import { Field, ID, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
+import { Post } from "./Post"
 
 @Entity()
 @ObjectType()
@@ -30,5 +31,9 @@ export class User extends BaseTimeEntity {
     @OneToMany(() => Blog, blog => blog.author)
     @Field(() => [Blog])
     blogs: Blog[];
+
+    @OneToMany(() => Post, post => post.author)
+    @Field(() => [Post])
+    posts: Post[];
 
 }

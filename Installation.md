@@ -57,3 +57,8 @@ npm install --save-dev typescript @types/node ts-node
   "start": "npm run compile && node ./dist/index.js",
   "dev": "ts-node src/index.ts"
 }
+
+
+# Added packages:
+npm install sanitize-html
+npm install --save-dev @types/sanitize-html
