@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
+import { Entity, Column, OneToMany } from "typeorm"
 import { Field, ID, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
