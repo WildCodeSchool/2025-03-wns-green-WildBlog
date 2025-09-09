@@ -1,0 +1,36 @@
+name: WildBlog CI
+
+on:
+  push:
+    branches:
+      - '**' # déclenche sur toutes les branches
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️- Récupérer le code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️- Installer Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️- Tester le backend
+      - name: Backend - lint & compile
+        working-directory: ./backend
+        run: |
+          npm install
+          npm run compile
+
+      # 4️- Tester le frontend
+      - name: Frontend - lint & compile
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run lint
+          npm run build
