@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Tag } from "../entities/Tag";
-import { TagInput } from "../inputs/post/TagInput";
+import { TagInput } from "../inputs/tag/TagInput";
 
 @Resolver(Tag)
 export class TagResolver {

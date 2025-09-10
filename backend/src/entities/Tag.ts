@@ -7,23 +7,14 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
+import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
 
 @Entity()
 @ObjectType()
-export class Tag extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  @Field(() => ID)
-  id: number;
-
+export class Tag extends BaseTimeEntity {
+  
   @Column({ unique: true })
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @CreateDateColumn()
-  @Field()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  @Field()
-  updatedAt: Date;
 }

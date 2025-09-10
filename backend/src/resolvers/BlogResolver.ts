@@ -3,7 +3,6 @@ import { Blog } from '../entities/Blog';
 import { BlogInput } from '../inputs/blog/BlogInput';
 import { User } from '../entities/User';
 
-
 @Resolver(Blog)
 export class BlogResolver {
 
