@@ -26,8 +26,9 @@ jobs:
         run: |
           npm install
           npm run compile
-          npm test
-
+          npm test -- --ci
+          echo "Tests finished"
+        
       # 4️- Tester le frontend
       - name: Frontend - lint & compile
         working-directory: ./frontend
