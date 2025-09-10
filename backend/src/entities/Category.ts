@@ -2,7 +2,7 @@ import {
     Entity,
     Column,
   } from "typeorm";
-  import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID } from "type-graphql";
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
   
   @Entity()
@@ -13,7 +13,7 @@ import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
     @Field(() => String)
     name: string;
 
-    @Column()
+    @Column({ default: "" })
     @Field(() => String)
     description: string;
   }

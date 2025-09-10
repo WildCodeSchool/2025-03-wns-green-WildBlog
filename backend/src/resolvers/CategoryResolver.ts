@@ -1,7 +1,8 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, ID } from "type-graphql";
 import { Category } from "../entities/Category";
 import { CategoryInput } from "../inputs/category/CategoryInput";
 import { UpdateCategoryInput } from "../inputs/category/UpdateCategoryInput";
+
 
 @Resolver(Category)
 export class CategoryResolver {
@@ -37,6 +38,22 @@ export class CategoryResolver {
         console.error("❌ Erreur lors de la modification de la catégorie:", err);
         throw new Error("Impossible de modifier la catégorie");
       }
+  }
+
+
+  @Mutation(() => ID)
+  async deleteCategory(@Arg("id") id: number) {
+    try {
+      const category = await Category.findOneByOrFail({ id });
+      if (!category) {
+        throw new Error("Catégorie non trouvée");
+      }
+      await Category.delete({ id });
+      return id;
+    } catch (err) {
+      console.error("❌ Erreur lors de la suppression de la catégorie:", err);
+      throw new Error("Impossible de supprimer la catégorie");
+    }
   }
 
 
