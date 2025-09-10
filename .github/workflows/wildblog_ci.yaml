@@ -26,7 +26,7 @@ jobs:
         run: |
           npm install
           npm run compile
-          npm test -- --ci --runInBand
+          npm test
           echo "Tests finished"
         
       # 4️- Tester le frontend

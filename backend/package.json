@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --ci --runInBand",
     "compile": "tsc",
     "start": "npm run compile && node ./dist/index.js",
     "dev": "ts-node src/index.ts"
