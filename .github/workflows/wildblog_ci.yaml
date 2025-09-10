@@ -21,11 +21,12 @@ jobs:
           node-version: 20
 
       # 3️- Tester le backend
-      - name: Backend - lint & compile
+      - name: Backend - lint & compile & unit tests
         working-directory: ./backend
         run: |
           npm install
           npm run compile
+          npm test
 
       # 4️- Tester le frontend
       - name: Frontend - lint & compile
@@ -34,3 +35,5 @@ jobs:
           npm install
           npm run lint
           npm run build
+
+
