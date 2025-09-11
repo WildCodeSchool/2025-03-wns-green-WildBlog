@@ -1,68 +1,65 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* frontend/src/index.css */
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@theme {
+  /* Couleurs Wild */
+  --color-wild-orange: #FF8102;
+  --color-wild-blue: #0034AE;
+  --color-wild-bg-light-blue: #F8FBFF;
+  --color-wild-selected-link: #4D7AE3;
+  --color-wild-grey: #F7F7F7;
+  --color-wild-beige: #FFEFD7;
+  --color-wild-text-grey: #364153;
+  --color-wild-light-blue: #E8F2F8;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Police */
+  --font-poppins: "Poppins", sans-serif;
+
+  /* Tailles de titres (génère text-h1, text-h2, text-h3) */
+  --text-h1: 42px;
+  --text-h1--line-height: 1.1;
+  --text-h2: 32px;
+  --text-h2--line-height: 1.15;
+  --text-h3: 22px;
+  --text-h3--line-height: 1.2;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Global */
+html, body, #root { height: 100%; }
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: var(--font-poppins);
+  background: var(--color-wild-bg-light-blue);
+  color: var(--color-wild-text-grey);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Classes spécifiques */
+@utility h1 { 
+  @apply 
+  font-poppins 
+  font-bold 
+  text-h1 
+  text-wild-blue; 
 }
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+@utility h2 { 
+  @apply 
+  font-poppins 
+  font-semibold 
+  text-h2 
+  text-wild-blue; 
 }
-button:hover {
-  border-color: #646cff;
+@utility h3 { 
+  @apply 
+  font-poppins 
+  font-semibold 
+  text-h3 
+  text-wild-blue; }
+@utility p-regular { 
+  @apply 
+  font-poppins 
+  text-base 
+  text-wild-text-grey; 
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+@utility muted { 
+  color: var(--color-wild-text-grey); 
+  opacity: .7; 
 }
