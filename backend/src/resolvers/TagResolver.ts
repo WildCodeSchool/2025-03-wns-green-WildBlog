@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, ID } from "type-graphql";
 import { Tag } from "../entities/Tag";
 import { TagInput } from "../inputs/tag/TagInput";
 import { UpdateTagInput } from "../inputs/tag/UpdateTagInput";
@@ -26,7 +26,6 @@ export class TagResolver {
     }
   }
 
-  // Modification d'un tag par id
   @Mutation(() => Tag)
   async updateTag(@Arg("id") id: number, @Arg("data") data: UpdateTagInput): Promise<Tag> {
     try {
@@ -46,21 +45,19 @@ export class TagResolver {
     }
   }
 
-  // Suppression d'un tag par id
-  @Mutation(() => Boolean)
-  async deleteTag(@Arg("id") id: number): Promise<boolean> {
+  @Mutation(() => ID)
+  async deleteTag(@Arg("id") id: number) {
     try {
       const tag = await Tag.findOneBy({ id });
       if (!tag) throw new Error("Tag introuvable.");
 
       await Tag.delete(id);
-      return true;
+      return id;
     } catch (err) {
       throw new Error(`Erreur lors de la suppression du tag ${err instanceof Error ? ` : ${err.message}` : ''}`);
     }
   }
 
-  // affichage de tous les tags par ordre decroissant
   @Query(() => [Tag])
   async getAllTags(): Promise<Tag[]> {
     try {
