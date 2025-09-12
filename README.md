@@ -8,7 +8,7 @@ Project launched using Docker.
 
 ### Project Structure
 
-- `frontend/`: React application with Vite and TypeScript.  
+- `frontend/`: React application with Vite and TypeScript, Tailwind CSS v4.  
 - `backend/`: GraphQL server in TypeScript using Apollo Server, TypeGraphQL, TypeORM, and PostgreSQL.  
 - `docker-compose.yaml`: orchestrates frontend, backend, PostgreSQL database, and pgAdmin containers.
 

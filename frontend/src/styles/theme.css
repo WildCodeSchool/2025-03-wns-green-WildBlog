@@ -1,0 +1,14 @@
+@theme {
+  /* couleurs */ 
+  --color-wild-orange: #FF8102;
+  --color-wild-blue: #0034AE;
+  --color-wild-bg-light-blue: #F8FBFF;
+  --color-wild-selected-link: #4D7AE3;
+  --color-wild-grey: #F7F7F7;
+  --color-wild-beige: #FFEFD7;
+  --color-wild-text-grey: #364153;
+  --color-wild-light-blue: #E8F2F8;
+
+  /* typo */
+  --font-poppins: "Poppins", sans-serif;
+}
