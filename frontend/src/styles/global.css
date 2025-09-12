@@ -1,0 +1,7 @@
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font-poppins);
+  background: var(--color-wild-bg-light-blue);
+  color: var(--color-wild-text-grey);
+}
