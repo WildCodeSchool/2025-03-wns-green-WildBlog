@@ -20,6 +20,9 @@ function App() {
       >
         Blog Public
       </Link>
+      <Link to="/article" className="text-blue-600 underline mt-4 block">
+        Article
+      </Link>    
     </div>
   );
 }
