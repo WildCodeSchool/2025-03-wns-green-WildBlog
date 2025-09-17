@@ -7,6 +7,9 @@ function App() {
       <Link to="/style-guide" className="text-blue-600 underline mt-4 block">
         Style Guide
       </Link>    
+      <Link to="/article" className="text-blue-600 underline mt-4 block">
+        Article
+      </Link>    
     </>
   )
 }
