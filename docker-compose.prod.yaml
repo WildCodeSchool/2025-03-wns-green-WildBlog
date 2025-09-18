@@ -1,6 +1,8 @@
 services:
   backend:
-    build: ./backend
+    # build: ./backend
+    image: emiliaraffalli/wildblog-backend
+    platform: linux/amd64
     env_file: .env
     expose:
       - "4200"                 # visible uniquement dans le réseau docker
@@ -18,9 +20,11 @@ services:
       - ./backend/package-lock.json:/app/package-lock.json
 
   frontend:
-    build: ./frontend
+    # build: ./frontend
+    image: emiliaraffalli/wildblog-frontend
+    platform: linux/amd64
     command: sh -c "npm run build"
-    env_file: .env
+    # env_file: .env
     # Le build écrit dans /app/dist → on le monte dans un volume partagé avec Nginx
     volumes:
       - web-client-build:/app/dist
