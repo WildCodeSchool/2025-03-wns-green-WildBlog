@@ -1,0 +1,81 @@
+services:
+  backend:
+    build: ./backend
+    env_file: .env
+    expose:
+      - "4200"                 # visible uniquement dans le réseau docker
+    depends_on:
+      database:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf -X POST -H 'Content-Type: application/json' -d '{\"query\":\"{__typename}\"}' http://backend:4200 || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - ./backend/src:/app/src   # Hot-reload dev only; en préprod tu peux retirer
+      - ./backend/package.json:/app/package.json
+      - ./backend/package-lock.json:/app/package-lock.json
+
+  frontend:
+    build: ./frontend
+    command: sh -c "npm run build"
+    env_file: .env
+    # Le build écrit dans /app/dist → on le monte dans un volume partagé avec Nginx
+    volumes:
+      - web-client-build:/app/dist
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:1.21.3
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    # n'écoute que sur l'hôte local ; Caddy jouera l'edge public en 443
+    ports:
+      - "8010:80" #à checker
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - web-client-build:/web-client-build
+      - ./logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/ >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER} 
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    # à verifier: ports à préciser ou non
+    volumes:
+      - ./backend/postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_DATABASE}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Optionnel : accès DB via navigateur, borné au localhost
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    # à verifier: ports à préciser ou non
+    environment:
+      PGADMIN_DEFAULT_EMAIL: wilder@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - database
+    ports:
+      - "127.0.0.1:5050:80"   # port obligatoire -> mapping avec nginx        
+
+volumes:
+  web-client-build:

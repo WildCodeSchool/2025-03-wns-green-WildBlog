@@ -3,4 +3,10 @@ node_modules/
 frontend/node_modules/
 backend/node_modules/
 .env
+.env.local
 dist/
+
+access_log
+error_log
+
+database
