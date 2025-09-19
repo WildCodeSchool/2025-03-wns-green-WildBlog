@@ -5,8 +5,13 @@ services:
       - "5180:5173"
     depends_on:
       - backend
+    # volumes:
+    #   - ./frontend/src/:/app/src # synchroniser dossier frontend/src avec app/src (défini dans Dockerfile du frontend)
     volumes:
-      - ./frontend/src/:/app/src # synchroniser dossier frontend/src avec app/src (défini dans Dockerfile du frontend)
+      - ./frontend/src:/app/src   # montage du code source
+      - ./frontend/public:/app/public
+      - /app/node_modules        # pour ne pas écraser node_modules
+    command: npm run dev -- --host
 
   backend:
     build: ./backend 

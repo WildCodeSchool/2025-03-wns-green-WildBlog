@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
 import { Post } from "./Post"
+import { Role } from "../auth/roles.enum"
 
 @Entity()
 @ObjectType()
@@ -35,5 +36,14 @@ export class User extends BaseTimeEntity {
     @OneToMany(() => Post, post => post.author)
     @Field(() => [Post])
     posts: Post[];
+
+    @Field(() => [Role])
+    @Column({
+      type: "enum",
+      enum: Role,
+      array: true,
+      default: [Role.USER],
+    })
+    roles: Role[];
 
 }

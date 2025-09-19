@@ -2,3 +2,64 @@
 @import "tailwindcss";
 @import "./styles/theme.css";
 @import "./styles/typo.css";
+
+ 
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body{
+    color: var(--color-wild-text-grey);
+    background-color:var(--color-wild-light-blue);
+    inline-size: 50%;
+    margin: auto;
+    font-family: var(--font-poppins);
+  }
+  
+  input{
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: #333333;
+    background-color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+    inline-size: 100%;
+  }
+  
+  input::placeholder{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+  }
+  
+  button{
+    padding: 0.7rem 2rem;
+    background-color: var(--color-wild-text-grey);
+    color: #FFFFFF;
+    font-size: 14px;
+    border-radius: 20px;
+    border: none;
+  }
+  
+  form{
+    margin-block-start: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+  
+  .link{
+    text-decoration: none;
+    color: var(--color-wild-blue);
+  } 
