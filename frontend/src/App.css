@@ -5,17 +5,17 @@
 
  
 
-*{
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+  } */
   
   body{
     color: var(--color-wild-text-grey);
     background-color:var(--color-wild-light-blue);
-    inline-size: 50%;
-    margin: auto;
+    /* inline-size: 50%;
+    margin: auto; */
     font-family: var(--font-poppins);
   }
   
@@ -31,7 +31,6 @@
   }
   
   input::placeholder{
-    font-family: "Montserrat", sans-serif;
     font-weight: 500;
   }
   
@@ -39,18 +38,54 @@
     padding: 0.7rem 2rem;
     background-color: var(--color-wild-text-grey);
     color: #FFFFFF;
-    font-size: 14px;
-    border-radius: 20px;
+    font-size: 13px;
+    border-radius: 7px;
     border: none;
+    cursor:pointer;
   }
+
+
+/* CSS */
+.button-38 {
+  background-color: var(--color-wild-text-grey);
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: var(--color-wild-light-blue);
+  font-size: .875rem;
+  /* font-weight: 600; */
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-38:hover {
+  background-color: var(--color-wild-text-grey);
+}
+
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-38:focus-visible {
+  box-shadow: none;
+}
   
-  form{
+  /* form{
     margin-block-start: 25%;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     align-items: center;
-  }
+  } */
   
   nav{
     display: flex;

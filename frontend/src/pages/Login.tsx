@@ -54,28 +54,59 @@ function Login() {
   return (
     <>
       <Authnavbar type="login" />
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email..."
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password..."
-          onChange={handleChange}
-          value={formData.password}
-        />
-        <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
-          </button>
+      <div className="max-w-md mx-auto px-4">
+        <h2 className="text-center text-black font-medium">Connexion</h2>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form
+            onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email" className="block text-wild-text-grey font-medium text-sm">
+              Email
+            </label>
+            <div className="mt-2">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email..."
+                onChange={handleChange}
+                value={formData.email}
+              />
+            </div>
+          </div>
+
+          <div className="mt-7">
+            <div className="flex items-center justify-between">              
+              <label htmlFor="password" className="block text-wild-text-grey font-medium text-sm">
+              Mot de passe
+              </label>
+              <div className="text-sm">
+                <a href="#" className="block text-wild-text-grey font-medium text-sm">Mot de passe oublié ?</a>
+              </div>
+            </div>
+          
+            <div className="mt-2">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password..."
+                onChange={handleChange}
+                value={formData.password}
+              />
+            </div>
+          </div>
+  
+          <div className="mt-7 flex">
+              <button 
+                type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Log In"}
+              </button>
+          </div>
+            {error && <p style={{ color: "red" }}>{error.message}</p>}
+          </form>
         </div>
-        {error && <p style={{ color: "red" }}>{error.message}</p>}
-      </form>
+
+      </div>
     </>
   );
 }
