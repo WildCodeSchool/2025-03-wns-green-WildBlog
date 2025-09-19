@@ -55,7 +55,7 @@ function Login() {
     <>
       <Authnavbar type="login" />
       <div className="max-w-md mx-auto px-4">
-        <h2 className="text-center text-black font-medium">Connexion</h2>
+        <h3 className="text-center text-black font-medium">Connexion à mon blog</h3>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
@@ -96,13 +96,13 @@ function Login() {
             </div>
           </div>
   
-          <div className="mt-7 flex">
-              <button 
+          <div className="mt-7">
+              <button className=" w-full"
                 type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Log In"}
+                Connexion
               </button>
           </div>
-            {error && <p style={{ color: "red" }}>{error.message}</p>}
+            {error && <p className="text-red-600 text-sm mt-2 text-center">{error.message}</p>}
           </form>
         </div>
 

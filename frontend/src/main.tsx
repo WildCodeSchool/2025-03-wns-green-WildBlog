@@ -7,7 +7,7 @@ import Login from './pages/Login.tsx';
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
 import { Home } from './pages/Home.tsx';
-import Signup from './pages/SignUp.tsx';
+import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
 
 const client = new ApolloClient({
