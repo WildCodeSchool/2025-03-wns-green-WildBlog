@@ -3,6 +3,12 @@ import { IsEmail, IsNotEmpty, Length, MaxLength } from "class-validator";
 
 @InputType()
 export class SignupInput {
+  
+  @Field()
+  @MaxLength(255)
+  @IsNotEmpty()
+  blogName: string
+  
   @Field()
   @MaxLength(100)
   @IsNotEmpty()
@@ -19,7 +25,10 @@ export class SignupInput {
   email: string;
 
   @Field()
-  @Length(6, 255, { message: "Le mot de passe doit contenir au moins 6 caractères." })
   @IsNotEmpty()
   password: string;
+
+  @Field()
+  @IsNotEmpty()
+  repeatPassword: string;
 }

@@ -55,7 +55,18 @@ services:
       environment:
         PGADMIN_DEFAULT_EMAIL: wilder@admin.com
         PGADMIN_DEFAULT_PASSWORD: admin
+      volumes:
+        - ./pgadmin_data:/var/lib/pgadmin
       depends_on:
         - database
 
-
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    restart: always
+    ports:
+      - "8978:8978" 
+    volumes:
+      - ./cloudbeaver/workspace:/opt/cloudbeaver/workspace
+    depends_on:
+      - database

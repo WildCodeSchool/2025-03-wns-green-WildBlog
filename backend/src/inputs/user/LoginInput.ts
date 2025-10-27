@@ -9,6 +9,5 @@ export class LoginInput {
   email: string;
 
   @Field()
-  @Length(6, 255)
   password: string;
 }

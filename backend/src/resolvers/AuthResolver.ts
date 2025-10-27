@@ -4,19 +4,26 @@ import { User } from "../entities/User";
 import { SignupInput } from "../inputs/user/SignupInput";
 import  argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+import { Blog } from "../entities/Blog";
 
 export class AuthResolver {
     @Mutation(() => User)
     async signUp(@Arg("data") data: SignupInput): Promise<User> {
         
-        const existing = await User.findOneBy({ email: data.email } );
-        if (existing) {
-            throw new Error("Cette adresse email est déjà utilisée.");
-        }
-
-        const hashedPassword = await argon2.hash(data.password);
-        
         try {
+            const existingUser = await User.findOneBy({ email: data.email } );
+            if (existingUser) {
+                throw new Error("Cette adresse email est déjà utilisée.");
+            }
+    
+            if (data.password.length < 6) {
+                throw new Error("Le mot de passe doit contenir au moins 6 caractères.");
+            }
+            if (data.password !== data.repeatPassword) {
+                throw new Error("Les mots de passe ne correspondent pas.");
+            }
+    
+            const hashedPassword = await argon2.hash(data.password);
             const user = User.create({
                 firstName: data.firstName,
                 lastName: data.lastName,
@@ -25,12 +32,25 @@ export class AuthResolver {
                 isActive: true
             });
             await user.save();
-            return user;
+
+            const blog = Blog.create({
+                name: data.blogName,
+                author: user, 
+              });
+            await blog.save();
+
+            const createdUser = await User.findOne({
+                where: { id: user.id },
+                relations: ["blogs", "blogs.author"],
+              });
+              
+            return createdUser!;
 
         } catch (error) {
-            throw new Error( "Erreur lors de la création de l'utilisateur : " + error.message);
+            throw new Error(error.message);
         } 
     }
+
 
     @Mutation(() => String)
     async Login(@Arg("data") data: LoginInput) : Promise<String> {

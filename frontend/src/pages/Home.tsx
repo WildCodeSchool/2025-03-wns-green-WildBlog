@@ -19,7 +19,6 @@ export function Home() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-
   console.log(localStorage.getItem('token'))
 
   useEffect(() => {
@@ -49,7 +48,7 @@ export function Home() {
       Tableau de bord : à intégrer
     </div>
       <h1>
-        Welcome {data?.getUser.firstName ? data.getUser.firstName.charAt(0).toUpperCase() + data.getUser.firstName.slice(1) : ""}!
+        Bienvenue {data?.getUser.firstName ? data.getUser.firstName.charAt(0).toUpperCase() + data.getUser.firstName.slice(1) : ""}!
       </h1>    
       <button onClick={handleLogout}> Déconnexion </button>
     </>

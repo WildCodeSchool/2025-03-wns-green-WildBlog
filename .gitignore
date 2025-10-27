@@ -6,3 +6,5 @@ backend/node_modules/
 dist/
 logs/
 database/
+pgadmin_data/
+cloudbeaver/

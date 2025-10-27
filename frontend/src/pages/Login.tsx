@@ -54,13 +54,11 @@ function Login() {
   return (
     <>
       <Authnavbar type="login" />
-      <div className="max-w-md mx-auto px-4">
-        <h3 className="text-center text-black font-medium">Connexion à mon blog</h3>
+      <h3 className="text-center text-black font-lg text-xl">Connexion</h3>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            onSubmit={handleSubmit}>
-          <div>
+      <div className="max-w-xl mx-auto bg-white shadow-md rounded-xl p-10 mt-10">
+        <form
+          onSubmit={handleSubmit}>
             <label htmlFor="email" className="block text-wild-text-grey font-medium text-sm">
               Email
             </label>
@@ -71,17 +69,17 @@ function Login() {
                 placeholder="Email..."
                 onChange={handleChange}
                 value={formData.email}
-              />
+                className="w-full"
+                />
             </div>
-          </div>
 
           <div className="mt-7">
-            <div className="flex items-center justify-between">              
-              <label htmlFor="password" className="block text-wild-text-grey font-medium text-sm">
-              Mot de passe
-              </label>
-              <div className="text-sm">
-                <a href="#" className="block text-wild-text-grey font-medium text-sm">Mot de passe oublié ?</a>
+              <div className="flex items-center justify-between">              
+                <label htmlFor="password" className="block text-wild-text-grey font-medium text-sm">
+                Mot de passe
+                </label>
+                <div className="text-sm">
+                  <a href="#" className="block text-wild-text-grey font-medium text-sm">Mot de passe oublié ?</a>
               </div>
             </div>
           
@@ -92,6 +90,7 @@ function Login() {
                 placeholder="Password..."
                 onChange={handleChange}
                 value={formData.password}
+                className="w-full"
               />
             </div>
           </div>
@@ -102,11 +101,10 @@ function Login() {
                 Connexion
               </button>
           </div>
-            {error && <p className="text-red-600 text-sm mt-2 text-center">{error.message}</p>}
-          </form>
-        </div>
-
+          {error && <p className="text-red-600 text-sm mt-2 text-center">{error.message}</p>}
+        </form>
       </div>
+
     </>
   );
 }

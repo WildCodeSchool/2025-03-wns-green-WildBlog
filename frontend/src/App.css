@@ -4,39 +4,17 @@
 @import "./styles/typo.css";
 
  
+  
+body{
+  color: var(--color-wild-text-grey);
+  background-color:var(--color-wild-light-grey);
+  font-family: var(--font-poppins);
+}
 
-/* *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } */
-  
-  body{
-    color: var(--color-wild-text-grey);
-    background-color:var(--color-wild-light-blue);
-    /* inline-size: 50%;
-    margin: auto; */
-    font-family: var(--font-poppins);
-  }
-  
-  input{
-    padding: 0.7rem 1rem;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    color: #333333;
-    background-color: #FFFFFF;
-    font-family: "Montserrat", sans-serif;
-    inline-size: 100%;
-  }
-  
-  input::placeholder{
-    font-weight: 500;
-  }
   
   button{
     padding: 0.7rem 2rem;
-    background-color: var(--color-wild-text-grey);
+    background-color: var(--color-wild-blue);
     color: #FFFFFF;
     font-size: 13px;
     border-radius: 7px;
@@ -44,8 +22,12 @@
     cursor:pointer;
   }
 
+  button:hover{
+    padding: 0.7rem 2rem;
+    background-color: var(--color-wild-selected-link);
+  }
 
-/* CSS */
+
 .button-38 {
   background-color: var(--color-wild-text-grey);
   border: 0;
@@ -53,7 +35,6 @@
   box-sizing: border-box;
   color: var(--color-wild-light-blue);
   font-size: .875rem;
-  /* font-weight: 600; */
   line-height: 1.25rem;
   padding: .75rem 1rem;
   text-align: center;
@@ -79,22 +60,41 @@
   box-shadow: none;
 }
   
-  /* form{
-    margin-block-start: 25%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-  } */
+
   
-  nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+  
+
+
+@layer base {
+  input{
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    color: var(--color-wild-text-grey);
+    border: 1px solid var(--color-wild-border-grey);
+    font-size: 0.8rem;
   }
-  
-  .link{
-    text-decoration: none;
-    color: var(--color-wild-blue);
-  } 
+  input::placeholder {
+    font-size: 0.8rem !important;
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    color: var(--color-wild-text-grey-hover);
+  }
+
+  input:focus {
+    border-color: var(--color-wild-selected-link);
+    box-shadow: 0 0 0 0.8px var(--color-wild-selected-link);
+  }
+}
+
+a {
+  font-size: 0.8rem;
+  color: var(--color-wild-blue);
+  font-weight:400;
+}
