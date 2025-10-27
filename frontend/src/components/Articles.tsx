@@ -5,14 +5,13 @@ import Commentaires from "./Commentaires";
 
 export default function Articles() {    
     return (      
-    
-    <div className="article-container" 
-    style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", maxWidth: "800px", margin: "auto" }} >
-    <h1 className="article-title text-center" style={{ color: "#0034AE", marginBottom: "10px" }} >L’IA : entre révolution technologique et défi humain</h1>
-        <img className="article-image " src={img} alt="IA" />
+    <div className="article-container flex:auto flex-col items-center p-20 max-w-800 md:auto">
+    <h1 className="article-title text-center bg:wild-blue mb-10" >L’IA : entre révolution technologique et défi humain</h1>
+        <img className="article-image block mx-auto w-full max-w-300 h-200 mb-20 rounded-lg shadow-lg object-cover"
+             src={img} 
+             alt="IA" />
     <div/>
-    <div className="articles-page col-start-1 col-end-7 " style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
-        <p className="article-text" style={{ textAlign: "justify", lineHeight: "1.6", marginTop: "20px" }}>
+        <p className="article-text text-justify text-1.6 mt-20" >
            Paris, 2025 – Longtemps cantonnée aux laboratoires de recherche et aux récits de science-fiction, l’intelligence artificielle (IA) est désormais partout : dans nos téléphones, nos voitures, nos hôpitaux, et même nos foyers.
                          Elle façonne une nouvelle ère, pleine de promesses… mais aussi de questions. Une révolution silencieuse mais omniprésente.
                          Que l’on demande à son assistant vocal de régler le chauffage, qu’un médecin analyse un scanner avec l’aide d’un algorithme, ou qu’un agriculteur optimise l’irrigation de ses champs grâce à des capteurs connectés, l’IA agit déjà en coulisses. Elle apprend, prédit, recommande.
@@ -42,7 +41,6 @@ export default function Articles() {
                         La clé semble résider dans un équilibre : faire de l’IA un outil, et non une fin. L’avenir de l’intelligence artificielle sera celui que l’humanité choisira de lui donner.
         </p>
          <Commentaires/>
-    </div>
     </div>
 );
 
