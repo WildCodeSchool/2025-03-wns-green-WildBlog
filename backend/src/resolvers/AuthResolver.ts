@@ -1,10 +1,11 @@
-import { Arg, Mutation } from "type-graphql";
+import { Arg, Ctx, Mutation, Query } from "type-graphql";
 import { LoginInput } from "../inputs/user/LoginInput";
 import { User } from "../entities/User";
 import { SignupInput } from "../inputs/user/SignupInput";
 import  argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { Blog } from "../entities/Blog";
+import { Context } from "vm";
 
 export class AuthResolver {
     @Mutation(() => User)
@@ -78,6 +79,14 @@ export class AuthResolver {
         )
 
         return token;
+    }
+
+    @Query(() => User)
+    async currentUser(@Ctx() ctx: Context): Promise<User> {
+    if (!ctx.currentUser) {
+        throw new Error("Utilisateur non connecté");
+    }
+    return ctx.currentUser;
     }
 }
 

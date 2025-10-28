@@ -1,56 +1,41 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
-import { GET_USER_FROM_TOKEN } from '../gql/user/getUserByTokenId';
 import { useQuery } from "@apollo/client/react";
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
-interface UserData {
-  getUser: User;
-}
+import { CURRENT_USER } from "../gql/auth/context";
+import type { UserData } from "../types/UserData";
 
 export function Home() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
-  console.log(localStorage.getItem('token'))
-
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  const { data, loading, error } = useQuery<UserData>(GET_USER_FROM_TOKEN, {
-    variables: { token: token || "" },
-    skip: !token, // skip si pas de token
-  });
+  const { data, loading, error } = useQuery<{ currentUser: UserData }>(CURRENT_USER);
 
   if (loading) return <p>Loading user...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  
-  console.log("Data:", data);
+
+  const user = data?.currentUser;
+
+  console.log(user);
 
   return (
     <>
-    <div>
-      Tableau de bord : à intégrer
-    </div>
+      <div>Tableau de bord : à intégrer</div>
       <h1>
-        Bienvenue {data?.getUser.firstName ? data.getUser.firstName.charAt(0).toUpperCase() + data.getUser.firstName.slice(1) : ""}!
-      </h1>    
-      <button onClick={handleLogout}> Déconnexion </button>
+        Bienvenue {user?.firstName ? user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) : ""}!
+      </h1>
+      <button onClick={handleLogout}>Déconnexion</button>
     </>
   );
 }

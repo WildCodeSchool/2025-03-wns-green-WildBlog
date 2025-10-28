@@ -12,6 +12,10 @@ import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
 import { ApolloLink } from '@apollo/client';
 
+import { UserProvider } from './contexts/UserContext.tsx';
+import { ProtectedRoute } from './routes/ProtectedRoutes.tsx';
+
+
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -40,15 +44,25 @@ const client = new ApolloClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/style-guide" element={<DesignSystem />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/style-guide" element={<DesignSystem />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/home" element={<Home />} /> */}
+
+
+            <Route path="/home" element={
+              <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </ApolloProvider>
   </StrictMode>
 );
