@@ -11,6 +11,9 @@ import { TagResolver } from './resolvers/TagResolver';
 import { CategoryResolver } from './resolvers/CategoryResolver';
 import { PostResolver } from './resolvers/PostResolver';
 import { AuthResolver } from './resolvers/AuthResolver';
+import { User } from './entities/User';
+import jwt from 'jsonwebtoken';
+
 
 dotenv.config();
 
@@ -27,7 +30,31 @@ const start = async () => {
     const server = new ApolloServer({ schema });
 
     const { url } = await startStandaloneServer(server, {
+      
       listen: { port: 4200 },
+      context: async ({ req }) => {
+        console.log("Headers de la requête :", req.headers);
+        console.log("Authorization header :", req.headers.authorization);
+      
+        const token = req.headers.authorization?.replace('Bearer ', '');
+        let currentUser: User | null = null;
+      
+        if (token) {
+          try {
+            const payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as { id: number };
+            currentUser = await User.findOne({
+              where: { id: payload.id },
+              relations: ["posts", "blogs"]
+            });
+          } catch (err) {
+            console.warn("Token invalide ou expiré");
+          }
+        }
+      
+        console.log("utilisateur connecté:", currentUser?.email ?? "aucun");
+      
+        return { req, currentUser };
+      }
     });
 
     console.log(`GraphQL server ready at ${url}`);

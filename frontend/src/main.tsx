@@ -5,15 +5,34 @@ import App from './App.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login.tsx';
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+
 import { ApolloProvider } from "@apollo/client/react";
 import { Home } from './pages/Home.tsx';
 import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
+import { ApolloLink } from '@apollo/client';
+
+
+// Lien terminal qui envoie la requête au serveur
+const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
+
+// Lien custom pour ajouter le token
+const authLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("token");
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  }));
+  return forward(operation);
+});
+
+// Concatène authLink puis httpLink
+const link = authLink.concat(httpLink);
 
 const client = new ApolloClient({
-  link: new HttpLink({ 
-  uri: "http://localhost:4200/graphql"
-  }),
+  link,
   cache: new InMemoryCache(),
 });
 
