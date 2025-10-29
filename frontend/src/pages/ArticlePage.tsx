@@ -1,4 +1,4 @@
-import Articles from "../components/Articles";
+import Articles from "../components/ArticleDetails";
 
 export default function Article() {
   return (

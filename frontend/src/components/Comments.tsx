@@ -4,28 +4,27 @@ import img2 from "../assets/homme1.jpg";
 import img3 from "../assets/homme2.jpg";
 import img from "../assets/avatar_base.jpg";
 
-export default function Commentaires() { 
-    
 type profile = {
         id: number;
         name: string;
         avatarUrl: string | typeof img;
     };
 
-type Commentaire = {
+type Comment = {
         id: number;
         profile: profile | null;
         text: string;
         date: string;
     };
 
+export default function Comments() {
 
 const [profile] = useState<profile | null>({
     id: 0,
     name: "Anonyme",
     avatarUrl: img
 });
-const [commentaire, setCommentaire] = useState<Commentaire[]>([
+const [comments, setComments] = useState<Comment[]>([
     { id: 1, profile: {
         id: 1,
         name: "John Doe",
@@ -47,10 +46,10 @@ const [commentaire, setCommentaire] = useState<Commentaire[]>([
 
     const handleAddComment = () => {
         if (newComment.trim() !== "") {
-            setCommentaire([
-                ...commentaire,
+            setComments([
+                ...comments,
                 {
-                    id: commentaire.length + 1,
+                    id: comments.length + 1,
                     profile: profile ? profile : { id: 0, name: "Anonyme", avatarUrl: img },
                     text: newComment,
                     date: new Date().toISOString().split("T")[0],
@@ -61,11 +60,11 @@ const [commentaire, setCommentaire] = useState<Commentaire[]>([
     };
 
     return (      
-        <div className="p-8 commentaire-container col-start-1 col-end-7 bg-wild-grey rounded-lg shadow-md">
-            <h1 className="commentaire-title mb-6" style={{ color: "#0034AE" }}>Commentaires</h1>
+        <div className="p-8 m-50 col-start-1 col-end-7 bg-wild-grey rounded-lg shadow-md">
+            <h2 className=" mb-6 bg-wild-blue text-white p-2 rounded-lg">
+                Commentaires</h2>
             <textarea
-                className="mb-4 w-full h-15 border rounded-lg p-2"
-                style={{ color: "bg-wild-text-grey" }}
+                className="mb-4 w-full h-15 border bg-wild-grey rounded-lg p-2"
                 placeholder="écrivez votre commentaire ici..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
@@ -74,9 +73,9 @@ const [commentaire, setCommentaire] = useState<Commentaire[]>([
                 className="mb-4 px-4 py-2 bg-wild-blue text-white rounded-lg"
                 onClick={handleAddComment}
             >
-                Ajouter un commentaire
+            <ul> Ajouter un commentaire</ul>
             </button>
-                {commentaire.map((c) => (
+                {comments.map((c) => (
                     <li key={c.id} className="mb-2 p-2 border-b flex items-center">
                         {c.profile && (
                             <img

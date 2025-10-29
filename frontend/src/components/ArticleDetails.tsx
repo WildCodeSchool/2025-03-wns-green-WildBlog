@@ -1,17 +1,16 @@
 import img from "../assets/image_IT.jpg";
-import Commentaires from "./Commentaires";
+// import Commentaires from "./Commentaires";
 
 
 
-export default function Articles() {    
+export default function ArticleDetails() {    
     return (      
-    <div className="article-container flex:auto flex-col items-center p-20 max-w-800 md:auto">
-    <h1 className="article-title text-center bg:wild-blue mb-10" >L’IA : entre révolution technologique et défi humain</h1>
-        <img className="article-image block mx-auto w-full max-w-300 h-200 mb-20 rounded-lg shadow-lg object-cover"
+    <div className="article-container flex:auto flex-col items-center m-10 p-20 max-w-800 md:auto">
+        <img className="article-image block mx-auto w-200 max-w-300 h-200 mb-10 rounded-lg shadow-lg object-cover"
              src={img} 
              alt="IA" />
-    <div/>
-        <p className="article-text text-justify text-1.6 mt-20" >
+        <p className="article-title text-start bg:wild-blue mb-10" >L’IA : entre révolution technologique et défi humain</p>
+        <p className="article-text text-start mb-10 " >
            Paris, 2025 – Longtemps cantonnée aux laboratoires de recherche et aux récits de science-fiction, l’intelligence artificielle (IA) est désormais partout : dans nos téléphones, nos voitures, nos hôpitaux, et même nos foyers.
                          Elle façonne une nouvelle ère, pleine de promesses… mais aussi de questions. Une révolution silencieuse mais omniprésente.
                          Que l’on demande à son assistant vocal de régler le chauffage, qu’un médecin analyse un scanner avec l’aide d’un algorithme, ou qu’un agriculteur optimise l’irrigation de ses champs grâce à des capteurs connectés, l’IA agit déjà en coulisses. Elle apprend, prédit, recommande.
@@ -40,7 +39,7 @@ export default function Articles() {
 
                         La clé semble résider dans un équilibre : faire de l’IA un outil, et non une fin. L’avenir de l’intelligence artificielle sera celui que l’humanité choisira de lui donner.
         </p>
-         <Commentaires/>
+         {/* <Commentaires/> */}
     </div>
 );
 

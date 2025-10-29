@@ -1,4 +1,4 @@
-import Commentaires from "../components/Commentaires";
+import Commentaires from "../components/Comments";
 
 export default function Commentaire() {
   return (

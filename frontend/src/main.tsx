@@ -4,7 +4,8 @@ import './App.css'
 import App from './App.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import StyleGuide from './pages/StyleGuide.tsx'
-import Article from './pages/Article.tsx'
+import ArticlePage from './pages/ArticlePage.tsx'
+import BlogUser from './components/BlogListCategoryAndTag.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode> 
@@ -12,7 +13,8 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={ <App /> } />
         <Route path="/style-guide" element={<StyleGuide />} />
-        <Route path="/article" element={<Article />} />
+        <Route path="/article/:id" element={<ArticlePage />} />
+        <Route path="/blogUser" element={ <BlogUser /> } />
       </Routes>
     </BrowserRouter>
   </StrictMode>
