@@ -15,7 +15,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
 import { Profile } from './pages/admin/Profile.tsx';
 import { GuestRoute } from './routes/GuestRoute.tsx';
 import { AuthProvider } from './contexts/AuthProvider.tsx';
-
+import BlogList from './pages/blog/BlogList.tsx'
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -48,6 +48,7 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
+            <Route path="/blog" element={<BlogList />} />
 
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />} />
