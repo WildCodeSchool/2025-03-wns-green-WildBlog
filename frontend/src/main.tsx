@@ -7,13 +7,14 @@ import Login from './pages/Login.tsx';
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 
 import { ApolloProvider } from "@apollo/client/react";
-import { Home } from './pages/Home.tsx';
+import { Dashboard } from './pages/admin/Dashboard.tsx';
 import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
 import { ApolloLink } from '@apollo/client';
-
-import { UserProvider } from './contexts/UserContext.tsx';
+import { AUTH_TOKEN } from './constants.tsx';
 import { ProtectedRoute } from './routes/ProtectedRoutes.tsx';
+
+
 
 
 
@@ -22,7 +23,7 @@ const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
 
 // Lien custom pour ajouter le token
 const authLink = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem(AUTH_TOKEN);
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
@@ -44,25 +45,20 @@ const client = new ApolloClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <UserProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/home" element={<Home />} /> */}
 
-
-            <Route path="/home" element={
-              <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
+            <Route path="/admin" element=
+              {<ProtectedRoute>
+                {<Dashboard/>}
+              </ProtectedRoute>} 
             />
           </Routes>
         </BrowserRouter>
-      </UserProvider>
     </ApolloProvider>
   </StrictMode>
 );

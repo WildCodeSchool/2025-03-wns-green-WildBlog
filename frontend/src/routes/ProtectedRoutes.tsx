@@ -1,17 +1,23 @@
-import type { ReactNode } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../contexts/UserContext";
+import { AUTH_TOKEN } from "../constants";
 
 interface ProtectedRouteProps {
-  children: ReactNode;
+  children: React.ReactNode;
   redirectPath?: string;
 }
 
-export const ProtectedRoute = ({ children, redirectPath = "/login" }: ProtectedRouteProps) => {
-  const { user, loading } = useUser();
+export const ProtectedRoute = ({
+  children,
+  redirectPath = "/login",
+}: ProtectedRouteProps) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
 
-  if (loading) return <p>Loading...</p>; 
-  if (!user) return <Navigate to={redirectPath} replace />;
+  if (!token) {
+    // Pas de token : redirection vers login
+    return <Navigate to={redirectPath} replace />;
+  }
 
+  // Token existant : on rend le composant enfant
   return <>{children}</>;
 };

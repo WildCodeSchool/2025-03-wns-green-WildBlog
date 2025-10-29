@@ -3,6 +3,7 @@ import Authnavbar from "../components/Authnavbar";
 import { LOGIN } from "../gql/auth/login";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client/react";
+import { AUTH_TOKEN } from "../constants";
 
 // Typage du résultat de la mutation
 interface LoginData {
@@ -29,8 +30,8 @@ function Login() {
     LOGIN,
     {
       onCompleted: (data) => {
-        localStorage.setItem("token", data.Login); // stocke le token dans localStorage
-        navigate("/home");  // redirige vers la page d'accueil
+        localStorage.setItem(AUTH_TOKEN, data.Login); // stocke le token dans localStorage
+        navigate("/admin");  // redirige vers la page d'accueil du Dashboard
       },
     }
   );

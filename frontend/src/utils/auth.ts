@@ -1,3 +1,5 @@
+import { AUTH_TOKEN } from "../constants";
+
 export const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem(AUTH_TOKEN);
 };

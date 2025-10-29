@@ -1,19 +1,11 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../utils/auth";
+import { logout } from "../../utils/auth";
 import { useQuery } from "@apollo/client/react";
-import { CURRENT_USER } from "../gql/auth/context";
-import type { UserData } from "../types/UserData";
+import { CURRENT_USER } from "../../gql/auth/context";
+import type { UserData } from "../../types/UserData";
 
-export function Home() {
+export function Dashboard() {
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate]);
 
   const handleLogout = () => {
     logout();
