@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './App.css';
 import App from './App.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login.tsx';
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 
@@ -12,7 +12,7 @@ import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
 import { ApolloLink } from '@apollo/client';
 import { AUTH_TOKEN } from './constants.tsx';
-import { ProtectedRoute } from './routes/ProtectedRoutes.tsx';
+import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
 
 
 
@@ -52,11 +52,10 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/admin" element=
-              {<ProtectedRoute>
-                {<Dashboard/>}
-              </ProtectedRoute>} 
-            />
+            <Route path="/admin" element={<ProtectedRoute />}> 
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Route>
           </Routes>
         </BrowserRouter>
     </ApolloProvider>
