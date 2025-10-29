@@ -13,6 +13,7 @@ import DesignSystem from './pages/DesignSystem.tsx';
 import { ApolloLink } from '@apollo/client';
 import { AUTH_TOKEN } from './constants.tsx';
 import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
+import { AuthProvider } from './contexts/UserContext.tsx';
 
 
 
@@ -45,6 +46,7 @@ const client = new ApolloClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
+      <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} />
@@ -58,6 +60,7 @@ createRoot(document.getElementById('root')!).render(
             </Route>
           </Routes>
         </BrowserRouter>
+      </AuthProvider>
     </ApolloProvider>
   </StrictMode>
 );
