@@ -9,6 +9,7 @@ export const ProtectedRoute = () => {
     return <Navigate to="/login" replace />;
   }
 
-  // Outlet rend toutes les routes enfants
   return <Outlet />;
 };
+
+

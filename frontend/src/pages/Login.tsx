@@ -2,20 +2,25 @@ import React from "react";
 import Authnavbar from "../components/Authnavbar";
 import { LOGIN } from "../gql/auth/login";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client/react";
+import { useApolloClient, useMutation } from "@apollo/client/react";
 import { AUTH_TOKEN } from "../constants";
+import { CURRENT_USER } from "../gql/auth/context";
+import type { UserData } from "../types/UserData";
+import { useAuth } from "../hooks/useAuth";
 
-// Typage du résultat de la mutation
 interface LoginData {
   Login: string; // le token renvoyé par le backend
 }
 
-// Typage des variables envoyées à la mutation
 interface LoginVariables {
   data: {
     email: string;
     password: string;
   };
+}
+
+interface CurrentUserData {
+  currentUser: UserData;
 }
 
 function Login() {
@@ -26,16 +31,9 @@ function Login() {
   });
 
   const navigate = useNavigate();
-
-  const [login, { loading, error }] = useMutation<LoginData, LoginVariables>(
-    LOGIN,
-    {
-      onCompleted: (data) => {
-        localStorage.setItem(AUTH_TOKEN, data.Login); // stocke le token dans localStorage
-        navigate("/admin");  // redirige vers la page d'accueil du Dashboard
-      },
-    }
-  );
+  const client = useApolloClient();
+  const { setUser } = useAuth();
+  const [login, { loading, error }] = useMutation<LoginData, LoginVariables>(LOGIN);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -46,8 +44,24 @@ function Login() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     try {
-      await login({ variables: { data: formData } });
+      const { data } = await login({ variables: { data: formData } });
+      if (!data?.Login) return;
+
+      localStorage.setItem(AUTH_TOKEN, data.Login);
+
+      // Refetch CURRENT_USER après que le token soit dans le localStorage
+      const { data: userData } = await client.query<CurrentUserData>({
+        query: CURRENT_USER,
+        fetchPolicy: "network-only", //pour forcer le refetch depuis le serveur, pas depuis le cache d'Apollo
+      });
+
+      if (userData?.currentUser) {
+        setUser(userData.currentUser);
+      }
+      navigate("/admin");
+
     } catch (err) {
       console.error("Login error:", err);
     }

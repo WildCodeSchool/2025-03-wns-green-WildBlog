@@ -1,36 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
-import { useQuery } from "@apollo/client/react";
-import { CURRENT_USER } from "../../gql/auth/context";
-import type { UserData } from "../../types/UserData";
-import { useAuth } from "../../contexts/UserContext";
+import { useApolloClient } from "@apollo/client/react"; 
+import { useAuth } from "../../hooks/useAuth";
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
+  const client = useApolloClient();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    logout(setUser, client);
+    navigate("/login", { replace: true });
   };
-
-  const auth = useAuth();
-
-  if (!auth) return null; 
-
-  const { user, loading, error } = auth;
-
-  if (loading) return <p>Loading user...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  
-  // const { data, loading, error } = useQuery<{ currentUser: UserData }>(CURRENT_USER);
-
-  // if (loading) return <p>Loading user...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
-
-  // const user = data?.currentUser;
-
-  console.log(user);
 
   return (
     <>

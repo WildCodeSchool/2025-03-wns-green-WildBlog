@@ -13,10 +13,9 @@ import DesignSystem from './pages/DesignSystem.tsx';
 import { ApolloLink } from '@apollo/client';
 import { AUTH_TOKEN } from './constants.tsx';
 import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
-import { AuthProvider } from './contexts/UserContext.tsx';
-
-
-
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import { Profile } from './pages/admin/Profile.tsx';
+import { GuestRoute } from './routes/GuestRoute.tsx';
 
 
 // Lien terminal qui envoie la requête au serveur
@@ -42,7 +41,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
@@ -51,13 +49,20 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} /> */}
+
+            <Route element={<GuestRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
 
             <Route path="/admin" element={<ProtectedRoute />}> 
               <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
+
           </Routes>
         </BrowserRouter>
       </AuthProvider>
