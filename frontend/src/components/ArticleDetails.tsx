@@ -1,4 +1,5 @@
 import img from "../assets/image_IT.jpg";
+import Comments from "./Comments.tsx";
 
 export default function ArticleDetails() {    
 
@@ -7,7 +8,7 @@ export default function ArticleDetails() {
             <img className="article-image block mx-auto w-150 max-w-200 h-150 mb-10 rounded-lg shadow-lg "
                 src={img}
                 alt="IA" />
-            <p className="article-title text-start bg:wild-blue mb-10" >L’IA : entre révolution technologique et défi humain</p>
+            <h2>L’IA : entre révolution technologique et défi humain</h2>
             <p className="article-text text-start mb-10 " >
                 Paris, 2025 – Longtemps cantonnée aux laboratoires de recherche et aux récits de science-fiction, l’intelligence artificielle (IA) est désormais partout : dans nos téléphones, nos voitures, nos hôpitaux, et même nos foyers.
                 Elle façonne une nouvelle ère, pleine de promesses… mais aussi de questions. Une révolution silencieuse mais omniprésente.
@@ -23,6 +24,7 @@ export default function ArticleDetails() {
                 Si certains redoutent une perte de contrôle, d’autres voient dans l’IA un formidable levier de progrès : réduction de la consommation énergétique, médecine personnalisée, transports plus sûrs et plus fluides…
                 La clé semble résider dans un équilibre : faire de l’IA un outil, et non une fin. L’avenir de l’intelligence artificielle sera celui que l’humanité choisira de lui donner.
             </p>
+            <Comments />
         </div>
     );
 

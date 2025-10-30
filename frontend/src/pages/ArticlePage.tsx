@@ -1,5 +1,6 @@
 import Articles from "../components/ArticleDetails";
 
+
 export default function Article() {
   return (
     <div className="article-container p-6">

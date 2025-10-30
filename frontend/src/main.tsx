@@ -9,15 +9,15 @@ import { ApolloProvider } from "@apollo/client/react";
 import { Dashboard } from './pages/admin/Dashboard.tsx';
 import Signup from './pages/Signup.tsx';
 import DesignSystem from './pages/DesignSystem.tsx';
-import { ApolloLink } from '@apollo/client';
+import { ApolloLink } from "@apollo/client/core";
 import { AUTH_TOKEN } from './constants.tsx';
 import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
 import { Profile } from './pages/admin/Profile.tsx';
 import { GuestRoute } from './routes/GuestRoute.tsx';
 import { AuthProvider } from './contexts/AuthProvider.tsx';
 import BlogList from './pages/blog/BlogList.tsx'
-import Article from './pages/Article.tsx'
 import ArticlePage from './pages/ArticlePage.tsx'
+import Article from './pages/ArticlePage.tsx';
 
 
 // Lien terminal qui envoie la requête au serveur
