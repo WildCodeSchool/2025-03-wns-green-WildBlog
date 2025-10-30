@@ -1,6 +1,6 @@
 // import { useState, useEffect } from "react";
 import img from "../assets/image_IT.jpg";
-// import Commentaires from "./Commentaires";
+// import Comments from "./Comments";
 
 
 export default function ArticleDetails() {    
@@ -64,7 +64,7 @@ export default function ArticleDetails() {
 
                         La clé semble résider dans un équilibre : faire de l’IA un outil, et non une fin. L’avenir de l’intelligence artificielle sera celui que l’humanité choisira de lui donner.
         </p>
-         {/* <Commentaires/> */}
+         {/* <Comments/> */}
     </div>
 );
 
