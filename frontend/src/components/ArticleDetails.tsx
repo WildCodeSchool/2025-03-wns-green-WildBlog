@@ -18,7 +18,7 @@ export default function ArticleDetails() {
 //     setArticle({
 //         id: parseInt(id || ""),
 //         title: data.title,
-//         content:data.content,
+//         content: data.content,
 //         imageUrl: img,
 //     });
 // }, [id]);
