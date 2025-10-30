@@ -94,9 +94,10 @@ function Login() {
                 <label htmlFor="password" className="block text-wild-text-grey font-medium text-sm">
                 Mot de passe
                 </label>
-                <div className="text-sm">
+                {/* FIXME : Mot de passe oublié à mettre en place */}
+                {/* <div className="text-sm">
                   <a href="#" className="block text-wild-text-grey font-medium text-sm">Mot de passe oublié ?</a>
-              </div>
+              </div> */}
             </div>
           
             <div className="mt-2">
