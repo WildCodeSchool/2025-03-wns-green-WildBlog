@@ -1,15 +1,40 @@
+// import { useState, useEffect } from "react";
 import img from "../assets/image_IT.jpg";
 // import Commentaires from "./Commentaires";
 
 
-
 export default function ArticleDetails() {    
+//     type Article = {
+//         id: number;
+//         title: string;
+//         content: string;
+//         imageUrl: string;
+//     };
+//  const { id } = useParams<{ id: string }>();
+//  const [article, setArticle] = useState<Article | null>(null);
+
+//  useEffect(() => {
+
+//     setArticle({
+//         id: parseInt(id || ""),
+//         title: data.title,
+//         content:data.content,
+//         imageUrl: img,
+//     });
+// }, [id]);
+// if (!article) {
+//     return <div>Pas d'article trouvé!</div>;
+// }
+
     return (      
     <div className="article-container flex:auto flex-col items-center m-10 p-20 max-w-800 md:auto">
         <img className="article-image block mx-auto w-200 max-w-300 h-200 mb-10 rounded-lg shadow-lg object-cover"
-             src={img} 
+        src={img}
+            //  src={article.imageUrl} 
              alt="IA" />
+        {/* <p className="article-title text-start bg:wild-blue mb-10" >{article.title}</p> */}
         <p className="article-title text-start bg:wild-blue mb-10" >L’IA : entre révolution technologique et défi humain</p>
+        {/* <p className="article-text text-start mb-10 " >{article.content} */}
         <p className="article-text text-start mb-10 " >
            Paris, 2025 – Longtemps cantonnée aux laboratoires de recherche et aux récits de science-fiction, l’intelligence artificielle (IA) est désormais partout : dans nos téléphones, nos voitures, nos hôpitaux, et même nos foyers.
                          Elle façonne une nouvelle ère, pleine de promesses… mais aussi de questions. Une révolution silencieuse mais omniprésente.
