@@ -18,7 +18,7 @@ export default function ArticleDetails() {
 //     setArticle({
 //         id: parseInt(id || ""),
 //         title: data.title,
-//         content: data.content,
+//         content:,
 //         imageUrl: img,
 //     });
 // }, [id]);
@@ -27,8 +27,8 @@ export default function ArticleDetails() {
 // }
 
     return (      
-    <div className="article-container flex:auto flex-col items-center m-10 p-20 max-w-800 md:auto">
-        <img className="article-image block mx-auto w-200 max-w-300 h-200 mb-10 rounded-lg shadow-lg object-cover"
+    <div className="article-container flex:auto flex-col m-10 p-20 max-w-700 md:auto">
+        <img className="article-image block mx-auto w-150 max-w-200 h-150 mb-10 rounded-lg shadow-lg "
         src={img}
             //  src={article.imageUrl} 
              alt="IA" />
