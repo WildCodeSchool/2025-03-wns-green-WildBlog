@@ -23,8 +23,14 @@ function App() {
       <Link to="/article" className="text-blue-600 underline mt-4 block">
         Article
       </Link>    
-    </div>
-  );
+      <Link to="/article" className="text-blue-600 underline mt-4 block">
+        Article
+      </Link>    
+      <Link to="/blogUser" className="text-blue-600 underline mt-4 block">
+        Blog
+      </Link>  
+    </>
+  )
 }
 
 export default App;
