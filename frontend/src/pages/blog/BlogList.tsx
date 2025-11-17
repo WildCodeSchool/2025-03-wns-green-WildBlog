@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "../../components/blog/ArticleCard";
+import { useParams } from "react-router-dom";
 
-export default function BlogList() {
-  const [visibleCount, setVisibleCount] = useState(6);
+interface ArticleCards {
+    id: number;
+    title: string;
+    image: string;
+    content: string;
+    author: string;
+    date: string;
+    category: string;
+}
 
-const articles = [
+const articles: ArticleCards[] = [
   {
     id: 1,
     title: "Les secrets du développement durable",
@@ -17,10 +25,10 @@ const articles = [
   },
   {
     id: 2,
-    title: "L’intelligence artificielle dans le quotidien",
+    title: "L'intelligence artificielle dans le quotidien",
     image: "https://picsum.photos/600/400?random=2",
     content:
-      "Comment l’IA transforme nos habitudes et nos outils du quotidien.",
+      "Comment l'IA transforme nos habitudes et nos outils du quotidien.",
     author: "Alexandre Morel",
     date: "2025-10-20",
     category: "Technologie",
@@ -39,7 +47,7 @@ const articles = [
     title: "Le design éthique et responsable",
     image: "https://picsum.photos/600/400?random=4",
     content:
-      "Comment penser le design en respectant l’environnement et les utilisateurs.",
+      "Comment penser le design en respectant l'environnement et les utilisateurs.",
     author: "Léo Bernard",
     date: "2025-10-10",
     category: "Design",
@@ -56,17 +64,27 @@ const articles = [
   },
   {
     id: 6,
-    title: "L’économie circulaire : un modèle d’avenir",
+    title: "L'économie circulaire : un modèle d'avenir",
     image: "https://picsum.photos/600/400?random=6",
     content:
-      "L’économie circulaire s’impose comme une alternative durable au modèle linéaire traditionnel.",
+      "L'économie circulaire s'impose comme une alternative durable au modèle linéaire traditionnel.",
     author: "Julien Caron",
     date: "2025-09-30",
     category: "Écologie",
   }
 ];
 
+export default function BlogList() {
+  const { id } = useParams<{ id: string }>();
+  const [listArticles, setListArticles] = useState<ArticleCards | null>(null);
+  const [visibleCount, setVisibleCount] = useState(6);
+
   useEffect(() => {
+    if (id) {
+      const foundArticle = articles.find(article => article.id === parseInt(id));
+      setListArticles(foundArticle || null);
+    }
+
     const handleScroll = () => {
       const bottom =
         window.innerHeight + window.scrollY >=
@@ -79,7 +97,7 @@ const articles = [
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [visibleCount, articles.length]);
+  }, [visibleCount, id]);
 
   return (
     <>
@@ -90,20 +108,18 @@ const articles = [
           <h1
             className="text-5xl font-extrabold text-gray-900 leading-tight"
           >
-            Hello, I’m Christophe
+            {listArticles?.title}
           </h1>
           <p
             className="text-gray-600 text-base leading-relaxed max-w-xl"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis viverra
+            {listArticles?.content}
           </p>
         </div>
-
         <div className="flex justify-center md:justify-end">
           <img
-            src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80"
-            alt="Blog hero"
+            src={listArticles?.image}
+            alt={listArticles?.title}
             className="object-cover w-[400px] h-[500px] rounded-none"
           />
         </div>

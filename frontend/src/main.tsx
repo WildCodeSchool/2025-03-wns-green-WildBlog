@@ -52,6 +52,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
             <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:id" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
