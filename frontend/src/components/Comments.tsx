@@ -17,6 +17,11 @@ type Comment = {
         date: string;
     };
 
+// interface CommentsProps {
+//     articleId: number;
+// }
+
+// export default function Comments({ articleId }: CommentsProps) {
 export default function Comments() {
 
 const [profile] = useState<profile | null>({
@@ -60,7 +65,7 @@ const [comments, setComments] = useState<Comment[]>([
     };
 
     return (      
-        <div className="p-8 m-50 col-start-1 col-end-7 bg-wild-grey rounded-lg shadow-md">
+        <div className="flex flex-col m-10 p-20 max-w-[800px] mx-auto bg-wild-grey rounded-lg shadow-md">
             <h2 className=" mb-6 bg-wild-blue text-white p-2 rounded-lg">
                 Commentaires</h2>
             <textarea

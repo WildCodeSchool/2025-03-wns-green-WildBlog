@@ -1,10 +1,9 @@
-import Articles from "../components/ArticleDetails";
+import ArticleDetails from "../components/ArticleDetails";
 
 export default function Article() {
   return (
-    <div className="article-container p-6">
-      <h1 className="article-title">Article</h1>
-      <Articles />
+    <div className="min-h-screen">
+      <ArticleDetails />
     </div>
   );
 }
