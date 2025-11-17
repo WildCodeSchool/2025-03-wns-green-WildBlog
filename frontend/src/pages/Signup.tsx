@@ -4,7 +4,6 @@ import { useMutation } from "@apollo/client/react";
 import { SIGNUP } from "../gql/auth/signup";
 import { useNavigate } from "react-router-dom";
 
-
 interface SignupData {
   signUp: {
     id: string;
@@ -163,7 +162,7 @@ function Signup() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full transition mt-4"
+              className="btn-global w-full transition mt-4"
             >
               {loading ? "Création en cours..." : "Créer mon compte"}
             </button>

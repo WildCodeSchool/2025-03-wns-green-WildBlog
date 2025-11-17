@@ -113,7 +113,7 @@ function Login() {
           </div>
   
           <div className="mt-7">
-              <button className=" w-full"
+              <button className="btn-global w-full"
                 type="submit" disabled={loading}>
                 Connexion
               </button>
