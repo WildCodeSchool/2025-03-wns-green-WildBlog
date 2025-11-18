@@ -25,7 +25,7 @@ export function DashboardSidebar() {
   const isActive = (path: string) => location.pathname.startsWith(path);
   const sidebarItemClass = "cursor-pointer active ";
   const activeClass = (path: string) => isActive(path) ? "sidebar-item-active" : "";
-
+  const openedLinkInDropDown = isActive("/admin/articles/mes-articles") || isActive("/admin/articles/creer");
 
   return (
       <Sidebar aria-label="Sidebar with multi-level dropdown example"
@@ -44,6 +44,7 @@ export function DashboardSidebar() {
               </Link>
             </SidebarItem>
               <SidebarCollapse 
+                open={openedLinkInDropDown}
                 icon={() => <HiOutlineNewspaper className="text-white" />}
                 label="Mes articles" 
                 className="text-sm text-white" >

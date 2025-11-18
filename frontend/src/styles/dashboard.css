@@ -46,7 +46,7 @@
 
 .btn-blog {
     padding: 0.8rem 1.3rem;
-    font-size: 13px;
+    font-size: 0.85rem;
     background-color: var(--color-wild-bg-light-blue);
     border: 1px solid var(--color-wild-blue);
     border-radius: 0.5rem;
@@ -88,3 +88,60 @@
     border-radius: 0.5rem;
     cursor: pointer;
 }
+
+/* Sidebar : desktop */
+.sidebar-wrapper {
+    width: 240px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: var(--color-wild-blue);
+    z-index: 100;
+  }
+  
+/* Sidebar : comportement responsive */
+  @media (max-width: 768px) {
+    .sidebar-wrapper {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: block;
+    }
+  
+    .sidebar-open .sidebar-wrapper {
+      transform: translateX(0);
+    }
+  
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 40;
+      display: none;
+    }
+  
+    .sidebar-open .sidebar-overlay {
+      display: block;
+    }
+  
+    .dashboard-navbar {
+      left: 0 !important;
+    }
+  
+    .dashboard-main {
+      margin-left: 0 !important;
+    }
+  
+    .toggle-hidden {
+      display: none !important;
+    }
+
+    .toggle-display {
+        display: block;
+    }
+
+    .btn-blog {
+        padding: 0.6rem 1rem;
+    }
+  }
+  

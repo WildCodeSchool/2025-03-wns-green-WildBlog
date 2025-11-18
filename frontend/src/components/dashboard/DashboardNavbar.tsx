@@ -13,14 +13,21 @@ import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 
-export function DashboardNavbar() {
+interface DashboardNavbarProps {
+  sidebarOpen: boolean;
+  onToggleSidebar: () => void;
+}
+
+export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavbarProps) {
 
   const { user } = useAuth();
 
   return (
     <Navbar className="bg-transparent px-4">
-      <NavbarToggle />
-
+      <div className={sidebarOpen ? "toggle-hidden" : ""}>
+        <NavbarToggle onClick={onToggleSidebar} />
+      </div>
+      
       <div className="ml-auto flex items-center gap-4">
         <a
           href="#"
@@ -40,7 +47,7 @@ export function DashboardNavbar() {
                 rounded
                 alt="utilisateur connecté"
               />
-              <span className="text-sm">{user?.firstName} { user?.lastName}</span>
+              <span className="hidden md:inline text-sm">{user?.firstName} { user?.lastName}</span>
               <HiChevronDown className="w-5 h-5 text-gray-500" />
             </div>
           }
