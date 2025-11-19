@@ -15,7 +15,7 @@ export function PostsTable({posts}: PostsTableProps) {
       <Table hoverable>
         <TableHead>
           <TableRow>
-            <TableHeadCell>Image</TableHeadCell>
+            <TableHeadCell>Image test</TableHeadCell>
             <TableHeadCell>Titre</TableHeadCell>
             <TableHeadCell>Auteur</TableHeadCell>
             <TableHeadCell>Créé le</TableHeadCell>

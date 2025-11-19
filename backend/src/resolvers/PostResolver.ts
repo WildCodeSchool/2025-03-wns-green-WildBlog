@@ -26,12 +26,6 @@ export class PostResolver {
             if (existing) {
               throw new Error("Un article existe déjà avec ce nom.");
             }
-        
-            // // FIXME: Remplacer ce fakeAuthor par l'utilisateur connecté quand on aura le contexte
-            // const fakeAuthor = await User.findOneBy({ id: 1 });
-            // if (!fakeAuthor) {
-            //   throw new Error("Auteur introuvable.");
-            // }
 
             const currentUser = await User.findOneBy({ id: ctx.currentUser.id });
             if (!currentUser) {

@@ -4,14 +4,12 @@
     font-weight: 400;
     font-size:0.7rem;
     letter-spacing: 0.02rem;
-    /* text-transform: lowercase; */
 }
 
 .badge-draft {
     background-color: var(--color-wild-grey);
     border: 1px solid var(--color-wild-border-grey);
     color: #828489;
-
 }
 
 .badge-scheduled {
