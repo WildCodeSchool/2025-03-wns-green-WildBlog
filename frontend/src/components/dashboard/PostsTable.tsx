@@ -2,7 +2,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import type { PostData } from "../../types/PostData";
 import { BagdesStatus } from "./BagdesStatus";
-import { DropDownButton } from "./DropDownButton";
+import { DropdownActionButton } from "./DropdownActionButton";
 
 interface PostsTableProps {
   posts: PostData[];
@@ -36,7 +36,7 @@ export function PostsTable({posts}: PostsTableProps) {
               <BagdesStatus statusLabel= {post.statusLabel}></BagdesStatus>
             </TableCell>
             <TableCell>
-              <DropDownButton/>
+              <DropdownActionButton/>
             </TableCell>
           </TableRow>
         ))}

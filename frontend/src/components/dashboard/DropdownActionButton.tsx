@@ -2,7 +2,7 @@
 import { Dropdown, DropdownItem } from "flowbite-react";
 import { HiOutlineClock, HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 
-export function DropDownButton() {
+export function DropdownActionButton() {
   return (
     <Dropdown label="Action" dismissOnClick={false}>
         <DropdownItem icon={HiOutlinePencil}>
