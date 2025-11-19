@@ -4,12 +4,12 @@ import type { IconType } from "react-icons";
 interface ButtonProps {
     label: string,
     icon?: IconType; 
-
+    onClick? : () => void
 }
 
-export function Button({ label, icon: Icon }: ButtonProps ) {
+export function Button({ label, icon: Icon, onClick }: ButtonProps ) {
     return (
-    <button className="btn-dashboard">
+    <button className="btn-dashboard" onClick={onClick}>
         <span className="btn-text">{label}</span>
         {Icon && (
             <span className="btn-icon">

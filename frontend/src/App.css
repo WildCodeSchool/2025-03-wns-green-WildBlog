@@ -5,6 +5,7 @@
 @import "./styles/dashboard.css";
 @import "./styles/status-badges.css";
 @import "./styles/dropdown-button.css";
+@import "./styles/tiptap.css";
   
 body{
   color: var(--color-wild-text-grey);

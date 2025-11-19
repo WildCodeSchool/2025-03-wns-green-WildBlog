@@ -6,4 +6,7 @@ import flowbiteReact from "flowbite-react/plugin/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), flowbiteReact()],
+  optimizeDeps: {
+    include: ['@tiptap/react', '@tiptap/starter-kit']
+  }
 })
