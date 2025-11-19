@@ -1,0 +1,5 @@
+[data-testid="flowbite-dropdown-target"] {
+    background-color: white;
+    border: 1px solid var(--color-wild-border-grey);
+    color: var(--color-wild-text-grey);
+}

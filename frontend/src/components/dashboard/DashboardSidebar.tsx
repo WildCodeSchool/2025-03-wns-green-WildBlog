@@ -35,6 +35,7 @@ export function DashboardSidebar() {
         <SidebarItems>
           <SidebarItemGroup>
             <SidebarItem 
+              onClick={() => navigate("/admin/dashboard")}
               icon={HiOutlineHome}
               active={isActive("/admin/dashboard")}
               className={`${sidebarItemClass} ${activeClass("/admin/dashboard")}`}

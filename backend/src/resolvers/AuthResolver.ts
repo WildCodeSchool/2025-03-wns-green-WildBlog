@@ -82,7 +82,9 @@ export class AuthResolver {
     }
 
     @Query(() => User)
-    async currentUser(@Ctx() ctx: Context): Promise<User> {
+    async currentUser(
+        @Ctx() ctx: Context
+    ): Promise<User> {
     if (!ctx.currentUser) {
         throw new Error("Utilisateur non connecté");
     }

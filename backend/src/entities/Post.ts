@@ -6,6 +6,13 @@ import { User } from "./User";
 import slugify from "slugify";
 import { Category } from "./Category";
 import { Tag } from "./Tag";
+import { PostStatus } from "../enums/PostStatus";
+import { registerEnumType } from "type-graphql";
+
+registerEnumType(PostStatus, {
+  name: "PostStatus",
+  description: "Statut de publication d'un article",
+});
 
 @Entity()
 @ObjectType()
@@ -38,11 +45,11 @@ export class Post extends BaseTimeEntity {
     coverImage: string;
 
     @Column({ type: "timestamp" , nullable: true})
-    @Field()
+    @Field({ nullable: true })
     publicationStartDate: Date;
 
     @Column({ type: "timestamp", nullable: true })
-    @Field()
+    @Field({ nullable: true })
     publicationEndDate: Date;
 
     @BeforeInsert()
@@ -56,5 +63,40 @@ export class Post extends BaseTimeEntity {
     @Field(() => [Tag])
     tags: Tag[]
 
+    @Column({
+      type:"enum",  
+      enum: PostStatus,
+      nullable : false, 
+      default: PostStatus.DRAFT })
+    @Field(() => PostStatus)
+    status: PostStatus
 
+    @BeforeInsert()
+    @BeforeUpdate()
+    updatePublicationStatus() {
+      const now = new Date();
+    
+      switch (true) { //on compare les conditions qui renvoient === true pour définir le statut
+        case !this.publicationStartDate:
+          this.status = PostStatus.DRAFT;
+          break;
+    
+        case this.publicationStartDate > now:
+          this.status = PostStatus.SCHEDULED;
+          break;
+    
+        case this.publicationEndDate && this.publicationEndDate < now:
+          this.status = PostStatus.FINISHED;
+          break;
+    
+        default:
+          this.status = PostStatus.PUBLISHED;
+          break;
+      }
+    }
+
+    @Field(() => String)
+    get statusLabel(): string {
+      return this.status // pour récupérer la value et non le case de l'enum
+    }
 }

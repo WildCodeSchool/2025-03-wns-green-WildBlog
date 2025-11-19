@@ -1,27 +1,41 @@
-import { Resolver, Mutation, Arg, Query } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, Ctx } from 'type-graphql';
 import { Post } from '../entities/Post';
 import { PostInput } from '../inputs/post/PostInput';
 import { User } from '../entities/User';
 import { Category } from '../entities/Category';
 import { Tag } from '../entities/Tag';
-import { In } from 'typeorm';
+import { FindOptionsWhere, In } from 'typeorm';
+import { Context } from 'vm';
 
 
 @Resolver(Post)
 export class PostResolver {
 
     @Mutation(() => Post)
-    async createPost(@Arg("data") data: PostInput): Promise<Post> {
+    async createPost(
+      @Ctx() ctx: Context,
+      @Arg("data") data: PostInput
+    ): Promise<Post> {
+
+      if(!ctx.currentUser) {
+        throw new Error("Utilisateur non connecté");
+      }
+
         try {
             const existing = await Post.findOneBy({ title: data.title });
             if (existing) {
               throw new Error("Un article existe déjà avec ce nom.");
             }
         
-            // FIXME: Remplacer ce fakeAuthor par l'utilisateur connecté quand on aura le contexte
-            const fakeAuthor = await User.findOneBy({ id: 1 });
-            if (!fakeAuthor) {
-              throw new Error("Auteur introuvable.");
+            // // FIXME: Remplacer ce fakeAuthor par l'utilisateur connecté quand on aura le contexte
+            // const fakeAuthor = await User.findOneBy({ id: 1 });
+            // if (!fakeAuthor) {
+            //   throw new Error("Auteur introuvable.");
+            // }
+
+            const currentUser = await User.findOneBy({ id: ctx.currentUser.id });
+            if (!currentUser) {
+              throw new Error("Auteur introuvable");
             }
 
             const category = await Category.findOneBy({ id: data.categoryId });
@@ -33,7 +47,7 @@ export class PostResolver {
 
             const post = Post.create({
               ...data,
-              author: fakeAuthor,
+              author: currentUser,
               category: category,
               tags:tags
             });
@@ -78,22 +92,29 @@ export class PostResolver {
 
     @Query(()=> [Post])
     async getPosts(
+      @Ctx() ctx: Context, 
       @Arg("skip", { defaultValue: 0 }) skip: number,
       @Arg("take", { defaultValue: 20 }) take: number,
       @Arg("categoryId", { nullable: true }) categoryId?: number, 
-      )
+    )
     { 
-        const where = categoryId ? { category: { id: categoryId } } : {};
+      if(!ctx.currentUser) {
+        throw new Error("Utilisateur non connecté");
+      }
+      const where: FindOptionsWhere<Post> = {};
 
-        const posts = await Post.find({
-            skip,
-            take,
-            where,
-            order: { createdAt: "DESC" },
-            relations: ["author", "category", "tags"]
-        });
-        return posts;
+      where.author = { id: ctx.currentUser.id };
+      if (categoryId) {
+        where.category = { id: categoryId };
+      }
+
+      const posts = await Post.find({
+        skip,
+        take,
+        where,
+        order: { createdAt: "DESC" },
+        relations: ["author", "category", "tags"]
+      });
+      return posts;
     }
-
-
 }

@@ -21,7 +21,6 @@ interface DashboardNavbarProps {
 export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavbarProps) {
 
   const { user } = useAuth();
-
   return (
     <Navbar className="bg-transparent px-4">
       <div className={sidebarOpen ? "toggle-hidden" : ""}>

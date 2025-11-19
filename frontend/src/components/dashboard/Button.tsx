@@ -1,16 +1,21 @@
-import type { ReactNode } from "react";
+import type { IconType } from "react-icons";
+
 
 interface ButtonProps {
     label: string,
-    icon?: ReactNode; 
+    icon?: IconType; 
 
 }
 
-export function Button({ label, icon }: ButtonProps ) {
+export function Button({ label, icon: Icon }: ButtonProps ) {
     return (
     <button className="btn-dashboard">
         <span className="btn-text">{label}</span>
-        {icon && <span className="btn-icon">{icon}</span>}
+        {Icon && (
+            <span className="btn-icon">
+                <Icon className="w-5 h-5" />
+            </span>
+        )}    
     </button>
     );
 }

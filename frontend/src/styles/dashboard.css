@@ -1,8 +1,8 @@
 .btn-dashboard {
-    padding: 1rem 1.6rem;
+    padding: 0.8rem 1.4rem;
     background-color: var(--color-wild-text-grey);
     color: #FFFFFF;
-    font-size: 13px;
+    font-size: 0.8rem;
     border-radius: 7px;
     border: none;
     cursor:pointer;

@@ -3,6 +3,8 @@
 @import "./styles/theme.css";
 @import "./styles/typo.css";
 @import "./styles/dashboard.css";
+@import "./styles/status-badges.css";
+@import "./styles/dropdown-button.css";
   
 body{
   color: var(--color-wild-text-grey);
