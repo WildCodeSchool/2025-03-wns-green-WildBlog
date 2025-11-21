@@ -6,7 +6,7 @@ import { BiCategory } from "react-icons/bi";
 import { HiOutlineChartPie, HiOutlineCog, HiOutlineHome, HiOutlineLogout, HiOutlineNewspaper, HiOutlineTag, HiOutlineUser} from "react-icons/hi";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 import { MdOutlineImage } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
 import { useApolloClient } from "@apollo/client/react";
 import { useAuth } from "../../hooks/useAuth";
@@ -14,6 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 export function DashboardSidebar() {
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
   const client = useApolloClient();
 
@@ -40,9 +41,7 @@ export function DashboardSidebar() {
               active={isActive("/admin/dashboard")}
               className={`${sidebarItemClass} ${activeClass("/admin/dashboard")}`}
               >
-              <Link to="/admin/dashboard">
-                Tableau de bord
-              </Link>
+              Tableau de bord
             </SidebarItem>
               <SidebarCollapse 
                 open={openedLinkInDropDown}
@@ -52,82 +51,73 @@ export function DashboardSidebar() {
               <SidebarItem  
                 active={isActive("/admin/articles/mes-articles")}
                 className={`${sidebarItemClass} ${activeClass("/admin/articles/mes-articles")}`}
+                onClick={() => navigate("/admin/articles/mes-articles")}
                 >
-                <Link to="/admin/articles/mes-articles">
                   Tous mes articles
-                </Link>              
               </SidebarItem>
               <SidebarItem 
                 active={isActive("/admin/articles/creer")}
                 className={`${sidebarItemClass} ${activeClass("/admin/articles/creer")}`}
+                onClick={() => navigate("/admin/articles/creer")}
                 >
-                <Link to="/admin/articles/creer">
                   Créer un article
-                </Link>                 
               </SidebarItem>
             </SidebarCollapse>
             <SidebarItem 
               icon={BiCategory }
               active={isActive("/admin/categories")}
               className={`${sidebarItemClass} ${activeClass("/admin/categories")}`}
+              onClick={() => navigate("/admin/categories")}
             >
-              <Link to="/admin/categories">
                 Catégories
-              </Link>            
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineTag}
               active={isActive("/admin/tags")}
               className={`${sidebarItemClass} ${activeClass("/admin/tags")}`}
+              onClick={() => navigate("/admin/tags")}             
               >
-              <Link to="/admin/tags">
                 Tags
-              </Link>              
             </SidebarItem>
             <SidebarItem 
               icon={MdOutlineImage}
               active={isActive("/admin/medias")}
               className={`${sidebarItemClass} ${activeClass("/admin/medias")}`}
+              onClick={() => navigate("/admin/medias")}             
               >
-              <Link to="/admin/medias">
                 Médias
-              </Link>           
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineChatBubbleOvalLeftEllipsis}
               active={isActive("/admin/commentaires")}
               className={`${sidebarItemClass} ${activeClass("/admin/commentaires")}`}
+              onClick={() => navigate("/admin/commentaires")}             
               >
-              <Link to="/admin/commentaires">
                 Commentaires
-              </Link> 
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineCog}
               active={isActive("/admin/parametres")}
               className={`${sidebarItemClass} ${activeClass("/admin/parametres")}`}
+              onClick={() => navigate("/admin/parametres")}             
               >
-              <Link to="/admin/parametres">
                 Paramètres
-              </Link>            
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineChartPie}
               active={isActive("/admin/statistiques")}
               className={`${sidebarItemClass} ${activeClass("/admin/statistiques")}`}
+              onClick={() => navigate("/admin/statistiques")}             
               >
-              <Link to="/admin/statistiques">
                 Statistiques
-              </Link>           
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineUser}
               active={isActive("/admin/profil")}
               className={`${sidebarItemClass} ${activeClass("/admin/profil")}`}
+              onClick={() => navigate("/admin/profil")}             
               >
-              <Link to="/admin/profil">
                 Profil
-              </Link>          
             </SidebarItem>
             <SidebarItem 
               icon={HiOutlineLogout}>

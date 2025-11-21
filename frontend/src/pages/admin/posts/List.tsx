@@ -19,8 +19,8 @@ export function List() {
     const postsCount = posts.length;
     const publishedCount = posts.filter((post:PostData) => post.status === "PUBLISHED").length;
 
-    console.log("Nombre de posts :", posts.length);
-    console.log(posts)
+    // console.log("Nombre de posts :", posts.length);
+    // console.log(posts)
 
     return (
         <DashboardLayout>

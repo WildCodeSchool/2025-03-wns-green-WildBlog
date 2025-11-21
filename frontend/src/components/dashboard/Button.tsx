@@ -2,14 +2,22 @@ import type { IconType } from "react-icons";
 
 
 interface ButtonProps {
+    type?: "button" | "submit" | "reset"; 
     label: string,
     icon?: IconType; 
     onClick? : () => void
+    className?: string
+    disabled?: boolean
 }
 
-export function Button({ label, icon: Icon, onClick }: ButtonProps ) {
+export function Button({  type = "button", label, icon: Icon, onClick, className='bg-wild-text-grey', disabled }: ButtonProps ) {
     return (
-    <button className="btn-dashboard" onClick={onClick}>
+    <button 
+        type={type}  
+        className={`btn-dashboard ${className} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}  
+        onClick={onClick}
+        disabled={disabled}
+        >
         <span className="btn-text">{label}</span>
         {Icon && (
             <span className="btn-icon">

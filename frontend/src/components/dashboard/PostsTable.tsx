@@ -3,6 +3,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import type { PostData } from "../../types/PostData";
 import { BagdesStatus } from "./BagdesStatus";
 import { DropdownActionButton } from "./DropdownActionButton";
+import { useState } from "react";
+import { ConfirmModal } from "./ConfirmModal";
+import { useMutation } from "@apollo/client/react";
+import { DELETE_POST } from "../../gql/posts/deletePost";
 
 interface PostsTableProps {
   posts: PostData[];
@@ -10,7 +14,34 @@ interface PostsTableProps {
 
 export function PostsTable({posts}: PostsTableProps) {
 
+  const[postsList, setPostList] = useState(posts);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
+
+  const [deletePost] = useMutation(DELETE_POST);
+
+  const openTheModal = (selectedPost: PostData) => {
+    setOpenModal(true);
+    console.log(selectedPost)
+    setSelectedPost(selectedPost)
+  }
+
+  const handleDelete = async (selectedPostId: number) => {
+    try {
+      await deletePost({variables: {
+        id:selectedPostId
+      }});
+      console.log("post supprimé");
+      setOpenModal(false);
+      setSelectedPost(null);
+      setPostList(posts.filter(post => Number(post.id) !== selectedPostId));
+    } catch(error) {
+        console.error("Erreur lors de la suppression :", error);
+    }
+  }
+
   return (
+    <>
     <div className="overflow-x-auto">
       <Table hoverable>
         <TableHead>
@@ -24,7 +55,8 @@ export function PostsTable({posts}: PostsTableProps) {
           </TableRow>
         </TableHead>
         <TableBody className="divide-y">
-        {posts.map((post) => (
+
+        {postsList.map((post) => (
           <TableRow key={post.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               {post.coverImage ? <img src={post.coverImage} alt={post.title} className="w-16 h-10 object-cover rounded" /> : "—"}
@@ -36,12 +68,21 @@ export function PostsTable({posts}: PostsTableProps) {
               <BagdesStatus statusLabel= {post.statusLabel}></BagdesStatus>
             </TableCell>
             <TableCell>
-              <DropdownActionButton/>
+              <DropdownActionButton id={Number(post.id)} onDelete={()=> openTheModal(post)} />
             </TableCell>
           </TableRow>
         ))}
         </TableBody>
       </Table>
+
+      <ConfirmModal 
+          openModal={openModal}
+          closeModal={() => setOpenModal(false)}
+          message={`Êtes-vous sûr de vouloir supprimer l'article : " ${selectedPost?.title} " ?`}
+          onConfirm={()=> handleDelete(Number(selectedPost!.id))}
+        />
     </div>
+    </>
+
   );
 }

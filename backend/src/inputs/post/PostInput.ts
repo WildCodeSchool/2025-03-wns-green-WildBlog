@@ -21,5 +21,12 @@ export class PostInput {
   @Field()
   @IsNotEmpty()
   content: string;
+
+  @Field({ nullable: true })
+  publicationStartDate: Date;
+
+  @Field({ nullable: true })
+  publicationEndDate: Date;
+  
 }
 

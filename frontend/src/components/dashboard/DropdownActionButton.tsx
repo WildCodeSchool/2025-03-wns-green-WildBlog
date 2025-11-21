@@ -1,22 +1,40 @@
 
 import { Dropdown, DropdownItem } from "flowbite-react";
-import { HiOutlineClock, HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
+import { HiOutlineEye, HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
-export function DropdownActionButton() {
-  return (
-    <Dropdown label="Action" dismissOnClick={false}>
-        <DropdownItem icon={HiOutlinePencil}>
-            Modifier
-        </DropdownItem>
-        <DropdownItem icon={HiOutlineEye}>
-            Voir
-        </DropdownItem>
-        <DropdownItem icon={HiOutlineClock}>
-            Programmer
-        </DropdownItem>
-        <DropdownItem icon={HiOutlineTrash}>
-            Supprimer
-        </DropdownItem>
-    </Dropdown>
-  );
+interface DropdownActionButtonProps {
+  id: number;
+  onDelete?: (id: number) => void
+}
+
+export function DropdownActionButton({id, onDelete }: DropdownActionButtonProps) {
+    const navigate = useNavigate();
+    return (
+        <Dropdown label="Action" dismissOnClick={false}>
+            <DropdownItem 
+                icon={HiOutlinePencil}
+                onClick={() => navigate(`/admin/articles/${id}/modifier`)}
+            >
+                Modifier
+            </DropdownItem>
+            <DropdownItem 
+                icon={HiOutlineEye}
+                onClick={() => navigate(`/admin/articles/${id}`)}
+            >
+                Voir
+            </DropdownItem>
+            {/* FIXME: v2 pour programmer un article depuis une modale */}
+            {/* <DropdownItem icon={HiOutlineClock}>
+                Programmer
+            </DropdownItem> */}
+            <DropdownItem 
+                icon={HiOutlineTrash}
+                onClick={() => onDelete?.(id)} // <-- ici on déclenche l'ouverture de la modale
+            >
+                Supprimer
+            </DropdownItem>
+        </Dropdown>
+        
+    );
 }

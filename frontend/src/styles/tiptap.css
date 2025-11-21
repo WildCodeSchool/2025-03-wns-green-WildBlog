@@ -3,7 +3,8 @@
   margin-top: 0;
   border: 1px solid var(--color-wild-border-grey);
   padding:1rem;
-  border-radius: 0.5rem;;
+  border-radius: 0.5rem;
+  min-height: 20rem;
 }
 
 /* List styles */

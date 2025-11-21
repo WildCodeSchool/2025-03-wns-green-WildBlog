@@ -6,19 +6,14 @@ import { TextStyleKit } from '@tiptap/extension-text-style'
 import {Highlight} from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
 
-import Document from '@tiptap/extension-document'
 import Image from '@tiptap/extension-image'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
-import { Dropcursor } from '@tiptap/extensions'
 
 import type { Editor } from '@tiptap/react'
 import { EditorContent, useEditor, useEditorState } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import StarterKit from '@tiptap/starter-kit' // StarterKit includes Document / Paragraph / Text / Bold, Italic, Strike / Heading / Blockquote /Listes / CodeBlock / History (undo/redo) / DropCursor....
 import { useCallback } from "react";
 
 import { LuUndo2, LuRedo2, LuBold, LuItalic, LuImage, LuCode, LuListOrdered, LuList, LuAlignJustify, LuAlignRight, LuAlignCenter, LuAlignLeft, LuStrikethrough, LuFileCode } from "react-icons/lu";
-import { MdOutlineImage } from "react-icons/md";
 
 
 const extensions = [
@@ -28,7 +23,6 @@ const extensions = [
     types: ['heading', 'paragraph'],
   }),
   Highlight,
-  Document, 
   Image.configure({
     inline: false,
     resize: {
@@ -52,7 +46,6 @@ const extensions = [
       class: 'custom-class-to-define', // à définir
     },
   }), 
-  Paragraph, Text, Dropcursor
 ]
 
 function MenuBar({ editor }: { editor: Editor }) {
@@ -101,75 +94,75 @@ function MenuBar({ editor }: { editor: Editor }) {
   return (
     <div className="control-group mt-5">
       <div className="button-group">
-        <button onClick={() => editor.chain().focus().undo().run()} disabled={!editorState.canUndo}>
+        <button type="button" onClick={() => editor.chain().focus().undo().run()} disabled={!editorState.canUndo}>
           <LuUndo2 size={18} />
         </button>
-        <button onClick={() => editor.chain().focus().redo().run()} disabled={!editorState.canRedo}>
+        <button type="button" onClick={() => editor.chain().focus().redo().run()} disabled={!editorState.canRedo}>
           <LuRedo2 size={18} />
         </button>
-        <button onClick={addImage}>
+        <button type="button" onClick={addImage}>
           <LuImage size={18}/>
         </button>
       </div>
       <div className="button-group">
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editorState.canBold}
           className={editorState.isBold ? 'is-active' : ''}
         >
           <LuBold size={18}/>
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editorState.canItalic}
           className={editorState.isItalic ? 'is-active' : ''}
         >
           <LuItalic size={18}/>
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editorState.canStrike}
           className={editorState.isStrike ? 'is-active' : ''}
         >
           <LuStrikethrough />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editorState.canCode}
           className={editorState.isCode ? 'is-active' : ''}
         >
           <LuCode />
         </button>
-        <button onClick={() => editor.chain().focus().clearNodes().run()}>Clear nodes</button>
+        <button type="button" onClick={() => editor.chain().focus().clearNodes().run()}>Clear nodes</button>
 
       </div>
 
       <div className="button-group">
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setParagraph().run()}
           className={editorState.isParagraph ? 'is-active' : ''}
         >
           Paragraph
         </button>
-                 <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
           className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
         >
           <LuAlignLeft />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
           className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
         >
           <LuAlignCenter />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('right').run()}
           className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}
         >
           <LuAlignRight />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('justify').run()}
           className={editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''}
         >
@@ -178,37 +171,37 @@ function MenuBar({ editor }: { editor: Editor }) {
       </div>
 
       <div className="button-group">
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={editorState.isHeading1 ? 'is-active' : ''}
         >
           H1
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={editorState.isHeading2 ? 'is-active' : ''}
         >
           H2
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           className={editorState.isHeading3 ? 'is-active' : ''}
         >
           H3
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
           className={editorState.isHeading4 ? 'is-active' : ''}
         >
           H4
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
           className={editorState.isHeading5 ? 'is-active' : ''}
         >
           H5
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
           className={editorState.isHeading6 ? 'is-active' : ''}
         >
@@ -217,19 +210,19 @@ function MenuBar({ editor }: { editor: Editor }) {
       </div>
 
       <div className="button-group">
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editorState.isBulletList ? 'is-active' : ''}
         >
           <LuList />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={editorState.isOrderedList ? 'is-active' : ''}
         >
           <LuListOrdered />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={editorState.isCodeBlock ? 'is-active' : ''}
         >
@@ -241,39 +234,14 @@ function MenuBar({ editor }: { editor: Editor }) {
   )
 }
 
-export function TipTapEditor() {
+export function TipTapEditor({onChangeContent,defaultContent}: { onChangeContent: (html: string) => void, defaultContent: string }) {  
   const editor = useEditor({
+    onUpdate( { editor }) { //fonction native de TiptapEditor qui surveille chaque changement
+      const htmlContent = editor.getHTML()
+      onChangeContent(htmlContent);
+    },
     extensions,
-    content: `
-<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    That’s a bullet list with one …
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
-`,
+    content: defaultContent,
   })
   return (
     <div>

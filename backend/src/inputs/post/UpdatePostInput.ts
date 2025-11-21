@@ -1,24 +1,28 @@
-import { Field, InputType } from "type-graphql";
+import { Field, ID, InputType } from "type-graphql";
 import { IsNotEmpty, Length } from "class-validator";
 
 @InputType()
-export class PostInput {
+export class UpdatePostInput {
   @Field({ nullable:true})
   @Length(5, 255)
   title: string;
 
-  @Field({ nullable:true})
-  @Length(5, 255)
-  @IsNotEmpty()
-  category: string;
+  @Field(() => ID, { nullable: true })
+  categoryId: number;
+
+  @Field(() => [ID], { nullable: true })
+  tagIds?: number[];
 
   @Field({ nullable:true})
-  @IsNotEmpty()
   coverImage: string;
 
   @Field({ nullable:true})
-  @IsNotEmpty()
-  @IsNotEmpty()
   content: string;
+
+  @Field({ nullable: true })
+  publicationStartDate: Date;
+
+  @Field({ nullable: true })
+  publicationEndDate: Date;
 }
 

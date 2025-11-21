@@ -1,9 +1,17 @@
-import { Button } from "../../../components/dashboard/Button";
+import { useMutation } from "@apollo/client/react";
 import { DashboardLayout } from "../../../components/dashboard/DashboardLayout";
-import { TipTapEditor } from "../../../components/dashboard/TipTapEditor";
-import { CreatePostForm } from "../../../forms/CreatePostForm";
+import { PostForm } from "../../../forms/PostForm";
+import type { PostData } from "../../../types/PostData";
+import { CREATE_POST } from "../../../gql/posts/createPost";
+import { useNavigate } from "react-router-dom";
+import { GET_POSTS } from "../../../gql/posts/getPosts";
 
 export function Create() {
+    const [createPost, {loading, error }] = useMutation<PostData>(CREATE_POST);
+    const navigate = useNavigate();
+    
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     return (
         <DashboardLayout>
@@ -13,35 +21,25 @@ export function Create() {
                     Remplissez les champs et commencez à créer votre article.
                 </p>  
             </section> 
-
-            <CreatePostForm/>
-
-            {/* <form action="" method="POST">
-                <div>
-                    <label htmlFor="name">Titre de l'article</label>
-                    <input type="text" name="name" id="name" />
-                </div>
-                <div>
-                    <label htmlFor="email">Enter your email: </label>
-                        <select name="catégorie" id="categoryId">
-                        <option value="">--Please choose an option--</option>
-                        <option value="dog">Dog</option>
-                        <option value="cat">Cat</option>
-                        <option value="hamster">Hamster</option>
-                        <option value="parrot">Parrot</option>
-                        <option value="spider">Spider</option>
-                        <option value="goldfish">Goldfish</option>
-                        </select>
-                    </div>
-
-                <TipTapEditor/>
-
-                <div className="flex flex-row gap-3 ml-auto justify-end mt-5">
-                    <Button label="Enregistrer comme brouillon"></Button>
-                    <Button label="Publier"></Button>
-                </div>
-            </form> */}
-
+            <PostForm
+                onSubmit={async (values) => {
+                    try{
+                        await createPost({ 
+                            variables: { data: values },
+                            refetchQueries: [{ query: GET_POSTS }],
+                            awaitRefetchQueries: true,
+                        });
+                        navigate("/admin/articles/mes-articles");
+                        console.log("Post créé !");
+                    } catch (error) {
+                        if( error instanceof Error) {
+                            console.error("Erreur:", error.message);
+                        } else {
+                            console.error("Erreur inconnue lors de la crétion :", error);
+                        }                    
+                    }
+                }}
+            />        
         </DashboardLayout>
     )
 }

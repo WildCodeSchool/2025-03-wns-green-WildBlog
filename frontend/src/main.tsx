@@ -26,6 +26,7 @@ import { Medias } from './pages/admin/Medias.tsx';
 import { Comments } from './pages/admin/Comments.tsx';
 import { Stats } from './pages/admin/Stats.tsx';
 import { Settings } from './pages/admin/Settings.tsx';
+import { Update } from './pages/admin/posts/Update.tsx';
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -71,13 +72,28 @@ createRoot(document.getElementById('root')!).render(
               <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<Home />} />
               <Route path="profil" element={<Profile />} />
+              
+              {/* Mes articles */}
               <Route path="articles/mes-articles" element= {<List/>} />
               <Route path="articles/creer" element= {<Create/>} />
+              <Route path="articles/:id/modifier" element= {<Update/>} />
+
+              {/* Catégories */}
               <Route path="categories" element= {<Categories/>} />
+
+              {/* Tags */}
               <Route path="tags" element= {<Tags/>} />
+              
+              {/* Médias */}
               <Route path="medias" element= {<Medias/>} />
+
+              {/* Commentaires */}
               <Route path="commentaires" element= {<Comments/>} />
+
+              {/* Stats */}
               <Route path="statistiques" element= {<Stats/>} />
+
+              {/* Paramètres */}
               <Route path="parametres" element= {<Settings/>} />
             </Route>
 
