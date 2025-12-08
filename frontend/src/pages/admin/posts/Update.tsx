@@ -74,7 +74,6 @@ export function Update() {
         }
       }}
       />
-
       {updating && <p>Mise à jour en cours...</p>}
       {updateError && <p>Erreur lors de la mise à jour : {updateError.message}</p>}
     </DashboardLayout>

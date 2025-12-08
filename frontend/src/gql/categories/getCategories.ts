@@ -5,6 +5,9 @@ query Query {
   getAllCategories {
     id
     name
+    description
+    createdAt
+    updatedAt
   }
 }`
 ;

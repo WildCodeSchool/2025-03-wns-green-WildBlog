@@ -1,12 +1,12 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
-import type { PostData } from "../../types/PostData";
-import { BagdesStatus } from "./BagdesStatus";
-import { DropdownActionButton } from "./DropdownActionButton";
+import type { PostData } from "../../../types/PostData";
+import { BagdesStatus } from "../BagdesStatus";
+import { DropdownActionButton } from "../DropdownActionButton";
 import { useState } from "react";
-import { ConfirmModal } from "./ConfirmModal";
+import { ConfirmModal } from "../ConfirmModal";
 import { useMutation } from "@apollo/client/react";
-import { DELETE_POST } from "../../gql/posts/deletePost";
+import { DELETE_POST } from "../../../gql/posts/deletePost";
 
 interface PostsTableProps {
   posts: PostData[];
@@ -46,7 +46,7 @@ export function PostsTable({posts}: PostsTableProps) {
       <Table hoverable>
         <TableHead>
           <TableRow>
-            <TableHeadCell>Image test</TableHeadCell>
+            <TableHeadCell>Image</TableHeadCell>
             <TableHeadCell>Titre</TableHeadCell>
             <TableHeadCell>Auteur</TableHeadCell>
             <TableHeadCell>Créé le</TableHeadCell>
@@ -57,7 +57,7 @@ export function PostsTable({posts}: PostsTableProps) {
         <TableBody className="divide-y">
 
         {postsList.map((post) => (
-          <TableRow key={post.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+          <TableRow key={post.id} className="bg-white dark:border-gray-700 dark:bg-gray-800 cursor-pointer">
             <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               {post.coverImage ? <img src={post.coverImage} alt={post.title} className="w-16 h-10 object-cover rounded" /> : "—"}
             </TableCell>
@@ -68,7 +68,10 @@ export function PostsTable({posts}: PostsTableProps) {
               <BagdesStatus statusLabel= {post.statusLabel}></BagdesStatus>
             </TableCell>
             <TableCell>
-              <DropdownActionButton id={Number(post.id)} onDelete={()=> openTheModal(post)} />
+              <DropdownActionButton 
+                id={Number(post.id)} 
+                onDelete={()=> openTheModal(post)} 
+                />
             </TableCell>
           </TableRow>
         ))}

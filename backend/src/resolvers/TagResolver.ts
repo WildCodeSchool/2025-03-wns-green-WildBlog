@@ -19,10 +19,10 @@ export class TagResolver {
       name: data.name,
     });
 
-      await tag.save();
+    await tag.save();
       return tag;
     } catch (err) {
-      throw new Error(`Erreur lors de la création du tag ${err instanceof Error ? ` : ${err.message}` : ''}`);
+      throw new Error(`${err instanceof Error ? `${err.message}` : ''}`);
     }
   }
 

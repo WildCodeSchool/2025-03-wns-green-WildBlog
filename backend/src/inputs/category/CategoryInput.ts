@@ -7,7 +7,7 @@ export class CategoryInput {
   @Length(2, 50, {message: "La catégorie doit contenir entre 2 et 50 caractères"})
   name: string;
 
-  @Field()
+  @Field({ nullable:true })
   @Length(2, 300)
-  description: string;
+  description?: string;
 }

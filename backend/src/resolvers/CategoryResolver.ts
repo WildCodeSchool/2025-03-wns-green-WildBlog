@@ -5,24 +5,24 @@ import { UpdateCategoryInput } from "../inputs/category/UpdateCategoryInput";
 
 
 @Resolver(Category)
-export class CategoryResolver {
+  export class CategoryResolver {
 
-  @Mutation(() => Category)
-  async createCategory(@Arg("data") data: CategoryInput): Promise<Category> {
-    const isExisting = await Category.findOneBy({ name: data.name });
+    @Mutation(() => Category)
+    async createCategory(@Arg("data") data: CategoryInput): Promise<Category> {
+      const isExisting = await Category.findOneBy({ name: data.name });
 
-    if (isExisting) {
-      throw new Error("Une catégorie portant ce nom existe déjà.")
-    }
+      if (isExisting) {
+        throw new Error("Une catégorie portant ce nom existe déjà.")
+      }
 
-    const category = Category.create({
-      name: data.name,
-      description: data.description
-    });
+      const category = Category.create({
+        name: data.name,
+        description: data.description
+      });
 
-    await category.save();
-    return category;
-}
+      await category.save();
+      return category;
+  }
 
   @Mutation(() => Category)
     async updateCategory(
@@ -40,15 +40,12 @@ export class CategoryResolver {
       }
   }
 
-
   @Mutation(() => ID)
   async deleteCategory(@Arg("id") id: number) {
     try {
-      const category = await Category.findOneByOrFail({ id });
-      if (!category) {
-        throw new Error("Catégorie non trouvée");
-      }
+      await Category.findOneByOrFail({ id });
       await Category.delete({ id });
+
       return id;
     } catch (err) {
       console.error("❌ Erreur lors de la suppression de la catégorie:", err);
@@ -56,9 +53,8 @@ export class CategoryResolver {
     }
   }
 
-
   @Query(() => [Category])
   async getAllCategories(): Promise<Category[]> {
-    return Category.find({ order: { createdAt: "ASC" } });
+    return Category.find({ order: { name: "ASC" } });
   }
 }

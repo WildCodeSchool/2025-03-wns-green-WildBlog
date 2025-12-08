@@ -1,7 +1,7 @@
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import { Button } from "../../../components/dashboard/Button";
 import { DashboardLayout } from "../../../components/dashboard/DashboardLayout";
-import { PostsTable } from "../../../components/dashboard/PostsTable";
+import { PostsTable } from "../../../components/dashboard/tables/PostsTable";
 import { useQuery } from "@apollo/client/react";
 import { GET_POSTS } from "../../../gql/posts/getPosts";
 import type { PostData } from "../../../types/PostData";
@@ -18,10 +18,7 @@ export function List() {
     const posts = data?.getPosts || [];
     const postsCount = posts.length;
     const publishedCount = posts.filter((post:PostData) => post.status === "PUBLISHED").length;
-
-    // console.log("Nombre de posts :", posts.length);
-    // console.log(posts)
-
+    
     return (
         <DashboardLayout>
             <section className="container">
@@ -43,7 +40,7 @@ export function List() {
                 </div>
             </section>
 
-            <section className="mt-10">
+            <section className="mt-10 p-6 bg-white rounded-lg">
                 <PostsTable posts={posts} ></PostsTable>
             </section>
         </DashboardLayout>

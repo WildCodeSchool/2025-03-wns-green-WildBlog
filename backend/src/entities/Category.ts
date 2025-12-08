@@ -15,8 +15,8 @@ import { Post } from "./Post";
     @Field(() => String)
     name: string;
 
-    @Column({ default: "" })
-    @Field(() => String)
+    @Column({ type: "text", nullable: true })
+    @Field(() => String, { nullable: true })
     description: string;
 
     @OneToMany(() => Post, post => post.category)
