@@ -9,7 +9,7 @@ import { CategoriesTable } from "../../components/dashboard/tables/CategoriesTab
 export function Categories() {
   const { data, loading, error } = useQuery<{ getAllCategories: CategoryData[] }>(GET_CATEGORIES);
   const categories = data?.getAllCategories || [];
-const [selectedCategory, setSelectedCategory] = useState<CategoryData | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryData | undefined>(undefined);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -18,7 +18,9 @@ const [selectedCategory, setSelectedCategory] = useState<CategoryData | undefine
     <DashboardLayout>
       <section className="container">
         <h2>Catégories</h2>  
-        <h3 className="text-wild-text-grey my-3">Ajouter / Modifier une catégorie</h3>  
+        <h3 className="text-sm text-wild-text-grey my-3">
+          {selectedCategory ? 'Modifier la catégorie' : 'Ajouter une catégorie'}
+        </h3>  
       </section> 
 
       <section className="container">

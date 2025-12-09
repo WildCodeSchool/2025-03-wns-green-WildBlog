@@ -7,52 +7,18 @@ import { Tag } from '../entities/Tag';
 import { FindOptionsWhere, In } from 'typeorm';
 import { Context } from 'vm';
 import { UpdatePostInput } from '../inputs/post/UpdatePostInput';
+import { PostService } from '../services/PostService';
 
 
 @Resolver(Post)
 export class PostResolver {
+    private postService = new PostService;
 
     @Mutation(() => Post)
-    async createPost(
-      @Ctx() ctx: Context,
-      @Arg("data") data: PostInput
+    async createPost( @Ctx() ctx: Context, @Arg("data") data: PostInput
     ): Promise<Post> {
-
-      if(!ctx.currentUser) {
-        throw new Error("Utilisateur non connecté");
-      }
-
-        try {
-            const existing = await Post.findOneBy({ title: data.title });
-            if (existing) {
-              throw new Error("Un article existe déjà avec ce nom.");
-            }
-
-            const currentUser = await User.findOneBy({ id: ctx.currentUser.id });
-            if (!currentUser) {
-              throw new Error("Auteur introuvable");
-            }
-
-            const category = await Category.findOneBy({ id: data.categoryId });
-            if (!category) {
-              throw new Error("Catégorie introuvable.");
-            }
-
-            const tags = await Tag.findBy({ id: In(data.tagIds || []) });
-
-            const post = Post.create({
-              ...data,
-              author: currentUser,
-              category: category,
-              tags:tags
-            });
-        
-            await post.save();
-            return post;
-        
-          } catch (error) {
-            throw new Error( "Erreur lors de la création de l'article : " + error.message);
-          }
+      if(!ctx.currentUser) throw new Error("Utilisateur non connecté");
+      return this.postService.createPost(ctx.currentUser.id, data);
     }
 
     @Mutation(() => Post)

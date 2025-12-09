@@ -25,7 +25,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <DashboardNavbar sidebarOpen={sidebarOpen} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       </div>
 
-      <main className="dashboard-main mt-10 ml-60 pt-16 p-10 min-h-screen">
+      <main className="dashboard-main mt-10 ml-60 pt-16 p-10 min-h-screen" id="scroll-to-top">
         {children}
       </main>
     </div>

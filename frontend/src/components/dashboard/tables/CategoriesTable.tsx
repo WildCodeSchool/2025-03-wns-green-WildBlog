@@ -21,21 +21,25 @@ export function CategoriesTable({ categories, onEdit }: CategoriesTableProps) {
           </TableRow>
         </TableHead>
         <TableBody className="divide-y">
-          {categories.map((cat) => (
+          {categories.map((category) => (
             <TableRow
-              key={cat.id}
+              key={category.id}
               className="bg-white cursor-pointer border-b border-wild-border-grey"
             >
-              <TableCell>{cat.name}</TableCell>
-              <TableCell>{cat.description ?? '-'}</TableCell>
-              <TableCell>{new Date(cat.createdAt).toLocaleDateString()}</TableCell>
-              <TableCell>{cat.name}</TableCell>
+              <TableCell>{category.name}</TableCell>
+              <TableCell>{category.description ?? '-'}</TableCell>
+              <TableCell>{new Date(category.createdAt).toLocaleDateString()}</TableCell>
+              <TableCell>{category.posts.length}</TableCell>
               <TableCell>
-                <HiOutlinePencil
-                  className="text-gray-600 hover:text-gray-900 cursor-pointer"
-                  size={16}
-                  onClick={() => onEdit(cat)}
-                />
+                <a
+                  href="#scroll-to-top"
+                  onClick={() => onEdit(category)}
+                >
+                  <HiOutlinePencil
+                    className="text-gray-600 hover:text-gray-900 cursor-pointer"
+                    size={16}
+                  />
+                </a>
               </TableCell>
             </TableRow>
           ))}

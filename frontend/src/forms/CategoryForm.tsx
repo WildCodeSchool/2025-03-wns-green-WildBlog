@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useMutation } from "@apollo/client/react";
 import type { CategoryData } from "../types/CategoryData";
 import { CREATE_CATEGORY } from "../gql/categories/createCategory";
@@ -7,6 +7,7 @@ import { Label, Textarea, TextInput } from "flowbite-react";
 import { Button } from "../components/dashboard/Button";
 import type { GraphQLErrorType } from "../types/GraphQlErrorType";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import { UPDATE_CATEGORY } from "../gql/categories/updateCategory";
 
 
 type CategoryFormProps = {
@@ -18,15 +19,19 @@ type CategoryFormProps = {
 export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-
+    const nameInputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const [createCategory, { loading }] = useMutation<CategoryData>(CREATE_CATEGORY);
+    const [updateCategory] = useMutation(UPDATE_CATEGORY);
 
     useEffect(() => {
         if (selectedCategory) {
             setName(selectedCategory.name);
             setDescription(selectedCategory.description ?? "");
+            setTimeout(() => {
+                nameInputRef.current?.focus();
+            }, 50);
         } else {
             setName("");
             setDescription("");
@@ -43,15 +48,25 @@ export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) 
         const description = (formData.get("description") as string) || null; 
 
         try {
-            await createCategory({
-                variables: { data: { name, description } },
-                refetchQueries: [{ query: GET_CATEGORIES }],
-                awaitRefetchQueries: true,
-            });
+            if (selectedCategory) {
+                await updateCategory({
+                    variables: { id: Number(selectedCategory.id), data: { name, description } },
+                    refetchQueries: [{ query: GET_CATEGORIES}],
+                    awaitRefetchQueries: true
+                });
+            } else {
+                await createCategory({
+                    variables: { data: { name, description } },
+                    refetchQueries: [{ query: GET_CATEGORIES }],
+                    awaitRefetchQueries: true,
+                });
+            }
+        
             form.reset();
             console.log(selectedCategory? "Catégorie mise à jour !" :  "Catégorie créée");
             setName("");
             setDescription("");
+            if (onSuccess) onSuccess();
         } catch (err) {
             const error = err as GraphQLErrorType;
             if (error.graphQLErrors?.length) {
@@ -74,6 +89,7 @@ export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) 
                         name="name"
                         placeholder="Nom de la catégorie"
                         value= {name}
+                        ref={nameInputRef}
                         required
                         color={errorMessage ? "failure" : "gray"}
                         onChange={(e) => { setName(e.currentTarget.value); setErrorMessage(null); }}
