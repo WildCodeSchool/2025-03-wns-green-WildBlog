@@ -32,7 +32,6 @@ export function DashboardSidebar() {
       <Sidebar aria-label="Sidebar with multi-level dropdown example"
       className="w-60 dashboard-sidebar bg-wild-blue"
       >
-      <div className="h-screen p-0 overflow-y-auto">
         <SidebarItems>
           <SidebarItemGroup>
             <SidebarItem 
@@ -127,7 +126,6 @@ export function DashboardSidebar() {
             </SidebarItem>
           </SidebarItemGroup>
         </SidebarItems>
-      </div>
     </Sidebar>
   );
 }

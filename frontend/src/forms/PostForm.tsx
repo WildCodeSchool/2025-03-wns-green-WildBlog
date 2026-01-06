@@ -8,6 +8,7 @@ import { GET_CATEGORIES } from "../gql/categories/getCategories";
 import type { CategoryData } from "../types/CategoryData";
 import { useQuery } from "@apollo/client/react";
 import { RiArrowDownWideFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 interface PostFormValues {
   title: string;
@@ -27,6 +28,7 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
 
     const {data, loading, error} = useQuery<{ getAllCategories: CategoryData[]}>(GET_CATEGORIES);
     const categories = data?.getAllCategories;
+    const navigate = useNavigate()
 
     const defaultContent =  `
         <h2>Titre</h2>
@@ -157,6 +159,12 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
             <TipTapEditor onChangeContent={setContent} defaultContent={initialContent}  />      
 
             <div className="flex flex-row gap-3 ml-auto justify-end mt-5">
+                <Button
+                    type="button"
+                    label="Annuler"
+                    onClick={() => navigate(-1)}
+                    >
+                </Button>
                 <Button 
                     type="submit" 
                     label={initialValues ? "Mettre à jour" : "Enregistrer"} 

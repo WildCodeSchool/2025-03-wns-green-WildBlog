@@ -14,7 +14,7 @@ interface DropdownActionButtonProps {
 export function DropdownActionButton({id, onDelete, showEdit=true, showView=true, showDelete = true }: DropdownActionButtonProps) {
     const navigate = useNavigate();
     return (
-        <Dropdown label="Action" dismissOnClick={false}>
+        <Dropdown label="Action" dismissOnClick={false} placement="bottom-start">
             {showEdit && (
                 <DropdownItem 
                     icon={HiOutlinePencil}

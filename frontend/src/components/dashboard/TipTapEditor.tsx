@@ -5,7 +5,6 @@ import "../../styles/tiptap.css";
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import {Highlight} from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
-
 import Image from '@tiptap/extension-image'
 
 import type { Editor } from '@tiptap/react'
@@ -43,7 +42,7 @@ const extensions = [
     },
     allowBase64: true,
     HTMLAttributes: {
-      class: 'custom-class-to-define', // à définir
+      class: 'tiptap-img', 
     },
   }), 
 ]

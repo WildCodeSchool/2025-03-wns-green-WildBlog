@@ -8,6 +8,8 @@ export const GET_POST_BY_ID = gql `
         coverImage
         publicationStartDate
         publicationEndDate
+        createdAt
+        updatedAt
         category {
         id
         name

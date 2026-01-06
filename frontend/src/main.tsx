@@ -18,15 +18,16 @@ import { AuthProvider } from './contexts/AuthProvider.tsx';
 import BlogList from './pages/blog/BlogList.tsx'
 import ArticlePage from './pages/ArticlePage.tsx'
 import Article from './pages/ArticlePage.tsx';
-import { List } from './pages/admin/posts/List.tsx';
-import { Create } from './pages/admin/posts/Create.tsx';
+import { List } from './pages/admin/post/List.tsx';
+import { Create } from './pages/admin/post/Create.tsx';
 import { Categories } from './pages/admin/Categories.tsx';
 import { Tags } from './pages/admin/Tags.tsx';
 import { Medias } from './pages/admin/Medias.tsx';
 import { Comments } from './pages/admin/Comments.tsx';
 import { Stats } from './pages/admin/Stats.tsx';
 import { Settings } from './pages/admin/Settings.tsx';
-import { Update } from './pages/admin/posts/Update.tsx';
+import { Update } from './pages/admin/post/Update.tsx';
+import { PostDetails } from './pages/admin/post/PostDetails.tsx';
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -77,6 +78,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="articles/mes-articles" element= {<List/>} />
               <Route path="articles/creer" element= {<Create/>} />
               <Route path="articles/:id/modifier" element= {<Update/>} />
+              <Route path="articles/:id" element={<PostDetails/>} />
 
               {/* Catégories */}
               <Route path="categories" element= {<Categories/>} />

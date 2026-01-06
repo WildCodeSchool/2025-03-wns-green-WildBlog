@@ -3,3 +3,8 @@
     border: 1px solid var(--color-wild-border-grey);
     color: var(--color-wild-text-grey);
 }
+
+[data-testid='table-element'] {
+    position: static !important;
+    overflow: visible !important; 
+}
