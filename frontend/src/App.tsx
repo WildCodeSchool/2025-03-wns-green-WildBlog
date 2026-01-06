@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 
+
+
+
 function App() {
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-2xl font-bold">
-        Accueil
-      </h1>
+    <>
+      <div className="p-6 space-y-4">
+        <h1 className="text-2xl font-bold">
+          Accueil
+        </h1>
 
       <Link 
         to="/style-guide" 
@@ -26,7 +30,11 @@ function App() {
       <Link to="/blogUser" className="text-blue-600 underline mt-4 block">
         Blog
       </Link>  
-    </div>
+      <Link to="/home" className="text-blue-600 underline mt-4 block">
+        Home Page
+      </Link>
+      </div>
+    </>
   )
 }
 

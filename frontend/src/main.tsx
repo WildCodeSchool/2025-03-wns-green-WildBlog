@@ -18,6 +18,7 @@ import { AuthProvider } from './contexts/AuthProvider.tsx';
 import BlogList from './pages/blog/BlogList.tsx'
 import ArticlePage from './pages/ArticlePage.tsx'
 import Article from './pages/ArticlePage.tsx';
+import { HomePage } from './pages/HomePage.tsx';
 
 
 // Lien terminal qui envoie la requête au serveur
@@ -54,6 +55,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/blog" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
+            <Route path="/home" element={<HomePage />} />
 
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />} />
