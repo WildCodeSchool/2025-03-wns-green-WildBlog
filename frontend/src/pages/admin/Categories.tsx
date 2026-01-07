@@ -16,14 +16,12 @@ export function Categories() {
     skip: !blogId,
   });
 
-  console.log(data?.getAllCategoriesByBlog);
   const categories = data?.getAllCategoriesByBlog || [];
   const [selectedCategory, setSelectedCategory] = useState<CategoryData | undefined>(undefined);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log(categories);
   
   return (
     <DashboardLayout>

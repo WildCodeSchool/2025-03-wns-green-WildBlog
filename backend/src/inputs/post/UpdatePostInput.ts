@@ -1,14 +1,16 @@
 import { Field, ID, InputType } from "type-graphql";
-import { IsNotEmpty, Length } from "class-validator";
+import { IsNotEmpty, IsOptional, Length } from "class-validator";
 
 @InputType()
 export class UpdatePostInput {
+  
   @Field({ nullable:true})
-  @Length(5, 255)
+  @Length(3, 255)
   title: string;
 
   @Field(() => ID, { nullable: true })
-  categoryId: number;
+  @IsOptional()
+  categoryId?: number;
 
   @Field(() => [ID], { nullable: true })
   tagIds?: number[];

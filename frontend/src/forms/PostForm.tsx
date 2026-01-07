@@ -13,7 +13,7 @@ import { useAuth } from "../hooks/useAuth";
 
 interface PostFormValues {
   title: string;
-  categoryId: number | string | null;
+  categoryId: number;
   content: string;
   coverImage?: string | null;
   publicationStartDate?: Date | null;
@@ -27,9 +27,9 @@ interface PostFormProps {
 
 export function PostForm({initialValues, onSubmit}: PostFormProps) {
 
-    const blogId = useAuth();
+    const { blogId } = useAuth();
     const {data, loading, error} = useQuery<{ getAllCategoriesByBlog: CategoryData[]}>(GET_CATEGORIES,{
-        variables: blogId,
+        variables: { blogId },
         skip: !blogId, 
     });
     const categories = data?.getAllCategoriesByBlog;
@@ -61,9 +61,15 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
         const form = event.currentTarget;
         const formData = new FormData(form);
 
+        const categoryId = Number(formData.get("category"));
+
+        if (!categoryId) {
+        throw new Error("Une catégorie est obligatoire");
+        }
+
         onSubmit({
             title: formData.get("title") as string,
-            categoryId: formData.get("category") ? Number(formData.get("category")) : null,
+            categoryId,
             content, 
             coverImage: formData.get("coverImage") as string | null, 
             publicationStartDate: startDate ?? null,
