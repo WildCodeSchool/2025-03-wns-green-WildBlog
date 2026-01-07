@@ -24,8 +24,6 @@ export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) 
 
     const { blogId } = useAuth();
 
-    console.log(typeof(blogId));
-
     const [createCategory, { loading }] = useMutation<CategoryData>(CREATE_CATEGORY);
     const [updateCategory] = useMutation(UPDATE_CATEGORY);
 

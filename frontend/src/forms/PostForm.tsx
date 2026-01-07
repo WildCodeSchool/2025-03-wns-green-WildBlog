@@ -13,7 +13,7 @@ import { useAuth } from "../hooks/useAuth";
 
 interface PostFormValues {
   title: string;
-  categoryId: number;
+  categoryId: number | null;
   content: string;
   coverImage?: string | null;
   publicationStartDate?: Date | null;
@@ -61,12 +61,8 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
         const form = event.currentTarget;
         const formData = new FormData(form);
 
-        const categoryId = Number(formData.get("category"));
-
-        if (!categoryId) {
-        throw new Error("Une catégorie est obligatoire");
-        }
-
+        const categoryValue = formData.get("category"); // string | null
+        const categoryId: number | null = categoryValue && categoryValue !== "" ? Number(categoryValue) : null;
         onSubmit({
             title: formData.get("title") as string,
             categoryId,
