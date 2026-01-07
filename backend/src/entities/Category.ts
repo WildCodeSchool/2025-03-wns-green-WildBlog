@@ -2,16 +2,18 @@ import {
     Entity,
     Column,
     OneToMany,
+    ManyToOne,
   } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
 import { Post } from "./Post";
+import { Blog } from "./Blog";
   
   @Entity()
   @ObjectType()
   export class Category extends BaseTimeEntity {
   
-    @Column({ unique: true })
+    @Column()
     @Field(() => String)
     name: string;
 
@@ -22,5 +24,9 @@ import { Post } from "./Post";
     @OneToMany(() => Post, post => post.category)
     @Field(() => [Post])
     posts: Post[];
+
+    @ManyToOne(() => Blog, blog => blog.categories, { nullable: false })
+    @Field(() => Blog)
+    blog: Blog;
   }
   

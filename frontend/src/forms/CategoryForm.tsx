@@ -8,6 +8,7 @@ import { Button } from "../components/dashboard/Button";
 import type { GraphQLErrorType } from "../types/GraphQlErrorType";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import { UPDATE_CATEGORY } from "../gql/categories/updateCategory";
+import { useAuth } from "../hooks/useAuth";
 
 
 type CategoryFormProps = {
@@ -15,12 +16,15 @@ type CategoryFormProps = {
     onSuccess?: () => void; 
 }
 
-
 export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const nameInputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const { blogId } = useAuth();
+
+    console.log(typeof(blogId));
 
     const [createCategory, { loading }] = useMutation<CategoryData>(CREATE_CATEGORY);
     const [updateCategory] = useMutation(UPDATE_CATEGORY);
@@ -50,14 +54,18 @@ export function CategoryForm({selectedCategory, onSuccess }: CategoryFormProps) 
         try {
             if (selectedCategory) {
                 await updateCategory({
-                    variables: { id: Number(selectedCategory.id), data: { name, description } },
-                    refetchQueries: [{ query: GET_CATEGORIES}],
+                    variables: {
+                        id: Number(selectedCategory.id),
+                        blogId: blogId!,
+                        data: { name, description }
+                    },
+                    refetchQueries: [{ query: GET_CATEGORIES, variables: { blogId: blogId! } }],
                     awaitRefetchQueries: true
                 });
             } else {
                 await createCategory({
-                    variables: { data: { name, description } },
-                    refetchQueries: [{ query: GET_CATEGORIES }],
+                    variables: { data: { name, description, blogId } },
+                    refetchQueries: [{ query: GET_CATEGORIES, variables: { blogId: blogId! } }],
                     awaitRefetchQueries: true,
                 });
             }

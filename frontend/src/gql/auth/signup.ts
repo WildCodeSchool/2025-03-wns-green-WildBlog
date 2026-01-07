@@ -5,6 +5,7 @@ mutation SignUp($data: SignupInput!) {
     signUp(data: $data) {
     blogs {
       name
+      description
       author{
         firstName,
         lastName

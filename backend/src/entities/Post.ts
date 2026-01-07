@@ -22,9 +22,13 @@ export class Post extends BaseTimeEntity {
     @Field(() => User)
     author: User; //FIXME: rendre automatiquement le user connecté comme auteur du blog
 
+    @ManyToOne(() => Blog, blog => blog.posts, { nullable: false })
+    @Field(() => Blog)
+    blog: Blog;
+
     @ManyToOne(() => Category, category => category.posts, { nullable: false })
     @Field(() => Category)
-    category: Category; 
+    category?: Category;
 
     @Column({ length: 100, nullable: false })
     @Field(() => String)

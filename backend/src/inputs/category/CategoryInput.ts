@@ -1,4 +1,4 @@
-import { InputType, Field } from "type-graphql";
+import { InputType, Field, ID } from "type-graphql";
 import { Length } from "class-validator";
 
 @InputType()
@@ -10,4 +10,7 @@ export class CategoryInput {
   @Field({ nullable:true })
   @Length(2, 300)
   description?: string;
+
+  @Field(() => ID)
+  blogId: number;
 }

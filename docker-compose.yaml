@@ -32,19 +32,37 @@ services:
       - ./backend/package.json:/app/package.json
       - ./backend/package-lock.json:/app/package-lock.json
   
-  database: 
-    image: postgres
+  # database: 
+  #   image: postgres:16
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"  
+  #   environment:
+  #     POSTGRES_DB: ${DB_DATABASE}
+  #     POSTGRES_USER: ${DB_USER} 
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
+  #   volumes:
+  #     - ./backend/postgres-data:/var/lib/postgresql/data
+
+  database:
+    image: postgres:15
     restart: always
     ports:
-      - "5432:5432"  
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USER} 
+      POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ./backend/postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
 
   pgadmin:
       image: dpage/pgadmin4
@@ -70,3 +88,6 @@ services:
       - ./cloudbeaver/workspace:/opt/cloudbeaver/workspace
     depends_on:
       - database
+
+volumes:
+  postgres_data:

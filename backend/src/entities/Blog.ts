@@ -1,8 +1,10 @@
-import { Entity, Column , BeforeInsert, BeforeUpdate, ManyToOne, Index } from "typeorm";
+import { Entity, Column , BeforeInsert, BeforeUpdate, ManyToOne, Index, OneToMany } from "typeorm";
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity";
 import slugify from 'slugify';
 import { User } from "./User";
+import { Category } from "./Category";
+import { Post } from "./Post";
 
 
 @Index(["author", "slug"], { unique: true }) // pour le slug unique par auteur et non global à l'appli (sur slug)
@@ -31,4 +33,12 @@ export class Blog extends BaseTimeEntity {
     generateSlug() {
       this.slug = slugify(this.name, { lower: true });
     }
+
+    @OneToMany(() => Category, category => category.blog)
+    @Field(() => [Category])
+    categories: Category[];
+
+    @OneToMany(() => Post, post => post.blog)
+    @Field(() => [Post])
+    posts: Post[];
 }

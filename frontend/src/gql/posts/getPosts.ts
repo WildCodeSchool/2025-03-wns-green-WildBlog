@@ -21,6 +21,7 @@ export const GET_POSTS = gql`
             id
             email
             firstName
+            lastName
         }
         id
         publicationEndDate

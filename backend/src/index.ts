@@ -38,7 +38,7 @@ const start = async () => {
       
         const token = req.headers.authorization?.replace('Bearer ', '');
         let currentUser: User | null = null;
-      
+
         if (token) {
           try {
             const payload = jwt.verify(token, process.env.JWT_SECRET_KEY!) as { id: number };

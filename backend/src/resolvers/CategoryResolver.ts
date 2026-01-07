@@ -11,26 +11,47 @@ import { CategoryService } from "../services/CategoryService";
   private categoryService = new CategoryService();
 
   @Mutation(() => Category)
-  async createCategory(@Arg("data") data: CategoryInput): Promise<Category> {
+  async createCategory(
+    @Arg("data") data: CategoryInput
+  ): Promise<Category> {
     return this.categoryService.createCategory(data);
   }
 
   @Mutation(() => Category)
     async updateCategory(
       @Arg("id") id: number,
+      @Arg("blogId") blogId: number,
       @Arg("data", () => UpdateCategoryInput) data: UpdateCategoryInput
     ): Promise<Category> {
-      return this.categoryService.updateCategory(id, data);
+      return this.categoryService.updateCategory(id, data, blogId);
   }
 
   @Mutation(() => ID)
-  async deleteCategory(@Arg("id") id: number) {
-    return this.categoryService.deleteCategory(id);
+  async deleteCategory(
+    @Arg("id") id: number,
+    @Arg("blogId") blogId:number 
+  ) {
+    return this.categoryService.deleteCategory(id, blogId);
   }
 
   @Query(() => [Category])
-  async getAllCategories(): Promise<Category[]> {
-    return this.categoryService.getAllCategories();
+  async getAllCategoriesByBlog(
+    @Arg("blogId") blogId: number
+  ): Promise<Category[]> {
+    return this.categoryService.getAllCategoriesByBlog(blogId);
+  }
+
+  @Query(() => Category)
+  async getCategoryById(
+    @Arg('id') id: number,
+    @Arg('blogId') blogId: number
+  ) {
+    return await Category.findOne({
+      where: { 
+        id: id,
+        blog: { id: blogId} },
+      relations: ["posts", "blog"]
+    });
   }
 
 }

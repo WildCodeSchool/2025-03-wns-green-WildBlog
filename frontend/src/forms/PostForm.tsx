@@ -9,10 +9,11 @@ import type { CategoryData } from "../types/CategoryData";
 import { useQuery } from "@apollo/client/react";
 import { RiArrowDownWideFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 interface PostFormValues {
   title: string;
-  categoryId: number | string;
+  categoryId: number | string | null;
   content: string;
   coverImage?: string | null;
   publicationStartDate?: Date | null;
@@ -26,8 +27,12 @@ interface PostFormProps {
 
 export function PostForm({initialValues, onSubmit}: PostFormProps) {
 
-    const {data, loading, error} = useQuery<{ getAllCategories: CategoryData[]}>(GET_CATEGORIES);
-    const categories = data?.getAllCategories;
+    const blogId = useAuth();
+    const {data, loading, error} = useQuery<{ getAllCategoriesByBlog: CategoryData[]}>(GET_CATEGORIES,{
+        variables: blogId,
+        skip: !blogId, 
+    });
+    const categories = data?.getAllCategoriesByBlog;
     const navigate = useNavigate()
 
     const defaultContent =  `
@@ -58,7 +63,7 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
 
         onSubmit({
             title: formData.get("title") as string,
-            categoryId: formData.get("category") as string,
+            categoryId: formData.get("category") ? Number(formData.get("category")) : null,
             content, 
             coverImage: formData.get("coverImage") as string | null, 
             publicationStartDate: startDate ?? null,
@@ -105,7 +110,7 @@ export function PostForm({initialValues, onSubmit}: PostFormProps) {
                                     id="category" 
                                     name="category" 
                                     defaultValue={(initialValues?.categoryId) || ""}
-                                    required >
+                                    >
                                     <option value="" disabled hidden>
                                         Sélectionner une catégorie 
                                     </option>

@@ -8,6 +8,7 @@ interface SignupData {
   signUp: {
     id: string;
     blogName:string;
+    blogDescription: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -17,6 +18,7 @@ interface SignupData {
 interface SignupVariables {
   data: {
     blogName:string;
+    blogDescription: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -28,6 +30,7 @@ interface SignupVariables {
 function Signup() {
   const [formData, setFormData] = React.useState<SignupVariables["data"]>({
     blogName:"",
+    blogDescription: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -47,7 +50,7 @@ function Signup() {
     }
   );
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
@@ -81,9 +84,23 @@ function Signup() {
               onChange={handleChange}
               value={formData.blogName}
               className="mt-2 w-full "
+              required
             />
           </div>
 
+          <div>
+            <label htmlFor="blogDescription" className="block text-gray-700 font-medium text-sm">
+              Description du blog
+            </label>
+            <textarea
+              name="blogDescription"
+              placeholder="Description du blog..."
+              onChange={handleChange}
+              value={formData.blogDescription}
+              className="mt-2 w-full"
+            />
+          </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="lastName" className="block text-gray-700 font-medium text-sm">
@@ -96,6 +113,7 @@ function Signup() {
                 onChange={handleChange}
                 value={formData.lastName}
                 className="mt-2 w-full"
+                required
               />
             </div>
 
@@ -110,6 +128,7 @@ function Signup() {
                 onChange={handleChange}
                 value={formData.firstName}
                 className="mt-2 w-full "
+                required
               />
             </div>
           </div>
@@ -125,6 +144,7 @@ function Signup() {
               onChange={handleChange}
               value={formData.email}
               className="mt-2 w-full "
+              required
             />
           </div>
 
@@ -140,6 +160,7 @@ function Signup() {
                 onChange={handleChange}
                 value={formData.password}
                 className="mt-2 w-full "
+                required
               />
             </div>
 
@@ -154,6 +175,7 @@ function Signup() {
                 onChange={handleChange}
                 value={formData.repeatPassword}
                 className="mt-2 w-full "
+                required
               />
             </div>
           </div>

@@ -5,9 +5,13 @@ import { IsEmail, IsNotEmpty, Length, MaxLength } from "class-validator";
 export class SignupInput {
   
   @Field()
-  @MaxLength(255)
+  @Length(3, 255)
   @IsNotEmpty()
   blogName: string
+
+  @Field( { nullable: true } )
+  @MaxLength(255)
+  blogDescription?: string
   
   @Field()
   @MaxLength(100)

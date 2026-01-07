@@ -4,12 +4,12 @@ import { IsNotEmpty, Length } from "class-validator";
 @InputType()
 export class PostInput {
   @Field()
-  @Length(5, 255)
+  @Length(3, 255)
   @IsNotEmpty()
   title: string;
 
-  @Field(() => ID)
-  categoryId: number;
+  @Field(() => ID, { nullable: true })
+  categoryId?: number;
 
   @Field(() => [ID], { nullable: true })
   tagIds?: number[];

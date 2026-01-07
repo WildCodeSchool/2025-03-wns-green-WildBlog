@@ -23,7 +23,10 @@ export class AuthResolver {
             if (data.password !== data.repeatPassword) {
                 throw new Error("Les mots de passe ne correspondent pas.");
             }
-    
+            if (data.blogName.length < 3 ) {
+                throw new Error("Le nom du blog doit comporter au moins 3 caractères.");
+            }
+
             const hashedPassword = await argon2.hash(data.password);
             const user = User.create({
                 firstName: data.firstName,
@@ -36,6 +39,7 @@ export class AuthResolver {
 
             const blog = Blog.create({
                 name: data.blogName,
+                description: data.blogDescription,
                 author: user, 
               });
             await blog.save();

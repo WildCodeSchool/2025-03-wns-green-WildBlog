@@ -5,15 +5,26 @@ import { CategoryForm } from "../../forms/CategoryForm";
 import type { CategoryData } from "../../types/CategoryData";
 import { GET_CATEGORIES } from "../../gql/categories/getCategories";
 import { CategoriesTable } from "../../components/dashboard/tables/CategoriesTable";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Categories() {
-  const { data, loading, error } = useQuery<{ getAllCategories: CategoryData[] }>(GET_CATEGORIES);
-  const categories = data?.getAllCategories || [];
+
+  const { blogId } = useAuth();
+
+  const { data, loading, error } = useQuery<{ getAllCategoriesByBlog: CategoryData[] }>(GET_CATEGORIES, {
+    variables: { blogId },
+    skip: !blogId,
+  });
+
+  console.log(data?.getAllCategoriesByBlog);
+  const categories = data?.getAllCategoriesByBlog || [];
   const [selectedCategory, setSelectedCategory] = useState<CategoryData | undefined>(undefined);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  console.log(categories);
+  
   return (
     <DashboardLayout>
       <section className="container">
