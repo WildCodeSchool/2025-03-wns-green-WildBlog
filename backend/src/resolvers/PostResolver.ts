@@ -69,16 +69,6 @@ export class PostResolver {
       if (!post) {
         throw new Error("Article introuvable");
       }
-
-      // Vérifier si le post est publié et accessible publiquement
-      const now = new Date();
-      const isStarted = !post.publicationStartDate || post.publicationStartDate <= now;
-      const isNotFinished = !post.publicationEndDate || post.publicationEndDate >= now;
-      
-      if (!isStarted || !isNotFinished) {
-        throw new Error("Cet article n'est pas disponible publiquement");
-      }
-
       return post;
     }
 

@@ -14,7 +14,6 @@ import { AuthResolver } from './resolvers/AuthResolver';
 import { User } from './entities/User';
 import jwt from 'jsonwebtoken';
 
-
 dotenv.config();
 
 const start = async () => {
@@ -22,7 +21,6 @@ const start = async () => {
     await dataSource.initialize();
     console.log("✅ Database connected");
 
-    
     const schema = await buildSchema({
       resolvers: [AuthResolver, HelloResolver, UserResolver, BlogResolver, TagResolver, CategoryResolver, PostResolver ],
       validate: true, // active les decorators de class-validator

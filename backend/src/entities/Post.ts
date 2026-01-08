@@ -60,10 +60,6 @@ export class Post extends BaseTimeEntity {
     @Field(() => Number)
     likes: number;
 
-    @Column({ type: 'int', default: 0 })
-    @Field(() => Number)
-    comments: number;
-
     @BeforeInsert()
     @BeforeUpdate()
     generateSlug() {
