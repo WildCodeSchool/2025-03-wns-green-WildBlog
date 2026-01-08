@@ -25,7 +25,7 @@ export class User extends BaseTimeEntity {
     @Field(() => String)
     password: string
 
-    @Column()
+    @Column({ default: true })
     @Field()
     isActive: boolean
 

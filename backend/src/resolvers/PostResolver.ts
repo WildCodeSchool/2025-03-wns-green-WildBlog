@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query, Ctx, ID } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, Ctx, ID, Int } from 'type-graphql';
 import { Post } from '../entities/Post';
 import { PostInput } from '../inputs/post/PostInput';
 import { User } from '../entities/User';
@@ -23,7 +23,7 @@ export class PostResolver {
 
     @Mutation(() => Post)
     async updatePost(
-      @Arg("id") id: number,
+      @Arg("id", () => Int) id: number,
       @Arg("data", () => UpdatePostInput) data: UpdatePostInput
     ): Promise<Post> {
       try {
@@ -60,19 +60,34 @@ export class PostResolver {
   }
 
     @Query(() => Post)
-    async getPostById(@Arg('id') postId: number) {
-      return await Post.findOne({
+    async getPostById(@Arg('id', () => Int) postId: number) {
+      const post = await Post.findOne({
         where: { id: postId },
         relations: ["author", "category", "tags"]
       });
+
+      if (!post) {
+        throw new Error("Article introuvable");
+      }
+
+      // Vérifier si le post est publié et accessible publiquement
+      const now = new Date();
+      const isStarted = !post.publicationStartDate || post.publicationStartDate <= now;
+      const isNotFinished = !post.publicationEndDate || post.publicationEndDate >= now;
+      
+      if (!isStarted || !isNotFinished) {
+        throw new Error("Cet article n'est pas disponible publiquement");
+      }
+
+      return post;
     }
 
     @Query(()=> [Post])
     async getPosts(
       @Ctx() ctx: Context, 
-      @Arg("skip", { defaultValue: 0 }) skip: number,
-      @Arg("take", { defaultValue: 20 }) take: number,
-      @Arg("categoryId", { nullable: true }) categoryId?: number, 
+      @Arg("skip", () => Int, { defaultValue: 0 }) skip: number,
+      @Arg("take", () => Int, { defaultValue: 20 }) take: number,
+      @Arg("categoryId", () => Int, { nullable: true }) categoryId?: number, 
     )
     { 
       if(!ctx.currentUser) {
@@ -95,8 +110,41 @@ export class PostResolver {
       return posts;
     }
 
+    @Query(() => [Post])
+    async getPublicPosts(
+      @Arg("skip", () => Int, { defaultValue: 0 }) skip: number,
+      @Arg("take", () => Int, { defaultValue: 50 }) take: number,
+      @Arg("categoryId", () => Int, { nullable: true }) categoryId?: number,
+    ) {
+      const now = new Date();
+      const where: FindOptionsWhere<Post> = {};
+      
+      if (categoryId) {
+        where.category = { id: categoryId };
+      }
+
+      // Récupérer tous les posts avec les relations
+      const posts = await Post.find({
+        skip,
+        take: take * 2, // Prendre plus de posts pour compenser le filtrage
+        where,
+        order: { createdAt: "DESC" },
+        relations: ["author", "category", "tags"]
+      });
+
+      // Filtrer manuellement les posts publiés
+      const publishedPosts = posts.filter(post => {
+        const isStarted = !post.publicationStartDate || post.publicationStartDate <= now;
+        const isNotFinished = !post.publicationEndDate || post.publicationEndDate >= now;
+        return isStarted && isNotFinished;
+      });
+
+      // Retourner seulement le nombre demandé après filtrage
+      return publishedPosts.slice(0, take);
+    }
+
       @Mutation(() => ID)
-      async deletePost(@Arg("id") id: number) {
+      async deletePost(@Arg("id", () => Int) id: number) {
         try {
           const post = await Post.findOneBy({ id });
           if (!post) throw new Error("Article introuvable.");

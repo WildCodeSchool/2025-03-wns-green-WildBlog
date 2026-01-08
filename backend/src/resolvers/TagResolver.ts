@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query, ID } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, ID, Int } from "type-graphql";
 import { Tag } from "../entities/Tag";
 import { TagInput } from "../inputs/tag/TagInput";
 import { UpdateTagInput } from "../inputs/tag/UpdateTagInput";
@@ -27,7 +27,7 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag)
-  async updateTag(@Arg("id") id: number, @Arg("data") data: UpdateTagInput): Promise<Tag> {
+  async updateTag(@Arg("id", () => Int) id: number, @Arg("data") data: UpdateTagInput): Promise<Tag> {
     try {
       const tag = await Tag.findOneBy({ id });
       if (!tag) throw new Error("Tag introuvable.");
@@ -46,7 +46,7 @@ export class TagResolver {
   }
 
   @Mutation(() => ID)
-  async deleteTag(@Arg("id") id: number) {
+  async deleteTag(@Arg("id", () => Int) id: number) {
     try {
       const tag = await Tag.findOneBy({ id });
       if (!tag) throw new Error("Tag introuvable.");

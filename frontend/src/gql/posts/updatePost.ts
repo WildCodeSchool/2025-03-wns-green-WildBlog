@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const UPDATE_POST = gql `
-    mutation Mutation($data: UpdatePostInput!, $id: Float!) {
+    mutation Mutation($data: UpdatePostInput!, $id: Int!) {
     updatePost(data: $data, id: $id) {
         id
         createdAt
