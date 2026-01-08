@@ -63,17 +63,14 @@ createRoot(document.getElementById('root')!).render(
             {/* ------------- Routes publiques ------------- */}
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
-            {/* <Route path="/blog" element={<BlogList />} /> */}
+            <Route path="/blog" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
 
-            {/* Liste des posts d’un blog -> public */}
             <Route path="/blog/:blogSlug" element={<PublicBlog />} />
-
-            {/* Page d’un post d'un blog -> public*/}
             <Route path="/blog/:blogSlug/:postSlug" element={<PublicPostDetails />} />
-
+            
             {/* ------------- */}
 
             <Route element={<GuestRoute />}>

@@ -60,8 +60,14 @@ export class Post extends BaseTimeEntity {
     @BeforeInsert()
     @BeforeUpdate()
     generateSlug() {
-      this.slug = slugify(this.title, { lower: true });
+        this.slug = slugify(this.title, {
+        lower: true,
+        strict: true,
+        trim: true,
+      });    
     }
+
+
 
     @ManyToMany(() => Tag, tag => tag.posts )
     @JoinTable()

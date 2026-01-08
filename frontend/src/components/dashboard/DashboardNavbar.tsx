@@ -25,6 +25,8 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
   const { user, setUser, blog } = useAuth();
   const navigate = useNavigate();
   const client = useApolloClient();
+
+  const blogSlug = blog?.slug;
   
   const handleLogout = () => {
     logout(setUser, client);
@@ -43,9 +45,12 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
       
       <div className="ml-auto flex items-center gap-4">
         <a
-          href="#"
-          className="flex items-center gap-1 text-sm font-medium btn-blog"
+          href={blogSlug ? `/blog/${blogSlug}` : undefined}
+          className={`flex items-center gap-1 text-sm font-medium btn-blog ${
+            !blogSlug ? "opacity-50 pointer-events-none" : ""
+          }`}
           target="_blank"
+          rel="noopener noreferrer"
         >
           Aller sur mon blog
           <HiOutlineArrowTopRightOnSquare className="w-5 h-5" />

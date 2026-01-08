@@ -8,6 +8,8 @@
 @import "./styles/status-badges.css";
 @import "./styles/dropdown-button.css";
 @import "./styles/tiptap.css";
+
+@import "./styles/public-blog.css";
   
 body{
   color: var(--color-wild-text-grey);

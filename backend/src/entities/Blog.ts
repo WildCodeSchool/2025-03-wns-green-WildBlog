@@ -31,7 +31,11 @@ export class Blog extends BaseTimeEntity {
     @BeforeInsert()
     @BeforeUpdate()
     generateSlug() {
-      this.slug = slugify(this.name, { lower: true });
+      this.slug = slugify(this.name, {
+        lower: true,
+        strict: true,   
+        trim: true,
+      });
     }
 
     @OneToMany(() => Category, category => category.blog)
