@@ -8,6 +8,7 @@ import { FindOptionsWhere, In } from 'typeorm';
 import { Context } from 'vm';
 import { UpdatePostInput } from '../inputs/post/UpdatePostInput';
 import { PostService } from '../services/PostService';
+import { PostStatus } from '../enums/PostStatus';
 
 
 @Resolver(Post)
@@ -107,4 +108,43 @@ export class PostResolver {
           throw new Error(`Erreur lors de la suppression de l'article ${err instanceof Error ? ` : ${err.message}` : ''}`);
         }
       }
+
+      @Query(() => Post, { nullable: true })
+      async getPublicPost(
+        @Arg("blogSlug") blogSlug: string,
+        @Arg("postSlug") postSlug: string
+      ): Promise<Post | null> {
+        try {
+          const post = await Post.findOne({
+            where: {
+              slug: postSlug,
+              status: PostStatus.PUBLISHED,
+              blog: {
+                slug: blogSlug,
+              },
+            },
+            relations: ["blog", "author", "category", "tags"],
+          });
+
+          return post;
+        } catch (err) {
+          console.error("❌ Erreur lors de la récupération des articles:", err);
+          return null;
+        }
+      }
+
+      @Query(() => [Post])
+      async getPublicPostsByBlog(
+        @Arg("blogSlug") blogSlug: string
+      ): Promise<Post[]> {
+        return await Post.find({
+          where: {
+            status: PostStatus.PUBLISHED,
+            blog: { slug: blogSlug },
+          },
+          order: { createdAt: "DESC" },
+          relations: ["blog", "author", "category", "tags", "blog.author"],
+        });
+      }
+
 }

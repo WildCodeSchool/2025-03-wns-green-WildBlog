@@ -7,14 +7,14 @@ import { Category } from "./Category";
 import { Post } from "./Post";
 
 
-@Index(["author", "slug"], { unique: true }) // pour le slug unique par auteur et non global à l'appli (sur slug)
+@Index(["slug"], { unique: true }) // pour le slug unique globalement
 @Entity()
 @ObjectType()
 export class Blog extends BaseTimeEntity {
 
     @ManyToOne(() => User, user => user.blogs, { nullable: false })
     @Field(() => User)
-    author: User; 
+    author: User; //FIXME: le créateur du blog-> doit avoir le rôle super admin à la création
 
     @Column({ length: 100, nullable: false })
     @Field(() => String)
@@ -41,4 +41,5 @@ export class Blog extends BaseTimeEntity {
     @OneToMany(() => Post, post => post.blog)
     @Field(() => [Post])
     posts: Post[];
+
 }

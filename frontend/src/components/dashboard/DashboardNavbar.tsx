@@ -42,13 +42,14 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
       </div>
       
       <div className="ml-auto flex items-center gap-4">
-          <a
-            href="#"
-            className="flex items-center gap-1 text-sm font-medium btn-blog"
-          >
-            Aller sur mon blog
-            <HiOutlineArrowTopRightOnSquare className="w-5 h-5" />
-          </a>
+        <a
+          href="#"
+          className="flex items-center gap-1 text-sm font-medium btn-blog"
+          target="_blank"
+        >
+          Aller sur mon blog
+          <HiOutlineArrowTopRightOnSquare className="w-5 h-5" />
+        </a>
 
           <Dropdown
             arrowIcon={false}

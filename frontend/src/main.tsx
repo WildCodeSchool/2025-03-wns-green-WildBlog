@@ -28,6 +28,8 @@ import { Stats } from './pages/admin/Stats.tsx';
 import { Settings } from './pages/admin/Settings.tsx';
 import { Update } from './pages/admin/post/Update.tsx';
 import { PostDetails } from './pages/admin/post/PostDetails.tsx';
+import { PublicBlog } from './pages/blog/PublicBlog.tsx';
+import { PublicPostDetails } from './pages/blog/PublicPostDetails.tsx';
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -58,11 +60,21 @@ createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <BrowserRouter>
           <Routes>
+            {/* ------------- Routes publiques ------------- */}
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
-            <Route path="/blog" element={<BlogList />} />
+            {/* <Route path="/blog" element={<BlogList />} /> */}
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
+
+
+            {/* Liste des posts d’un blog -> public */}
+            <Route path="/blog/:blogSlug" element={<PublicBlog />} />
+
+            {/* Page d’un post d'un blog -> public*/}
+            <Route path="/blog/:blogSlug/:postSlug" element={<PublicPostDetails />} />
+
+            {/* ------------- */}
 
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />} />

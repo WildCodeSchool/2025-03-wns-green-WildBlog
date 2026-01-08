@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, JoinTable } from "typeorm"
+import { Entity, Column, OneToMany, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, JoinTable, Index } from "typeorm"
 import { Field, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
@@ -14,6 +14,7 @@ registerEnumType(PostStatus, {
   description: "Statut de publication d'un article",
 });
 
+@Index(["blog", "slug"], { unique: true })
 @Entity()
 @ObjectType()
 export class Post extends BaseTimeEntity {
