@@ -1,70 +1,47 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "../../components/blog/ArticleCard";
+import { useQuery } from "@apollo/client/react";
+import { GET_PUBLIC_POSTS } from "../../gql/posts/getPublicPosts";
+
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  coverImage: string;
+  publicationStartDate: string;
+  publicationEndDate: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  author: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  likes: number;
+  comments: number;
+}
+interface GetPublicPostsData {
+  getPublicPosts: Post[];
+}
 
 export default function BlogList() {
   const [visibleCount, setVisibleCount] = useState(6);
-
-const articles = [
-  {
-    id: 1,
-    title: "Les secrets du développement durable",
-    image: "https://picsum.photos/600/400?random=1",
-    content:
-      "Découvre comment les entreprises réinventent leurs modèles pour un avenir plus vert.",
-    author: "Marie Dupont",
-    date: "2025-10-29",
-    category: "Écologie",
-  },
-  {
-    id: 2,
-    title: "L’intelligence artificielle dans le quotidien",
-    image: "https://picsum.photos/600/400?random=2",
-    content:
-      "Comment l’IA transforme nos habitudes et nos outils du quotidien.",
-    author: "Alexandre Morel",
-    date: "2025-10-20",
-    category: "Technologie",
-  },
-  {
-    id: 3,
-    title: "Voyager autrement : le slow travel",
-    image: "https://picsum.photos/600/400?random=3",
-    content: "Prendre son temps pour redécouvrir le plaisir de voyager.",
-    author: "Sarah Benali",
-    date: "2025-10-15",
-    category: "Voyage",
-  },
-  {
-    id: 4,
-    title: "Le design éthique et responsable",
-    image: "https://picsum.photos/600/400?random=4",
-    content:
-      "Comment penser le design en respectant l’environnement et les utilisateurs.",
-    author: "Léo Bernard",
-    date: "2025-10-10",
-    category: "Design",
-  },
-  {
-    id: 5,
-    title: "Les métiers du web en 2025",
-    image: "https://picsum.photos/600/400?random=5",
-    content:
-      "Une exploration des compétences les plus recherchées dans le monde numérique.",
-    author: "Claire Rousseau",
-    date: "2025-10-05",
-    category: "Carrière",
-  },
-  {
-    id: 6,
-    title: "L’économie circulaire : un modèle d’avenir",
-    image: "https://picsum.photos/600/400?random=6",
-    content:
-      "L’économie circulaire s’impose comme une alternative durable au modèle linéaire traditionnel.",
-    author: "Julien Caron",
-    date: "2025-09-30",
-    category: "Écologie",
-  }
-];
+  const { data, loading, error } = useQuery<GetPublicPostsData>(
+    GET_PUBLIC_POSTS,
+    {
+      errorPolicy: "all",
+      fetchPolicy: "cache-and-network",
+      variables: {
+        skip: 0,
+        take: 50, // Récupérer plus d'articles pour permettre le scroll infini
+      },
+    }
+  );
+  const posts = data?.getPublicPosts || [];
+  console.log("Posts récupérés :", posts);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,52 +49,65 @@ const articles = [
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 100;
 
-      if (bottom && visibleCount < articles.length) {
+      if (bottom && visibleCount < posts.length) {
         setVisibleCount((prev) => prev + 3);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [visibleCount, articles.length]);
+  }, [visibleCount, posts.length]);
 
+  if (loading)
+    return (
+      <div className="text-center py-20">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <p className="mt-2">Chargement des articles...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="text-center py-20 text-red-500">
+        <p>Impossible de charger les articles</p>
+        <p className="text-sm mt-2">{error.message}</p>
+      </div>
+    );
+
+  
   return (
     <>
-      <section
-        className="w-full max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
-      >
-        <div className="flex flex-col justify-center space-y-6">
-          <h1
-            className="text-5xl font-extrabold text-gray-900 leading-tight"
-          >
-            Hello, I’m Christophe
-          </h1>
-          <p
-            className="text-gray-600 text-base leading-relaxed max-w-xl"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis viverra
-          </p>
-        </div>
-
-        <div className="flex justify-center md:justify-end">
-          <img
-            src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80"
-            alt="Blog hero"
-            className="object-cover w-[400px] h-[500px] rounded-none"
-          />
-        </div>
-      </section>
-
       <section className="w-full max-w-7xl mx-auto px-6 pb-20">
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center"
-        >
-          {articles.slice(0, visibleCount).map((article) => (
-            <ArticleCard key={article.id} {...article} />
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-600">
+              Aucun article disponible pour le moment.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-10 m-72">
+              <h2 className="text-3xl font-bold text-gray-900">
+                Tous les articles ({posts.length})
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
+              {posts.slice(0, visibleCount).map((post) => (
+                <ArticleCard key={post.id} id={post.id} />
+              ))}
+            </div>
+
+            {visibleCount < posts.length && (
+              <div className="text-center mt-10">
+                <p className="text-gray-500">
+                  Faites défiler pour voir plus d'articles...
+                </p>
+              </div>
+            )}
+          </>
+        )}
       </section>
-     </>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query, ID } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, ID, Int } from "type-graphql";
 import { Category } from "../entities/Category";
 import { CategoryInput } from "../inputs/category/CategoryInput";
 import { UpdateCategoryInput } from "../inputs/category/UpdateCategoryInput";

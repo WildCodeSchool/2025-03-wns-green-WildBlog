@@ -13,7 +13,12 @@ function App() {
       >
         Style Guide
       </Link>
-
+      <Link to="/signup" className="text-blue-600 underline mt-4 block">
+        Signup
+      </Link>
+      <Link to="/login" className="text-blue-600 underline mt-4 block">
+        Login
+      </Link>  
       <Link 
         to="/blog" 
         className="text-blue-600 underline block"
