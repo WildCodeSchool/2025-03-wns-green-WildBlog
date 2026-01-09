@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 import type { UserData } from "../types/UserData";
 import type { BlogData } from "../types/Blogdata";
-import { CURRENT_USER } from "../gql/auth/context";
+import { CURRENT_USER } from "../gql/auth/getCurrentUser";
 import { useQuery } from "@apollo/client/react";
 
 export function AuthProvider({ children }: { children: ReactNode }) {

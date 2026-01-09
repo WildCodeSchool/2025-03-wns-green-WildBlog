@@ -1,4 +1,5 @@
 import type { CategoryData } from "./CategoryData";
+import type { PostData } from "./PostData";
 import type { UserData } from "./UserData";
 
 export type BlogData = {
@@ -6,6 +7,8 @@ export type BlogData = {
       author: UserData;
       name: string;
       description: string;
-      slug: BlogData;
+      slug: string;
       categories: CategoryData[];
+      posts: PostData[];
+      logo: string | null;
 };

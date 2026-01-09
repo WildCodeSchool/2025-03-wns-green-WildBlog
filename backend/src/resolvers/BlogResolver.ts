@@ -43,12 +43,14 @@ export class BlogResolver {
     }
 
     @Query(() => Blog, { nullable: true })
-      getPublicBlog(@Arg("slug") slug: string) {
+      getPublicBlog(
+        @Arg("slug") slug: string
+      ) {
         return Blog.findOne({
           where: { slug },
           relations: ["posts", "author"], 
         });
-}
+    }
 
 
 }

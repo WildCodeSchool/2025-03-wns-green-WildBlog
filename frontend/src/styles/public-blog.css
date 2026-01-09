@@ -3,15 +3,15 @@
 }
 
 .post-card {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
-    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); */
     transition: box-shadow 0.2s ease, transform 0.2s ease;
     width: 100%;
     overflow: hidden;
     padding: 1rem;
     cursor: pointer;
+    min-height: 400px;;
 }
 
 .post-card h3 {
@@ -53,7 +53,7 @@
 
 .post-card-content {
     font-size: 0.75rem;
-    color: #4b5563;
+    color: var(--color-wild-text-grey);
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 3; 
@@ -61,10 +61,17 @@
     overflow: hidden;
 }
 
-
 .post-card-content p{
     font-size: 0.75rem;
-    color: #4b5563;
+    color: var(--color-wild-text-grey);
     line-height: 1.4;
+    font-weight:400;
 }
 
+.post-card-content img {
+  display: none;
+}
+
+section.cover-image-home-blog {
+    min-height: 100px;
+}

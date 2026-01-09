@@ -4,7 +4,7 @@ import { LOGIN } from "../gql/auth/login";
 import { useNavigate } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client/react";
 import { AUTH_TOKEN } from "../constants";
-import { CURRENT_USER } from "../gql/auth/context";
+import { CURRENT_USER } from "../gql/auth/getCurrentUser";
 import type { UserData } from "../types/UserData";
 import { useAuth } from "../hooks/useAuth";
 
