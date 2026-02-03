@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_POSTS = gql`
     query GetPosts {
         getPosts {
+        id
         title
         slug
         content
@@ -33,6 +34,8 @@ export const GET_POSTS = gql`
             updatedAt
             name
         }
+        likes
+        comments
         }
     }
 `;

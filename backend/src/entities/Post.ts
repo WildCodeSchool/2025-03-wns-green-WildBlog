@@ -57,6 +57,14 @@ export class Post extends BaseTimeEntity {
     @Field({ nullable: true })
     publicationEndDate: Date;
 
+    @Column({ type: 'int', default: 0 })
+    @Field(() => Number)
+    likes: number;
+
+    @Column({ type: 'int', default: 0 })
+    @Field(() => Number)
+    comments: number;
+
     @BeforeInsert()
     @BeforeUpdate()
     generateSlug() {
@@ -110,4 +118,5 @@ export class Post extends BaseTimeEntity {
     get statusLabel(): string {
       return this.status // pour récupérer la value et non le case de l'enum
     }
+    
 }

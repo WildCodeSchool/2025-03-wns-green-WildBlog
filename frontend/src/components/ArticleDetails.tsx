@@ -1,4 +1,3 @@
-import img from "../assets/image_IT.jpg";
 import Comments from "./Comments.tsx";
 
 export default function ArticleDetails() {    
@@ -6,7 +5,7 @@ export default function ArticleDetails() {
     return (      
         <div className="article-container flex:auto flex-col m-10 p-20 max-w-700 md:auto">
             <img className="article-image block mx-auto w-150 max-w-200 h-150 mb-10 rounded-lg shadow-lg "
-                src={img}
+                src="/src/assets/image_IT.jpg"
                 alt="IA" />
             <h2>L’IA : entre révolution technologique et défi humain</h2>
             <p className="article-text text-start mb-10 " >
