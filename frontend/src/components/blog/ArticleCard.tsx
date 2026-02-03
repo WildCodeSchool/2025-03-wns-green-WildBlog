@@ -23,7 +23,6 @@ interface GetPostByIdData {
       name: string;
     };
     likes: number;
-    comments: number;
   };
 }
 
@@ -82,7 +81,7 @@ export default function ArticleCard({ id }: ArticleProps) {
           <span>🤍</span> <span>{post.likes}</span>
         </div>
         <div className="flex items-center gap-1">
-          <span>💬</span> <span>{post.comments}</span>
+          <span>💬</span> <span>{}</span>
         </div>
       </div>
     </div>

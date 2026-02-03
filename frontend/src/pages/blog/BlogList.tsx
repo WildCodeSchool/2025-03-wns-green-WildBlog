@@ -21,7 +21,6 @@ interface Post {
     email: string;
   };
   likes: number;
-  comments: number;
 }
 interface GetPublicPostsData {
   getPublicPosts: Post[];
