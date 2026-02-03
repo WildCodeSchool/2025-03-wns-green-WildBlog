@@ -17,10 +17,10 @@ export const GET_POST_BY_ID = gql `
         name
         }
         author {
-        lastName
-        firstName
-        email
-        id
+            lastName
+            firstName
+            email
+            id
         }
     }
     }`

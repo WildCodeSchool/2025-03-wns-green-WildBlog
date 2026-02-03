@@ -28,6 +28,9 @@ import { Stats } from './pages/admin/Stats.tsx';
 import { Settings } from './pages/admin/Settings.tsx';
 import { Update } from './pages/admin/post/Update.tsx';
 import { PostDetails } from './pages/admin/post/PostDetails.tsx';
+import { PublicBlog } from './pages/blog/PublicBlog.tsx';
+import { PublicPostDetails } from './pages/blog/PublicPostDetails.tsx';
+import { BlogLayout } from './components/blog/BlogLayout.tsx';
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -57,13 +60,19 @@ createRoot(document.getElementById('root')!).render(
     <ApolloProvider client={client}>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
+          <Routes>            
             <Route path="/" element={<App />} />
             <Route path="/style-guide" element={<DesignSystem />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
+
+            <Route path="/blog/:blogSlug" element={<BlogLayout />}>
+              <Route index element={<PublicBlog />} />
+              <Route path=":postSlug" element={<PublicPostDetails />} />
+            </Route>
+            
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

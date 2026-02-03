@@ -18,6 +18,8 @@ export function PostDetails() {
   const post = data?.getPostById;
   if (!post) return null;
 
+  console.log(post);
+
   return (
 
     <DashboardLayout>

@@ -8,6 +8,8 @@
 @import "./styles/status-badges.css";
 @import "./styles/dropdown-button.css";
 @import "./styles/tiptap.css";
+
+@import "./styles/public-blog.css";
   
 body{
   color: var(--color-wild-text-grey);
@@ -40,6 +42,15 @@ nav{
   padding: 1rem 0;
 }
 
+nav.blog{
+  display: flex;
+  padding: 2.2rem;
+}
+
+nav.blog > div {
+  width: 100%;
+}
+
 @layer base {
   input, textarea {
     padding: 0.7rem 1rem;
@@ -64,7 +75,7 @@ nav{
 
 a {
   font-size: 0.8rem;
-  font-weight:400;
+  font-weight:500;
 }
 
 /* form */

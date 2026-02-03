@@ -1,7 +1,7 @@
 import Navbar from "./LandingNavbar";
 import Footer from "./LandingFooter";
 
-export default function BlogLayout({ children }: { children: React.ReactNode }) {
+export default function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
