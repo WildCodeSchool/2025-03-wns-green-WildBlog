@@ -1,29 +1,11 @@
 import { useQuery } from "@apollo/client/react";
 import { GET_POST_BY_ID } from "../../gql/posts/getPostById";
 import { useNavigate } from "react-router-dom";
-
+import { formatDate } from "../../utils/date";
 
 type ArticleProps = {
   id: number;
 };
-
-interface PostsProps {
-  title: string;
-  author: {
-    firstName: string;
-    lastName: string;
-  };
-  content: string;
-  image: string;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  category: {
-    id: number;
-    name: string;
-  };
-  likes: number;
-  comments: number;
-}
 
 interface GetPostByIdData {
   getPostById: {
@@ -41,7 +23,6 @@ interface GetPostByIdData {
       name: string;
     };
     likes: number;
-    comments: number;
   };
 }
 
@@ -56,30 +37,11 @@ export default function ArticleCard({ id }: ArticleProps) {
     variables: { id: numericId },
   });
 
-
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   if (!data) return <p>Aucun article trouvé</p>;
 
   const post = data.getPostById;
-  const posts = {
-    title: post.title,
-    author: {
-      firstName: post.author.firstName,
-      lastName: post.author.lastName,
-    },
-    content: post.content,
-    image: post.coverImage,
-    createdAt: post.createdAt,
-    updatedAt: post.updatedAt,
-    category: {
-      id: post.category.id,
-      name: post.category.name,
-    },
-    likes: post.likes,
-    comments: post.comments,
-  } as PostsProps;
 
  const handleClick = () => {
     navigate(`/Article/${id}`);
@@ -93,25 +55,21 @@ export default function ArticleCard({ id }: ArticleProps) {
           {`${post.author.firstName} ${post.author.lastName}`}
         </p>
         <p className="text-xs text-gray-500">
-          {posts.category.name} –{" "}
-          {new Date(posts.createdAt).toLocaleDateString("fr-FR", {
-            day: "2-digit",
-            month: "short",
-          })}
+          {formatDate(post.createdAt)}
         </p>
       </div>
 
       <div className="px-4 mt-2">
         <img
-          src={posts.image}
-          alt={posts.title}
+          src={post.coverImage}
+          alt={post.title}
           className="w-full h-44 rounded-lg object-cover"
         />
       </div>
 
       <div className="px-4 py-3">
         <p className="font-semibold text-gray-900 text-[15px] line-clamp-2">
-          {posts.title}
+          {post.title}
         </p>
         <div className="prose lg:prose-xl"
                 dangerouslySetInnerHTML={{ __html: post.content }}
@@ -120,10 +78,10 @@ export default function ArticleCard({ id }: ArticleProps) {
 
       <div className="flex items-center gap-4 px-4 pb-3 text-gray-500 text-sm">
         <div className="flex items-center gap-1">
-          <span>🤍</span> <span>{posts.likes}</span>
+          <span>🤍</span> <span>{post.likes}</span>
         </div>
         <div className="flex items-center gap-1">
-          <span>💬</span> <span>{posts.comments}</span>
+          <span>💬</span> <span>{}</span>
         </div>
       </div>
     </div>

@@ -33,7 +33,6 @@ export const GET_PUBLIC_POSTS = gql`
                 name
             }
             likes
-            comments
         }
     }
 `;

@@ -14,7 +14,6 @@ import { AuthResolver } from './resolvers/AuthResolver';
 import { User } from './entities/User';
 import jwt from 'jsonwebtoken';
 
-
 dotenv.config();
 
 const start = async () => {
