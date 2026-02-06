@@ -1,0 +1,14 @@
+{
+  "name": "wildblog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker": "bash ./bin/dockerTools.sh",
+    "dev": "docker compose --env-file .env -f docker-compose.yaml up -d --build",
+    "dev-stop": "docker compose --env-file .env -f docker-compose.yaml down",
+    "clean": "docker system prune -af --volumes"
+  },
+  "author": "",
+  "license": "ISC"
+}
