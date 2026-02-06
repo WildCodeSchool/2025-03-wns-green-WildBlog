@@ -1,5 +1,6 @@
-import { Resolver, Mutation, Arg, Query, Ctx, ID, Int } from 'type-graphql';
+import { Resolver, Mutation, Arg, Query, Ctx, ID, Int, FieldResolver, Root } from 'type-graphql';
 import { Post } from '../entities/Post';
+import { Comment } from '../entities/Comment';
 import { PostInput } from '../inputs/post/PostInput';
 import { User } from '../entities/User';
 import { Category } from '../entities/Category';
@@ -9,6 +10,7 @@ import { Context } from 'vm';
 import { UpdatePostInput } from '../inputs/post/UpdatePostInput';
 import { PostService } from '../services/PostService';
 import { PostStatus } from '../enums/PostStatus';
+import { processImageUrl } from '../utils/imageUtils';
 
 
 @Resolver(Post)
@@ -30,7 +32,7 @@ export class PostResolver {
       try {
         let post = await Post.findOneOrFail({ 
           where: {id},
-          relations: ["author", "category", "tags"]
+          relations: ["author", "category", "tags", "likes"]
          });
 
         if (data.categoryId) {
@@ -64,7 +66,7 @@ export class PostResolver {
     async getPostById(@Arg('id', () => Int) postId: number) {
       const post = await Post.findOne({
         where: { id: postId },
-        relations: ["author", "category", "tags"]
+        relations: ["author", "category", "tags", "likes"]
       });
 
       if (!post) {
@@ -106,7 +108,7 @@ export class PostResolver {
         take,
         where,
         order: { createdAt: "DESC" },
-        relations: ["author", "category", "tags"]
+        relations: ["author", "category", "tags", "likes"]
       });
       return posts;
     }
@@ -130,7 +132,7 @@ export class PostResolver {
         take: take * 2, // Prendre plus de posts pour compenser le filtrage
         where,
         order: { createdAt: "DESC" },
-        relations: ["author", "category", "tags"]
+        relations: ["author", "category", "tags", "likes"]
       });
 
       // Filtrer manuellement les posts publiés
@@ -171,7 +173,7 @@ export class PostResolver {
                 slug: blogSlug,
               },
             },
-            relations: ["blog", "author", "category", "tags"],
+            relations: ["blog", "author", "category", "tags", "likes"],
           });
 
           return post;
@@ -191,8 +193,23 @@ export class PostResolver {
             blog: { slug: blogSlug },
           },
           order: { createdAt: "DESC" },
-          relations: ["blog", "author", "category", "tags", "blog.author"],
+          relations: ["blog", "author", "category", "tags", "blog.author", "likes"],
         });
+      }
+
+      // Field resolver pour calculer le nombre de commentaires
+      @FieldResolver(() => Int)
+      async commentsCount(@Root() post: Post): Promise<number> {
+        const count = await Comment.count({ 
+          where: { post: { id: post.id } }
+        });
+        return count;
+      }
+
+      // Field resolver pour processer les URLs des images
+      @FieldResolver(() => String, { nullable: true })
+      coverImage(@Root() post: Post): string | null {
+        return processImageUrl(post.coverImage);
       }
 
 }

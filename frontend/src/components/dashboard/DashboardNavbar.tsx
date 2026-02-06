@@ -39,14 +39,11 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
         <NavbarToggle onClick={onToggleSidebar} />
       </div>
 
-      <div>
-        {blog?.name}
-      </div>
       
       <div className="ml-auto flex items-center gap-4">
         <a
           href={blogSlug ? `/blog/${blogSlug}` : undefined}
-          className={`flex items-center gap-1 text-sm font-medium btn-blog ${
+          className={`flex items-center gap-1 text-sm font-medium  btn-blog ${
             !blogSlug ? "opacity-50 pointer-events-none" : ""
           }`}
           target="_blank"
@@ -66,14 +63,14 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
                   rounded
                   alt="utilisateur connecté"
                 />
-                <span className="hidden md:inline text-sm">{user?.firstName} { user?.lastName}</span>
-                <HiChevronDown className="w-5 h-5 text-gray-500" />
+                <span className="hidden md:inline text-sm text-white">{user?.firstName} { user?.lastName}</span>
+                <HiChevronDown className="w-5 h-5 text-white" />
               </div>
             }
           >
             <DropdownHeader>
-              <span className="block text-sm">{user?.firstName} { user?.lastName}</span>
-              <span className="block truncate text-sm font-medium">{user?.email} </span>
+              <span className="block text-sm text-white">{user?.firstName} { user?.lastName}</span>
+              <span className="block truncate text-sm font-medium text-white">{user?.email} </span>
             </DropdownHeader>
             <DropdownItem>
               <Link to="/admin/profil">

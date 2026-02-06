@@ -1,58 +1,59 @@
+import { ReactNode } from "react";
 import { useQuery } from "@apollo/client/react";
 import { useParams } from "react-router-dom";
 import { PublicBlogContext } from "./PublicBlogContext";
-import { GET_PUBLIC_BLOG } from "../gql/blog/getPublicBlog";
 import { GET_PUBLIC_POSTS_BY_BLOG } from "../gql/posts/getPublicPostsByBlog";
-import type { BlogData } from "../types/Blogdata";
-import type { PostData } from "../types/PostData";
-import type { ReactNode } from "react";
+import { PublicBlogContextType } from "../types/PublicBlogContextType";
+import { BlogData } from "../types/Blogdata";
+import { PostData } from "../types/PostData";
 
-interface GetPublicBlogData {
-  getPublicBlog: BlogData;
-}
 
-interface GetPublicPostsByBlogData {
-  getPublicPostsByBlog: PostData[];
-}
 
 interface PublicBlogProviderProps {
   children: ReactNode;
 }
 
+interface PublicPost {
+  id: string;
+  author: string;
+  name: string;
+  description: string;
+  slug: string;
+  categories: string[];
+  posts: string[];
+  logo: string | null;
+  blog?: BlogData;
+}
+
+interface GetPublicPostsByBlogResponse {
+  getPublicPostsByBlog: PublicPost[];
+}
+
 export function PublicBlogProvider({ children }: PublicBlogProviderProps) {
   const { blogSlug } = useParams<{ blogSlug: string }>();
 
-  const { data: blogData, loading: blogLoading, error: blogError } = useQuery<GetPublicBlogData>(
-    GET_PUBLIC_BLOG,
-    {
-      variables: { slug: blogSlug },
-      skip: !blogSlug,
-    }
-  );
-
-  const { data: postsData, loading: postsLoading, error: postsError } = useQuery<GetPublicPostsByBlogData>(
+  const { data, loading, error } = useQuery<GetPublicPostsByBlogResponse>(
     GET_PUBLIC_POSTS_BY_BLOG,
     {
-      variables: { blogSlug },
+      variables: { blogSlug: blogSlug || "" },
       skip: !blogSlug,
-    }
+    },
   );
 
-  const blog = blogData?.getPublicBlog ?? null;
-  const posts = postsData?.getPublicPostsByBlog ?? [];
+   // Extraction des données avec valeurs par défaut
+  const posts = data?.getPublicPostsByBlog ?? [];
+  const blog = posts.length > 0 ? posts[0].blog ?? null : null;
 
-  const loading = blogLoading || postsLoading;
-  const error = blogError || postsError || null;
+  const value: PublicBlogContextType = {
+    blog,
+    posts: posts as unknown as PostData[],
+    loading,
+    error: error ?? null,
+  };
+
 
   return (
-    <PublicBlogContext.Provider
-      value={{
-        blog,
-        posts,
-        loading,
-        error,
-      }}
-    >
+    <PublicBlogContext.Provider value={value}>
       {children}
     </PublicBlogContext.Provider>
   );

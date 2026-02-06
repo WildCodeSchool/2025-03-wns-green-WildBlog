@@ -32,7 +32,8 @@ export const GET_PUBLIC_POSTS = gql`
                 updatedAt
                 name
             }
-            likes
+            likesCount
+            commentsCount
         }
     }
 `;
