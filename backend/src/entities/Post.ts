@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, JoinTable, Index } from "typeorm"
+import { Entity, Column, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, JoinTable, Index } from "typeorm"
 import { Field, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
