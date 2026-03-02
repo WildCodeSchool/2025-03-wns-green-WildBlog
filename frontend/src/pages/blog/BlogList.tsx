@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client/react";
 import { GET_PUBLIC_POSTS } from "../../gql/posts/getPublicPosts";
 import ArticleCard from "../../components/blog/ArticleCard";
+import LandingLayout from "../../components/landingPage/LandingLayout";
+
 
 interface Post {
   id: number;
@@ -79,6 +81,7 @@ export default function BlogList() {
     );
 
   return (
+<LandingLayout>
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {posts.length === 0 ? (
@@ -136,5 +139,6 @@ export default function BlogList() {
         )}
       </div>
     </div>
+    </LandingLayout>
   );
 }

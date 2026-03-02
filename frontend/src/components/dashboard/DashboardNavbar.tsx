@@ -63,14 +63,14 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
                   rounded
                   alt="utilisateur connecté"
                 />
-                <span className="hidden md:inline text-sm text-white">{user?.firstName} { user?.lastName}</span>
-                <HiChevronDown className="w-5 h-5 text-white" />
+                <span className="hidden md:inline text-sm text-dark">{user?.firstName} { user?.lastName}</span>
+                <HiChevronDown className="w-5 h-5 text-dark" />
               </div>
             }
           >
             <DropdownHeader>
-              <span className="block text-sm text-white">{user?.firstName} { user?.lastName}</span>
-              <span className="block truncate text-sm font-medium text-white">{user?.email} </span>
+              <span className="block text-sm text-dark">{user?.firstName} { user?.lastName}</span>
+              <span className="block truncate text-sm font-medium text-dark">{user?.email} </span>
             </DropdownHeader>
             <DropdownItem>
               <Link to="/admin/profil">
