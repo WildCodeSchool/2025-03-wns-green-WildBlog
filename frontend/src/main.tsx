@@ -1,14 +1,14 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './App.css';
-import App from './App.tsx';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Login from './pages/Login.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./App.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Login from "./pages/Login.tsx";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
-import { Home } from './pages/admin/Home.tsx';
-import Signup from './pages/Signup.tsx';
-import DesignSystem from './pages/DesignSystem.tsx';
+import { Home } from "./pages/admin/Home.tsx";
+import { HomePage } from "./pages/HomePage.tsx";
+import Signup from "./pages/Signup.tsx";
+import DesignSystem from "./pages/DesignSystem.tsx";
 import { ApolloLink } from "@apollo/client/core";
 import { AUTH_TOKEN } from './constants.tsx';
 import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
@@ -55,15 +55,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>            
-            <Route path="/" element={<App />} />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/style-guide" element={<DesignSystem />} />
-            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blogList" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
@@ -78,39 +78,38 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/signup" element={<Signup />} />
             </Route>
 
-            <Route path="/admin" element={<ProtectedRoute />}> 
+            <Route path="/admin" element={<ProtectedRoute />}>
               <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<Home />} />
               <Route path="profil" element={<Profile />} />
-              
+
               {/* Mes articles */}
-              <Route path="articles/mes-articles" element= {<List/>} />
-              <Route path="articles/creer" element= {<Create/>} />
-              <Route path="articles/:id/modifier" element= {<Update/>} />
-              <Route path="articles/:id" element={<PostDetails/>} />
+              <Route path="articles/mes-articles" element={<List />} />
+              <Route path="articles/creer" element={<Create />} />
+              <Route path="articles/:id/modifier" element={<Update />} />
+              <Route path="articles/:id" element={<PostDetails />} />
 
               {/* Catégories */}
-              <Route path="categories" element= {<Categories/>} />
+              <Route path="categories" element={<Categories />} />
 
               {/* Tags */}
-              <Route path="tags" element= {<Tags/>} />
-              
+              <Route path="tags" element={<Tags />} />
+
               {/* Médias */}
-              <Route path="medias" element= {<Medias/>} />
+              <Route path="medias" element={<Medias />} />
 
               {/* Commentaires */}
-              <Route path="commentaires" element= {<Comments/>} />
+              <Route path="commentaires" element={<Comments />} />
 
               {/* Stats */}
-              <Route path="statistiques" element= {<Stats/>} />
+              <Route path="statistiques" element={<Stats />} />
 
               {/* Paramètres */}
-              <Route path="parametres" element= {<Settings/>} />
+              <Route path="parametres" element={<Settings />} />
             </Route>
-
           </Routes>
         </BrowserRouter>
       </AuthProvider>
     </ApolloProvider>
-  </StrictMode>
+  </StrictMode>,
 );
