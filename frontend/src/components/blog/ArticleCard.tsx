@@ -87,7 +87,7 @@ export default function ArticleCard({ id }: ArticleProps) {
 
   return (
     <>
-    <div className="bg-white rounded-[14px] border border-gray-200 shadow-sm hover:shadow-md transition-all max-w-[360px] w-full overflow-hidden cursor-pointer" onClick={handleClick}>
+    <div className="bg-white rounded-[14px] border border-gray-200 shadow-sm hover:shadow-md transition-all max-w-90 w-full overflow-hidden cursor-pointer" onClick={handleClick}>
       <div className="px-4 pt-3">
         <p className="text-sm font-medium text-gray-800">
           {`${post.author.firstName} ${post.author.lastName}`}
