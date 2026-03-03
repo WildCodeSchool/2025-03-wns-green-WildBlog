@@ -10,6 +10,7 @@ interface GetPostByIdData {
     id: number;
     title: string;
     author: {
+      id: number;
       firstName: string;
       lastName: string;
     };
@@ -81,8 +82,11 @@ export default function ArticlePage() {
       <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Header avec bouton retour */}
         <div className="mb-8">
-          <button className="ghost mb-4" onClick={() => navigate("/blog")}>
-            ← Retour au blog
+          <button
+            className="ghost mb-4"
+            onClick={() => navigate(`/profile/${post.author.id}`)}
+          >
+            ← Retour au profil
           </button>
         </div>
 
@@ -141,7 +145,10 @@ export default function ArticlePage() {
 
         {/* Actions en bas */}
         <div className="mt-8 flex justify-between items-center">
-          <button className="outline" onClick={() => navigate("/blog")}>
+          <button
+            className="outline"
+            onClick={() => navigate(`/profile/${post.author.id}`)}
+          >
             ← Articles précédents
           </button>
 
