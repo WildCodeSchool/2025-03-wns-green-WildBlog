@@ -5,7 +5,6 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
-import img from "../../assets/WildBlog2.png";
 import { useNavigate } from "react-router-dom";
 
 export function NavBarHome() {
@@ -13,7 +12,6 @@ export function NavBarHome() {
 
   return (
     <Navbar className="bg-white! border-b border-gray-200">
-      <img src={img} className="mr-10 h-50 sm:h-50" alt="Logo" />
       <span className=" m-10 text-xl font-bold text-center ml:text-center text-wild-blue">
         WildBlog
       </span>
@@ -30,8 +28,6 @@ export function NavBarHome() {
         <NavbarLink href="landingPage" active>
           Accueil
         </NavbarLink>
-        <NavbarLink href="landingPage">Produits</NavbarLink>
-        <NavbarLink href="landingPage">Fonctionnalités</NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );
