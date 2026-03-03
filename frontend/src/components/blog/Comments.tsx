@@ -44,9 +44,10 @@ interface CreateCommentData {
 
 interface CommentsProps {
   postId: number;
+  commentsCount?: number;
 }
 
-export default function Comments({ postId }: CommentsProps) {
+export default function Comments({ postId, commentsCount }: CommentsProps) {
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [anonymousName, setAnonymousName] = useState("");
@@ -185,7 +186,7 @@ export default function Comments({ postId }: CommentsProps) {
   return (
     <div className="mt-12 bg-white rounded-lg border border-gray-200 p-6">
       <h3 className="text-xl font-bold text-gray-900 mb-6">
-        Commentaires ({comments.length})
+        Commentaires ({commentsCount ?? comments.length})
       </h3>
 
       {/* Formulaire d'ajout de commentaire */}

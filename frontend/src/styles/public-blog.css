@@ -72,6 +72,24 @@
   display: none;
 }
 
+.post-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.75rem;
+}
+
+.comments-count {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-wild-text-grey);
+  font-weight: 500;
+}
+
 section.cover-image-home-blog {
     min-height: 100px;
 }

@@ -26,4 +26,5 @@ export type PostData = {
     name: string;
   }[];
   likesCount?: number;
+  commentsCount: number;
 };

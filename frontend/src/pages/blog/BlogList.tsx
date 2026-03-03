@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client/react";
-import { GET_PUBLIC_POSTS } from "../../gql/posts/getPublicPosts";
+import { GET_PUBLIC_POST } from "../../gql/posts/getPublicPost";
 import ArticleCard from "../../components/blog/ArticleCard";
 import LandingLayout from "../../components/landingPage/LandingLayout";
 
@@ -35,7 +35,7 @@ export default function BlogList() {
   const [visibleCount, setVisibleCount] = useState(6);
 
   const { data, loading, error } = useQuery<GetPublicPostsData>(
-    GET_PUBLIC_POSTS,
+    GET_PUBLIC_POST,
     {
       errorPolicy: "all",
       fetchPolicy: "cache-and-network",

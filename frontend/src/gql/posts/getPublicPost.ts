@@ -25,6 +25,10 @@ query GetPublicPost($postSlug: String!, $blogSlug: String!) {
       name
       description
     }
+    likesCount
+    commentsCount
+    createdAt
+    updatedAt
   }
 }`
 ;

@@ -66,6 +66,7 @@ export default function PostCard({ post, blogSlug }: PostCardProps) {
         >
           {isLiked ? "💙" : "🤍"} {likesCount}
         </button>
+        <div className="comments-count">💬 {post.commentsCount || 0}</div>
       </div>
     </div>
   );

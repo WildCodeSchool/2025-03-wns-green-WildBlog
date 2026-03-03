@@ -26,6 +26,7 @@ query GetPublicPostsByBlog($blogSlug: String!) {
     blog {
       id
       name
+      slug
       author {
         id
         email
@@ -33,5 +34,7 @@ query GetPublicPostsByBlog($blogSlug: String!) {
     }
     likesCount
     commentsCount
+    createdAt
+    updatedAt
   }
 }`

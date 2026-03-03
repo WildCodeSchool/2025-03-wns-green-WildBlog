@@ -157,7 +157,7 @@ export default function ArticlePage() {
         </div>
 
         {/* Section des commentaires */}
-        <Comments postId={numericId} />
+        <Comments postId={numericId} commentsCount={post.commentsCount} />
       </div>
     </div>
   );
