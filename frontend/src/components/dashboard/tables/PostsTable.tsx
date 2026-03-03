@@ -6,7 +6,7 @@ import { DropdownActionButton } from "../DropdownActionButton";
 import { useState } from "react";
 import { ConfirmModal } from "../ConfirmModal";
 import { useMutation } from "@apollo/client/react";
-import { DELETE_POST } from "../../../gql/posts/deletePost";
+import { DELETE_POST } from '../../../gql/posts/deletePost';
 import { useNavigate } from "react-router-dom";
 
 interface PostsTableProps {
@@ -36,7 +36,7 @@ export function PostsTable({posts}: PostsTableProps) {
       console.log("post supprimé");
       setOpenModal(false);
       setSelectedPost(null);
-      setPostList(posts.filter(post => Number(post.id) !== selectedPostId));
+      setPostList(prev => prev.filter(post => Number(post.id) !== selectedPostId));
     } catch(error) {
         console.error("Erreur lors de la suppression :", error);
     }
@@ -86,7 +86,7 @@ export function PostsTable({posts}: PostsTableProps) {
             openModal={openModal}
             closeModal={() => setOpenModal(false)}
             message={`Êtes-vous sûr de vouloir supprimer l'article : " ${selectedPost?.title} " ?`}
-            onConfirm={()=> handleDelete(Number(selectedPost!.id))}
+            onConfirm={() => { if (selectedPost) handleDelete(Number(selectedPost.id)); }}
           />
       </div>
     </>
