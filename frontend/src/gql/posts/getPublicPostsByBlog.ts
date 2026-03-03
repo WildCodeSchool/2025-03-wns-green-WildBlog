@@ -31,5 +31,7 @@ query GetPublicPostsByBlog($blogSlug: String!) {
         email
       }
     }
+    likesCount
+    commentsCount
   }
 }`

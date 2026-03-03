@@ -24,7 +24,7 @@ export function PostDetails() {
 
     <DashboardLayout>
         <article className="mx-auto max-w-3xl py-8">
-            <h1 className="mb-4 pb-4 text-3xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">
+            <h1 className="mb-4 pb-4 text-3xl font-bold text-gray-900 dark:text-black border-b border-gray-200 dark:border-gray-700">
                 {post.title}
             </h1>
             <p className="text-xs text-wild-text-grey mb-1">

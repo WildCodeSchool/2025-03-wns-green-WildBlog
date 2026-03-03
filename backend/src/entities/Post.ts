@@ -6,8 +6,10 @@ import { User } from "./User";
 import slugify from "slugify";
 import { Category } from "./Category";
 import { Tag } from "./Tag";
+import { Comment } from "./Comment";
 import { PostStatus } from "../enums/PostStatus";
 import { registerEnumType } from "type-graphql";
+import { Like } from "./Like";
 
 registerEnumType(PostStatus, {
   name: "PostStatus",
@@ -59,11 +61,7 @@ export class Post extends BaseTimeEntity {
 
     @Column({ type: 'int', default: 0 })
     @Field(() => Number)
-    likes: number;
-
-    @Column({ type: 'int', default: 0 })
-    @Field(() => Number)
-    comments: number;
+    commentsCount: number;
 
     @BeforeInsert()
     @BeforeUpdate()
@@ -75,12 +73,14 @@ export class Post extends BaseTimeEntity {
       });    
     }
 
-
-
     @ManyToMany(() => Tag, tag => tag.posts )
     @JoinTable()
     @Field(() => [Tag])
     tags: Tag[]
+
+    @OneToMany(() => Comment, comment => comment.post)
+    @Field(() => [Comment], { nullable: true })
+    comments: Comment[]
 
     @Column({
       type:"enum",  
@@ -119,4 +119,12 @@ export class Post extends BaseTimeEntity {
       return this.status // pour récupérer la value et non le case de l'enum
     }
     
+    @Field(() => [Like])
+    @OneToMany(() => Like, (like) => like.post, { cascade: true })
+    likes: Like[];
+
+    @Field(() => Int)
+    get likesCount(): number {
+      return this.likes ? this.likes.length : 0;
+    }
 }
