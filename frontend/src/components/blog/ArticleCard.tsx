@@ -81,6 +81,23 @@ export default function ArticleCard({ post }: ArticleProps) {
             {formatDate(postData.createdAt)}
           </p>
         </div>
+    <div className="bg-white rounded-[14px] border border-gray-200 shadow-sm hover:shadow-md transition-all max-w-90 w-full overflow-hidden cursor-pointer" onClick={handleClick}>
+      <div className="px-4 pt-3">
+        <p className="text-sm font-medium text-gray-800">
+          {`${post.author.firstName} ${post.author.lastName}`}
+        </p>
+        <p className="text-xs text-gray-500">
+          {formatDate(post.createdAt)}
+        </p>
+      </div>
+
+      <div className="px-4 mt-2">
+        <img
+          src={post.coverImage}
+          alt={post.title}
+          className="w-full h-44 rounded-lg object-cover"
+        />
+      </div>
 
         <div className="px-4 mt-2">
           {data?.getPostById?.coverImage && (
