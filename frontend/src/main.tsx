@@ -2,13 +2,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login.tsx";
+import Login from "./pages/Login";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
-import { Home } from "./pages/admin/Home.tsx";
-import { HomePage } from "./pages/HomePage.tsx";
-import Signup from "./pages/Signup.tsx";
-import DesignSystem from "./pages/DesignSystem.tsx";
+import { Home } from "./pages/admin/Home";
+import { HomePage } from "./pages/HomePage";
+import Signup from "./pages/Signup";
+import DesignSystem from "./pages/DesignSystem";
 import { ApolloLink } from "@apollo/client/core";
 import { AUTH_TOKEN } from "./constants";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
@@ -16,7 +16,7 @@ import { Profile } from "./pages/admin/Profile";
 import { GuestRoute } from "./routes/GuestRoute";
 import { AuthProvider } from "./contexts/AuthProvider";
 import BlogList from "./pages/blog/BlogList";
-import ArticlePage from "./pages/ArticlePage";
+import Article from "./pages/ArticlePage";
 import { List } from "./pages/admin/post/List";
 import { Create } from "./pages/admin/post/Create";
 import { Categories } from "./pages/admin/Categories";
@@ -30,6 +30,7 @@ import { PostDetails } from "./pages/admin/post/PostDetails";
 import { PublicBlog } from "./pages/blog/PublicBlog";
 import { PublicPostDetails } from "./pages/blog/PublicPostDetails";
 import { BlogLayout } from "./components/blog/BlogLayout";
+import ArticlePage from "./pages/ArticlePage";
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -62,7 +63,7 @@ createRoot(document.getElementById("root")!).render(
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/style-guide" element={<DesignSystem />} />
-            <Route path="/blogList" element={<BlogList />} />
+            <Route path="/blog" element={<BlogList />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 

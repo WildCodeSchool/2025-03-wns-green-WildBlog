@@ -1,5 +1,5 @@
-import { Entity, Column, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, JoinTable, Index } from "typeorm"
-import { Field, ObjectType } from "type-graphql"
+import { Entity, Column, ManyToOne, BeforeInsert, BeforeUpdate, ManyToMany, OneToMany, JoinTable, Index } from "typeorm"
+import { Field, Int, ObjectType } from "type-graphql"
 import { BaseTimeEntity } from "../common/entities/BaseTimeEntity"
 import { Blog } from "./Blog"
 import { User } from "./User";
@@ -128,3 +128,4 @@ export class Post extends BaseTimeEntity {
       return this.likes ? this.likes.length : 0;
     }
 }
+

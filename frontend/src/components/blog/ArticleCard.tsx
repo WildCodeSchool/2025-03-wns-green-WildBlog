@@ -81,54 +81,58 @@ export default function ArticleCard({ post }: ArticleProps) {
             {formatDate(postData.createdAt)}
           </p>
         </div>
-    <div className="bg-white rounded-[14px] border border-gray-200 shadow-sm hover:shadow-md transition-all max-w-90 w-full overflow-hidden cursor-pointer" onClick={handleClick}>
-      <div className="px-4 pt-3">
-        <p className="text-sm font-medium text-gray-800">
-          {`${post.author.firstName} ${post.author.lastName}`}
-        </p>
-        <p className="text-xs text-gray-500">
-          {formatDate(post.createdAt)}
-        </p>
-      </div>
+        <div
+          className="bg-white rounded-[14px] border border-gray-200 shadow-sm hover:shadow-md transition-all max-w-90 w-full overflow-hidden cursor-pointer"
+          onClick={handleClick}
+        >
+          <div className="px-4 pt-3">
+            <p className="text-sm font-medium text-gray-800">
+              {`${post.author.firstName} ${post.author.lastName}`}
+            </p>
+            <p className="text-xs text-gray-500">
+              {formatDate(post.createdAt)}
+            </p>
+          </div>
 
-      <div className="px-4 mt-2">
-        <img
-          src={post.coverImage}
-          alt={post.title}
-          className="w-full h-44 rounded-lg object-cover"
-        />
-      </div>
-
-        <div className="px-4 mt-2">
-          {data?.getPostById?.coverImage && (
+          <div className="px-4 mt-2">
             <img
-              {...getImageProps()}
-              alt={postData.title}
+              src={post.coverImage}
+              alt={post.title}
               className="w-full h-44 rounded-lg object-cover"
             />
-          )}
-        </div>
-
-        <div className="px-4 py-3">
-          <p className="font-semibold text-gray-900 text-[15px] line-clamp-2">
-            {postData.title}
-          </p>
-          <div
-            className="prose lg:prose-xl"
-            dangerouslySetInnerHTML={{ __html: postData.content }}
-          />
-        </div>
-
-        <div className="flex items-center gap-4 px-4 pb-3 text-gray-500 text-sm">
-          <div className="flex items-center gap-1 hover:text-red-500 transition-colors">
-            <span>🤍</span>
-            <span className="font-medium">{postData.likesCount || 0}</span>
-            <span className="text-xs">likes</span>
           </div>
-          <div className="flex items-center gap-1 hover:text-blue-500 transition-colors">
-            <span>💬</span>
-            <span className="font-medium">{postData.commentsCount || 0}</span>
-            <span className="text-xs">commentaires</span>
+
+          <div className="px-4 mt-2">
+            {data?.getPostById?.coverImage && (
+              <img
+                {...getImageProps()}
+                alt={postData.title}
+                className="w-full h-44 rounded-lg object-cover"
+              />
+            )}
+          </div>
+
+          <div className="px-4 py-3">
+            <p className="font-semibold text-gray-900 text-[15px] line-clamp-2">
+              {postData.title}
+            </p>
+            <div
+              className="prose lg:prose-xl"
+              dangerouslySetInnerHTML={{ __html: postData.content }}
+            />
+          </div>
+
+          <div className="flex items-center gap-4 px-4 pb-3 text-gray-500 text-sm">
+            <div className="flex items-center gap-1 hover:text-red-500 transition-colors">
+              <span>🤍</span>
+              <span className="font-medium">{postData.likesCount || 0}</span>
+              <span className="text-xs">likes</span>
+            </div>
+            <div className="flex items-center gap-1 hover:text-blue-500 transition-colors">
+              <span>💬</span>
+              <span className="font-medium">{postData.commentsCount || 0}</span>
+              <span className="text-xs">commentaires</span>
+            </div>
           </div>
         </div>
       </div>
