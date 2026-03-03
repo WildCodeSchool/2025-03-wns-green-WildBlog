@@ -10,27 +10,26 @@ import { HomePage } from "./pages/HomePage.tsx";
 import Signup from "./pages/Signup.tsx";
 import DesignSystem from "./pages/DesignSystem.tsx";
 import { ApolloLink } from "@apollo/client/core";
-import { AUTH_TOKEN } from './constants.tsx';
-import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
-import { Profile } from './pages/admin/Profile.tsx';
-import { GuestRoute } from './routes/GuestRoute.tsx';
-import { AuthProvider } from './contexts/AuthProvider.tsx';
-import BlogList from './pages/blog/BlogList.tsx'
-import ArticlePage from './pages/ArticlePage.tsx'
-import Article from './pages/ArticlePage.tsx';
-import { List } from './pages/admin/post/List.tsx';
-import { Create } from './pages/admin/post/Create.tsx';
-import { Categories } from './pages/admin/Categories.tsx';
-import { Tags } from './pages/admin/Tags.tsx';
-import { Medias } from './pages/admin/Medias.tsx';
-import { Comments } from './pages/admin/Comments.tsx';
-import { Stats } from './pages/admin/Stats.tsx';
-import { Settings } from './pages/admin/Settings.tsx';
-import { Update } from './pages/admin/post/Update.tsx';
-import { PostDetails } from './pages/admin/post/PostDetails.tsx';
-import { PublicBlog } from './pages/blog/PublicBlog.tsx';
-import { PublicPostDetails } from './pages/blog/PublicPostDetails.tsx';
-import { BlogLayout } from './components/blog/BlogLayout.tsx';
+import { AUTH_TOKEN } from "./constants";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { Profile } from "./pages/admin/Profile";
+import { GuestRoute } from "./routes/GuestRoute";
+import { AuthProvider } from "./contexts/AuthProvider";
+import BlogList from "./pages/blog/BlogList";
+import ArticlePage from "./pages/ArticlePage";
+import { List } from "./pages/admin/post/List";
+import { Create } from "./pages/admin/post/Create";
+import { Categories } from "./pages/admin/Categories";
+import { Tags } from "./pages/admin/Tags";
+import { Medias } from "./pages/admin/Medias";
+import { Comments } from "./pages/admin/Comments";
+import { Stats } from "./pages/admin/Stats";
+import { Settings } from "./pages/admin/Settings";
+import { Update } from "./pages/admin/post/Update";
+import { PostDetails } from "./pages/admin/post/PostDetails";
+import { PublicBlog } from "./pages/blog/PublicBlog";
+import { PublicPostDetails } from "./pages/blog/PublicPostDetails";
+import { BlogLayout } from "./components/blog/BlogLayout";
 
 // Lien terminal qui envoie la requête au serveur
 const httpLink = new HttpLink({ uri: "http://localhost:4200/graphql" });
@@ -67,12 +66,11 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticlePage />} />
 
-
             <Route path="/blog/:blogSlug" element={<BlogLayout />}>
               <Route index element={<PublicBlog />} />
               <Route path=":postSlug" element={<PublicPostDetails />} />
             </Route>
-            
+
             <Route element={<GuestRoute />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

@@ -1,30 +1,157 @@
-import Comments from "./Comments.tsx";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client/react";
+import { useState, useEffect } from "react";
+import Comments from "./Comments";
+import { GET_POST_BY_ID } from "../gql/posts/getPostById";
+import { LIKE_POST } from "../gql/likes/likes";
 
-export default function ArticleDetails() {    
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  coverImage: string;
+  publicationStartDate: string;
+  publicationEndDate: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  author: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  likes: number;
+  createdAt?: string;
+}
 
-    return (      
-        <div className="article-container flex:auto flex-col m-10 p-20 max-w-700 md:auto">
-            <img className="article-image block mx-auto w-150 max-w-200 h-150 mb-10 rounded-lg shadow-lg "
-                src="/src/assets/image_IT.jpg"
-                alt="IA" />
-            <h2>L’IA : entre révolution technologique et défi humain</h2>
-            <p className="article-text text-start mb-10 " >
-                Paris, 2025 – Longtemps cantonnée aux laboratoires de recherche et aux récits de science-fiction, l’intelligence artificielle (IA) est désormais partout : dans nos téléphones, nos voitures, nos hôpitaux, et même nos foyers.
-                Elle façonne une nouvelle ère, pleine de promesses… mais aussi de questions. Une révolution silencieuse mais omniprésente.
-                Que l’on demande à son assistant vocal de régler le chauffage, qu’un médecin analyse un scanner avec l’aide d’un algorithme, ou qu’un agriculteur optimise l’irrigation de ses champs grâce à des capteurs connectés, l’IA agit déjà en coulisses. Elle apprend, prédit, recommande.
-                Selon une étude fictive menée par l’Institut Européen de la Technologie, plus de 70 % des entreprises européennes utilisent aujourd’hui au moins une solution basée sur l’IA, contre seulement 15 % en 2018.
-                L’IA créative et artistique
-                Mais l’IA ne se limite plus aux chiffres et aux calculs. Elle compose de la musique, génère des images, aide à l’écriture et même au design. De nombreux artistes collaborent désormais avec des intelligences artificielles pour explorer de nouvelles formes d’expression. Certains parlent d’une « co-création homme-machine ».  
-                Un défi éthique majeurFace à cette montée en puissance, les débats se multiplient : comment encadrer l’IA pour qu’elle reste au service de l’humain ?Faut-il autoriser des IA à prendre des décisions médicales critiques ?
-                Comment éviter les biais algorithmiques qui renforcent des discriminations existantes ?
-                Quelle place restera-t-il aux métiers traditionnels menacés par l’automatisation ?
-                « L’IA n’est ni bonne ni mauvaise en soi, tout dépend de l’usage qu’on en fait », rappelle Pr. Julien Morel, expert fictif en éthique numérique.
-                Un avenir à co-construire
-                Si certains redoutent une perte de contrôle, d’autres voient dans l’IA un formidable levier de progrès : réduction de la consommation énergétique, médecine personnalisée, transports plus sûrs et plus fluides…
-                La clé semble résider dans un équilibre : faire de l’IA un outil, et non une fin. L’avenir de l’intelligence artificielle sera celui que l’humanité choisira de lui donner.
-            </p>
-            <Comments />
-        </div>
+interface GetPostByIdData {
+  getPostById: Post;
+}
+
+interface LikePostData {
+  likePost: {
+    likes: number;
+  };
+}
+
+export default function ArticleDetails() {
+  const { id } = useParams<{ id: string }>();
+  const [likesCount, setLikesCount] = useState<number>(0);
+  const [isLiking, setIsLiking] = useState<boolean>(false);
+
+  const { data, loading, error } = useQuery<GetPostByIdData>(GET_POST_BY_ID, {
+    variables: { id: parseInt(id || "0") },
+    skip: !id,
+    errorPolicy: "all",
+  });
+
+  // Update likes count when data changes
+  useEffect(() => {
+    if (data?.getPostById) {
+      setLikesCount(data.getPostById.likes);
+    }
+  }, [data]);
+
+  const [likePost] = useMutation<LikePostData>(LIKE_POST, {
+    onCompleted: (data) => {
+      setLikesCount(data.likePost.likes);
+    },
+    onError: (error) => {
+      console.error("Erreur lors du like:", error);
+    }
+  });
+  
+  const handleLike = async () => {
+    if (isLiking) return; // Empêche les clics multiples
+    setIsLiking(true);
+    setLikesCount((prev) => prev + 1); // Mise à jour optimiste
+    try {
+      await likePost({
+        variables: { postId: post.id }
+      });
+      
+
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    } catch (error) {
+      console.error("Erreur lors du like:", error);
+      // En cas d'erreur, on remet l'ancien nombre
+      setLikesCount((prev) => prev - 1);
+    } finally {
+      setIsLiking(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="text-center py-20">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-wild-orange"></div>
+        <p className="mt-2 text-wild-text-grey">Chargement de l'article...</p>
+      </div>
     );
+  }
 
-};
+  if (error) {
+    return (
+      <div className="text-center py-20 text-red-500">
+        <p>Erreur lors du chargement de l'article</p>
+        <p className="text-sm mt-2">{error.message}</p>
+      </div>
+    );
+  }
+
+  if (!data?.getPostById) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-gray-600">Article introuvable</p>
+      </div>
+    );
+  }
+
+  const post = data.getPostById;
+
+  function renderContent(content: string | undefined): { __html: string | TrustedHTML; } | undefined {
+    if (!content) return undefined;
+    return { __html: content };
+  }
+
+  return (
+    <div className="article-container flex:auto flex-col m-10 p-20 max-w-700 md:auto">
+      <img
+        className="article-image block mx-auto w-150 max-w-200 h-150 mb-10 rounded-lg shadow-lg"
+        src={post.coverImage}
+        alt={post.title}
+      />
+      <h2 className="text-3xl font-bold mb-4 text-wild-text-grey">
+        {post.title}
+      </h2>
+      <div className="article-meta mb-6 text-sm text-gray-600">
+        <p>
+          Par {post.author?.firstName} {post.author?.lastName}
+        </p>
+        <p>
+          Publié le{" "}
+          {new Date(
+            post.createdAt || post.publicationStartDate || new Date(),
+          ).toLocaleDateString("fr-FR")}
+        </p>
+        <p>Catégorie: {post.category?.name || "Non définie"}</p>
+      </div>
+      <div
+        className="article-text text-start mb-10 prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={renderContent(post.content)}
+      />
+      {post.id && <Comments postId={post.id} />}
+      <div className="flex space-x-4">
+        <button
+          className={`primary ${isLiking ? "opacity-50 cursor-not-allowed" : ""}`}
+          onClick={handleLike}
+          disabled={isLiking}
+        >
+          {isLiking ? "💙" : "🤍"} J'aime ({likesCount})
+        </button>
+      </div>
+    </div>
+  );
+}

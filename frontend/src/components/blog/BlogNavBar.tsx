@@ -16,7 +16,7 @@ export function BlogNavbar() {
           {blog?.logo && (
             <img src={blog.logo} className="mr-3 h-6 sm:h-9" alt={blog.name} />
           )}        
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">{blog?.name}</span>
+        <span className="self-center whitespace-nowrap text-xl font-semibold ">{blog?.name}</span>
       </NavbarBrand>
       <NavbarToggle />
 

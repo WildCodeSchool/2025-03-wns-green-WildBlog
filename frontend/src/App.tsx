@@ -20,11 +20,8 @@ function App() {
       <Link to="/article" className="text-blue-600 underline mt-4 block">
         Article
       </Link>
-      <Link to="/blogList" className="text-blue-600 underline mt-4 block">
+      <Link to="/blogUser" className="text-blue-600 underline mt-4 block">
         Blog
-      </Link>
-      <Link to="/home" className="text-blue-600 underline mt-4 block">
-        Home Page
       </Link>
     </div>
   );
