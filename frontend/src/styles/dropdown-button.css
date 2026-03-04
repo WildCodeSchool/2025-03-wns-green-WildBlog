@@ -8,3 +8,8 @@
     position: static !important;
     overflow: visible !important; 
 }
+
+/* Permet au dropdown de dépasser le conteneur de la table */
+[data-testid='flowbite-table'] {
+    overflow: visible !important;
+}

@@ -21,6 +21,7 @@ export function PublicPostDetails() {
       variables: { blogSlug, postSlug },
     },
   );
+  console.log(blogSlug, postSlug);
 
   const post = data?.getPublicPost || null;
   const numericId = post ? Number(post.id) : 0;

@@ -84,7 +84,7 @@ export default function ArticlePage() {
         <div className="mb-8">
           <button
             className="ghost mb-4"
-            onClick={() => navigate(`/profile/${post.author.id}`)}
+            onClick={() => navigate(`/profile/${post.author?.id}`)}
           >
             ← Retour au profil
           </button>
@@ -108,16 +108,20 @@ export default function ArticlePage() {
             <div className="flex items-center justify-between mb-6 text-sm text-gray-600">
               <div className="flex items-center space-x-4">
                 <span className="font-medium text-wild-text-grey">
-                  {`${post.author.firstName} ${post.author.lastName}`}
+                  {`${post.author?.firstName ?? ""} ${post.author?.lastName ?? ""}`}
                 </span>
                 <span>•</span>
                 <time dateTime={post.createdAt}>
                   {formatDate(post.createdAt)}
                 </time>
-                <span>•</span>
-                <span className="bg-wild-light-blue text-wild-blue px-2 py-1 rounded-full text-xs">
-                  {post.category.name}
-                </span>
+                {post.category && (
+                  <>
+                    <span>•</span>
+                    <span className="bg-wild-light-blue text-wild-blue px-2 py-1 rounded-full text-xs">
+                      {post.category.name}
+                    </span>
+                  </>
+                )}
               </div>
               <div className="flex items-center space-x-4">
                 <button
@@ -147,7 +151,7 @@ export default function ArticlePage() {
         <div className="mt-8 flex justify-between items-center">
           <button
             className="outline"
-            onClick={() => navigate(`/profile/${post.author.id}`)}
+            onClick={() => navigate(`/profile/${post.author?.id}`)}
           >
             ← Articles précédents
           </button>

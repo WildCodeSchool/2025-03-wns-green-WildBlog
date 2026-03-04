@@ -28,10 +28,10 @@ export function BlogNavbar() {
           </span>
         </div>
         <NavbarBrand
-          href="/admin/profil"
+          href="/admin/dashboard"
           className="text-sm text-wild-blue hover:underline mt-1"
         >
-          ← Retour au profil
+          ← Retour au tableau de bord
         </NavbarBrand>
       </div>
       <NavbarToggle />

@@ -108,13 +108,13 @@ export function Medias() {
                       onClick={() => handleCopyUrl(media.url)}
                       className="flex-1 bg-wild-blue text-white py-2 px-3 rounded text-sm hover:bg-wild-dark-blue transition-colors font-medium"
                     >
-                      📋 Copier
+                      Copier
                     </button>
                     <button
                       onClick={() => handleDownload(media.url, media.title)}
                       className="flex-1 bg-wild-orange text-white py-2 px-3 rounded text-sm hover:opacity-90 transition-opacity font-medium"
                     >
-                      ⬇️ Télécharger
+                      Télécharger
                     </button>
                   </div>
                 </div>
