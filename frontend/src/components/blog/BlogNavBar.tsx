@@ -16,7 +16,7 @@ export function BlogNavbar() {
     <Navbar
       fluid
       rounded
-      className="fixed top-0 left-0 right-0 z-50 bg-white blog"
+      className="fixed top-0 left-0 right-0 z-50 bg-white blog h-20"
     >
       <div className="flex flex-col">
         <div className="flex items-center">

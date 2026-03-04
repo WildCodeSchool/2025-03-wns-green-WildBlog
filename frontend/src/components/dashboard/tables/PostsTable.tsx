@@ -53,7 +53,7 @@ export function PostsTable({ posts }: PostsTableProps) {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full ">
         <Table hoverable>
           <TableHead>
             <TableRow>

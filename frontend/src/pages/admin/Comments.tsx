@@ -89,7 +89,7 @@ export function Comments() {
           <div className="bg-white rounded-lg p-12 text-center border-2 border-dashed border-gray-300">
             <p className="text-gray-600 text-lg">Aucun commentaire</p>
             <p className="text-gray-500 mt-2">
-              Les commentaires publié sur vos articles s'afficheront ici
+              Les commentaires publiés sur vos articles s'afficheront ici
             </p>
           </div>
         ) : (

@@ -1,13 +1,12 @@
-
 import {
-    Avatar,
-    Dropdown,
-    DropdownDivider,
-    DropdownHeader,
-    DropdownItem,
-    Navbar,
-    NavbarToggle,
-  } from "flowbite-react";
+  Avatar,
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem,
+  Navbar,
+  NavbarToggle,
+} from "flowbite-react";
 import { HiChevronDown, HiOutlineLogout } from "react-icons/hi";
 import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import { useAuth } from "../../hooks/useAuth";
@@ -20,14 +19,16 @@ interface DashboardNavbarProps {
   onToggleSidebar: () => void;
 }
 
-export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavbarProps) {
-
+export function DashboardNavbar({
+  sidebarOpen,
+  onToggleSidebar,
+}: DashboardNavbarProps) {
   const { user, setUser, blog } = useAuth();
   const navigate = useNavigate();
   const client = useApolloClient();
 
   const blogSlug = blog?.slug;
-  
+
   const handleLogout = () => {
     logout(setUser, client);
     navigate("/login", { replace: true });
@@ -39,7 +40,6 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
         <NavbarToggle onClick={onToggleSidebar} />
       </div>
 
-      
       <div className="ml-auto flex items-center gap-4">
         <a
           href={blogSlug ? `/blog/${blogSlug}` : undefined}
@@ -53,43 +53,40 @@ export function DashboardNavbar({ sidebarOpen, onToggleSidebar }: DashboardNavba
           <HiOutlineArrowTopRightOnSquare className="w-5 h-5" />
         </a>
 
-          <Dropdown
-            arrowIcon={false}
-            inline
-            label={
-              <div className="flex items-center gap-2 cursor-pointer">
-                <Avatar
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  rounded
-                  alt="utilisateur connecté"
-                />
-                <span className="hidden md:inline text-sm text-dark">{user?.firstName} { user?.lastName}</span>
-                <HiChevronDown className="w-5 h-5 text-dark" />
-              </div>
-            }
-          >
-            <DropdownHeader>
-              <span className="block text-sm text-dark">{user?.firstName} { user?.lastName}</span>
-              <span className="block truncate text-sm font-medium text-dark">{user?.email} </span>
-            </DropdownHeader>
-            <DropdownItem>
-              <Link to="/admin/profil">
-                Mon profil
-              </Link>              
-            </DropdownItem>
-            <DropdownDivider />
-            <DropdownItem
-              icon={HiOutlineLogout}
-              onClick={handleLogout}
-            >
-              Déconnexion
-            </DropdownItem>
-          </Dropdown>
-        </div>
+        <Dropdown
+          arrowIcon={false}
+          inline
+          label={
+            <div className="flex items-center gap-2 cursor-pointer">
+              <Avatar
+                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                rounded
+                alt="utilisateur connecté"
+              />
+              <span className="hidden md:inline text-sm text-dark">
+                {user?.firstName} {user?.lastName}
+              </span>
+              <HiChevronDown className="w-5 h-5 text-dark" />
+            </div>
+          }
+        >
+          <DropdownHeader>
+            <span className="block text-sm text-dark">
+              {user?.firstName} {user?.lastName}
+            </span>
+            <span className="block truncate text-sm font-medium text-dark">
+              {user?.email}{" "}
+            </span>
+          </DropdownHeader>
+          <DropdownItem>
+            <Link to="/admin/profil">Mon profil</Link>
+          </DropdownItem>
+          <DropdownDivider />
+          <DropdownItem icon={HiOutlineLogout} onClick={handleLogout}>
+            Déconnexion
+          </DropdownItem>
+        </Dropdown>
+      </div>
     </Navbar>
   );
 }
-
-
-  
-  
