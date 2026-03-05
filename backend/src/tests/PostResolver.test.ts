@@ -54,7 +54,7 @@ describe("PostResolver (unit)", () => {
       take: 20,
       where: { author: { id: 7 } },
       order: { createdAt: "DESC" },
-      relations: ["author", "category", "tags"],
+      relations: ["author", "category", "tags", "likes"],
     });
   });
 });
